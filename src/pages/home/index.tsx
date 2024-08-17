@@ -1,11 +1,13 @@
-import { Typography } from "@material-ui/core"
+import { PageLayout } from '../../layouts/page-layout'
+import { TitlePage } from './styles'
+import { FC } from 'react'
 
-function Home() {
+const HomePage: FC = () => {
+	return (
+		<PageLayout title="Cardápio">
+			<TitlePage>Cardápio</TitlePage>
+		</PageLayout>
+	)
+}
 
-    return (
-      <Typography>HomePage</Typography>
-    )
-  }
-  
-  export default Home
-  
+export default HomePage
