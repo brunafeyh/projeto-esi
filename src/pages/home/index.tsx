@@ -5,7 +5,9 @@ import { FC } from 'react'
 const HomePage: FC = () => {
 	return (
 		<PageLayout title="HomePage">
-			<TitlePage>HomePage</TitlePage>
+			<TitlePage>Os mais vendidos</TitlePage>
+
+			<TitlePage>Recomendação da cozinha</TitlePage>
 		</PageLayout>
 	)
 }

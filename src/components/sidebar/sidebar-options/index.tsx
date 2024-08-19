@@ -21,7 +21,7 @@ const SidebarOptions: React.FC<SidebarOptionsProps> = ({ isCollapsed }) => {
 		}
 	}
 	const renderOptions = () => {
-		if (user?.role === 'ADMINISTRATOR') {
+		if (user?.role === 'ROLE_ADMINISTRATOR') {
 		  return isCollapsed ? (
 			<CollapsedOptionsAdmin onChange={handleChange} />
 		  ) : (

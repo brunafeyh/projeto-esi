@@ -1,4 +1,4 @@
-export type AuthorizationRole = 'ADMINISTRATOR' | 'CUSTUMER' | 'ATTENDANT';
+export type AuthorizationRole = 'ROLE_ADMINISTRATOR' | 'ROLE_CUSTUMER' | 'ROLE_ATTENDANT';
 
 export interface User {
   name: string;
@@ -12,5 +12,5 @@ export interface AccessToken {
   name?: string;
   email?: string;
   cpf?: string;
-  roles?: AuthorizationRole[];
+  role: AuthorizationRole;
 }

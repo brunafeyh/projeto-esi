@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/use-auth'
 const Profile: React.FC = () => {
 	const { user, logout } = useAuth()
 	const navigate = useNavigate()
+	console.log(user?.role)
 
 	const handleLogout = async () => {
 		try {

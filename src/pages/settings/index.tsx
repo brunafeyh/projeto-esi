@@ -47,7 +47,6 @@ const Settings: FC = () => {
 						<Typography> {prato.nome} </Typography>
 						<Typography> {prato.descricao} </Typography>
 						<Typography> {prato.valorReais} </Typography>
-                        <pre>{JSON.stringify(prato, null, 2)}</pre>
                     </div>
                 ) : (
                     <p>Informe um ID para buscar um prato específico.</p>
