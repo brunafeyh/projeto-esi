@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
 				<img
 					src="/images/logo-restaurante-esi.png"
 					alt="logo do Restaurante"
-					style={{  width: '160px', height: '60px', marginBottom: 'auto' }}
+					style={{  width: '130px', height: '60px', marginBottom: 'auto' }}
 				/>
 		</Stack>
 	)

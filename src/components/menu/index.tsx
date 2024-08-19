@@ -1,5 +1,4 @@
 import React from 'react'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { IconButton, Stack, Tooltip } from '@mui/material'
 import { useAtom } from 'jotai'
@@ -10,6 +9,7 @@ import { BoxMenuApresentation, MenuContainerApresentation } from './styles'
 import Logo from '../logo'
 import { isCollapsedAtom } from '../../contexts/is-collapsed-atom'
 import { openPopover } from '../../utils/popover'
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 const Menu: React.FC = () => {
 	const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom)
@@ -27,11 +27,11 @@ const Menu: React.FC = () => {
 					<IconButton onClick={handleCollapse} style={{ color: '#FFF' }}>
 						{isCollapsed ? (
 							<Tooltip title="Abrir Barra Lateral">
-								<ArrowBackIosIcon style={{ fontSize: '16px' }} />
+								<ArrowForwardIosIcon style={{ fontSize: '16px' }} />
 							</Tooltip>
 						) : (
 							<Tooltip title="Colapsar Barra Lateral">
-								<ArrowForwardIosIcon style={{ fontSize: '16px' }} />
+								<MenuOpenIcon style={{ fontSize: '24px' }} />
 							</Tooltip>
 						)}
 					</IconButton>
