@@ -1,109 +1,110 @@
-import { useCallback, useMemo } from 'react'
-import { useAtom } from 'jotai'
-import { useNavigate } from 'react-router-dom'
-import { RESET } from 'jotai/utils'
-import { KeycloakService } from '../services/keycloak'
-import { accessTokenAtom, refreshTokenAtom } from '../contexts/auth'
-import { getExpirationTime, getUserFromToken } from '../utils/auth'
-import { AuthCredentials } from '../schemas/form-types'
-import { setAuthorizationHeader } from '../services/auth'
-import bpAPI from '../shared/api'
-import { AuthorizationRole } from '../types/keycloak'
+import { useCallback, useMemo } from 'react';
+import { useAtom } from 'jotai';
+import { useNavigate } from 'react-router-dom';
+import { RESET } from 'jotai/utils';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { accessTokenAtom, refreshTokenAtom } from '../contexts/auth';
+import { getExpirationTime, getUserFromToken } from '../utils/auth';
+import { AuthCredentials } from '../schemas/form-types';
+import { AuthorizationRole } from '../types/auth';
 
-const keycloakService = new KeycloakService()
+const API_BASE_URL = 'https://menu-master-production.up.railway.app';
 
 export const useAuth = () => {
-	const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
-	const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom)
-	const expirationTime = getExpirationTime(accessToken)
-	const refreshExpirationTime = getExpirationTime(refreshToken)
-	const navigate = useNavigate()
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
+  const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
+  const expirationTime = getExpirationTime(accessToken);
+  const navigate = useNavigate();
 
-	const user = useMemo(() => getUserFromToken(accessToken), [accessToken])
+  const user = useMemo(() => getUserFromToken(accessToken), [accessToken]);
 
-	const updateTokens = (accessToken: string, refreshToken: string) => {
-		setAccessToken(accessToken)
-		setRefreshToken(refreshToken)
-	}
+  const updateTokens = (accessToken: string, refreshToken: string) => {
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  };
 
-	const login = useCallback(async (credentials: AuthCredentials) => {
-		try {
-			const { access_token, refresh_token } = await keycloakService.login(credentials)
-			setAccessToken(access_token)
-			setRefreshToken(refresh_token)
-			setAuthorizationHeader({ instance: bpAPI, token: access_token })
+  const login = useCallback(async (credentials: AuthCredentials) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/authentication/login`, credentials)
+      const { token } = response.data;
+      updateTokens(token, token);
+      toast.success('Login successful!');
+      return true;
+    } catch (error) {
+      toast.error('Error logging in. Please check your credentials.');
+      console.error('Error logging in:', error);
+      return false;
+    }
+  }, []);
 
-			return true
-		} catch (error) {
-			console.error('Erro ao fazer login:', error)
-			return false
-		}
-	}, [])
+  const logout = useCallback(async () => {
+    try {
+      setAccessToken(RESET);
+      setRefreshToken(RESET);
+      delete axios.defaults.headers.common['Authorization'];
+      toast.info('Logged out successfully.');
+      navigate('/login');
+    } catch (error) {
+      toast.error('Error logging out.');
+      console.error('Error logging out:', error);
+    }
+  }, [navigate, setAccessToken, setRefreshToken]);
 
-	const logout = useCallback(async () => {
-		if (!refreshToken) return
+  const renewToken = useCallback(async () => {
+    if (isRefreshTokenExpired() || !refreshToken) return;
 
-		try {
-			await keycloakService.logout(refreshToken)
-		} catch (error) {
-			console.error('Erro ao fazer logout no Keycloak:', error)
-		} finally {
-			setAccessToken(RESET)
-			setRefreshToken(RESET)
-		}
-	}, [refreshToken, setAccessToken, setRefreshToken])
+    try {
+      // Assuming token refresh endpoint is available in the future
+      // const response = await axios.post(`${API_BASE_URL}/authentication/refresh-token`, { refreshToken });
+      // const newTokens = response.data;
+      // updateTokens(newTokens.access_token, newTokens.refresh_token);
+      toast.info('Token renewal not implemented.');
+      console.log('Token renewal not implemented');
+    } catch (error) {
+      toast.error('Error renewing token.');
+      console.error('Error renewing token:', error);
+      logout();
+    }
+  }, [refreshToken, logout]);
 
-	const renewToken = useCallback(async () => {
-		if (isRefreshTokenExpired() || !refreshToken) return
+  const hasSomeRole = useCallback(
+    (requiredRoles: AuthorizationRole[]) => {
+      return user ? requiredRoles.includes(user.role) : false;
+    },
+    [user]
+  );
 
-		try {
-			const newTokens = await keycloakService.refreshAccessToken(refreshToken)
-			updateTokens(newTokens.access_token, newTokens.refresh_token)
-		} catch (error) {
-			console.error('Erro ao renovar token:', error)
-			logout()
-			navigate('/login')
-		}
-	}, [refreshToken, updateTokens, logout, navigate])
+  const isAuthenticated = useCallback(() => {
+    return accessToken && !isAccessTokenExpired();
+  }, [accessToken]);
 
-	const hasSomeRole = useCallback(
-		(requiredRoles: AuthorizationRole[]) => {
-			return user ? requiredRoles.includes(user.role) : false
-		},
-		[user]
-	)
+  const isAccessTokenExpired = useCallback(() => {
+    return Date.now() > expirationTime;
+  }, [expirationTime]);
 
-	const isAuthenticated = useCallback(() => {
-		return accessToken && refreshToken && !isAccessTokenExpired() && !isRefreshTokenExpired()
-	}, [accessToken, refreshToken])
+  const isRefreshTokenExpired = useCallback(() => {
+    // Assuming refreshToken expiration is the same as accessToken for simplicity
+    return Date.now() > expirationTime;
+  }, [expirationTime]);
 
-	const isAccessTokenExpired = useCallback(() => {
-		return Date.now() > expirationTime
-	}, [expirationTime])
+  const isTokenAboutToExpire = useCallback(() => {
+    const currentTime = Date.now();
+    return !isAccessTokenExpired() && currentTime > expirationTime - 30000;
+  }, [expirationTime, isAccessTokenExpired]);
 
-	const isRefreshTokenExpired = useCallback(() => {
-		return Date.now() > refreshExpirationTime
-	}, [refreshExpirationTime])
-
-	const isTokenAboutToExpire = useCallback(() => {
-		const currentTime = Date.now()
-		return (
-			(!isAccessTokenExpired() && currentTime > expirationTime - 30000) ||
-			(!isRefreshTokenExpired() && currentTime > refreshExpirationTime - 30000)
-		)
-	}, [expirationTime, refreshExpirationTime, isAccessTokenExpired, isRefreshTokenExpired])
-
-	return {
-		token: accessToken,
-		accessToken,
-		refreshToken,
-		user,
-		login,
-		logout,
-		isAuthenticated,
-		isRefreshTokenExpired,
-		isTokenAboutToExpire,
-		hasSomeRole,
-		renewToken,
-	}
-}
+  return {
+    token: accessToken,
+    accessToken,
+    refreshToken,
+    user,
+    login,
+    logout,
+    isAuthenticated,
+    isRefreshTokenExpired,
+    isTokenAboutToExpire,
+    hasSomeRole,
+    renewToken,
+  };
+};

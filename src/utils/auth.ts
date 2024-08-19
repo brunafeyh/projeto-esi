@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
-import { AccessToken, AuthorizationRole, User } from '../types/keycloak'
+import { AccessToken, AuthorizationRole, User } from '../types/auth'
+
 
 interface DecodedToken {
 	exp: number
@@ -10,11 +11,12 @@ export const getUserFromToken = (token?: string | null): User | null => {
 	if (!token) return null
 
 	const decodedToken = decodeToken(token)
+	console.log(decodeToken)
 
 	const user: User = {
-		name: decodedToken.name,
-		email: decodedToken.email,
-		role: getBiggerRole(decodedToken.realm_access.roles),
+		name: decodedToken.name ?? 'Unknown', 
+		email: decodedToken.email ?? 'Unknown',
+		role: getBiggerRole(decodedToken.roles ?? [])
 	}
 
 	return user
