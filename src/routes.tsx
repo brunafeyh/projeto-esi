@@ -3,7 +3,7 @@ import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import Settings from './pages/settings'
-import Pedido from './pages/business-proposals'
+import Pedido from './pages/pedidos'
 
 export const router = createBrowserRouter([
 	{

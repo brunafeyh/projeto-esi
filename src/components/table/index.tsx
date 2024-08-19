@@ -1,4 +1,3 @@
-import React from 'react'
 import { Paper, Table as MuiTable, TableBody } from '@mui/material'
 import {
 	TableHead,
@@ -8,19 +7,20 @@ import {
 	TableCellBody,
 	EmptyTableTitle,
 } from './styles'
+import { ReactNode } from 'react'
 
 export interface Column {
 	field: string
 	headerName: string
 }
 
-interface BusinessProposalTableProps {
+interface TableProps {
 	columns: Column[]
 	data: Record<string, any>[]
-	renderData: (row: Record<string, any>, columns: Column[]) => React.ReactNode
+	renderData: (row: Record<string, any>, columns: Column[]) => ReactNode
 }
 
-const Table: React.FC<BusinessProposalTableProps> = ({ columns, data, renderData }) => {
+const Table: React.FC<TableProps> = ({ columns, data, renderData }) => {
 
 	return (
 		<Paper elevation={0}>
