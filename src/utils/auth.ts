@@ -9,13 +9,16 @@ export const decodeToken = (token: string) => jwtDecode<AccessToken>(token)
 
 export const getUserFromToken = (token?: string | null): User | null => {
 	if (!token) return null
+	console.log(token)
 
 	const decodedToken = decodeToken(token)
-	console.log(decodeToken)
+
+	console.log(decodedToken)
 
 	const user: User = {
-		name: decodedToken.name ?? 'Unknown', 
+		cpf: decodedToken.cpf ? decodedToken.cpf : 'Unknown', 
 		email: decodedToken.email ?? 'Unknown',
+		name: decodedToken.name ?? 'Unknown',
 		role: getBiggerRole(decodedToken.roles ?? [])
 	}
 
@@ -31,7 +34,9 @@ export const getExpirationTime = (token: string | null): number => {
 }
 
 export const getBiggerRole = (roles: AuthorizationRole[] | string[]): AuthorizationRole => {
-	if (roles.includes('ADMIN')) return 'ADMIN'
-	if (roles.includes('EDITOR')) return 'EDITOR'
-	return 'VIEWER'
+	if (roles.includes('ADMINISTRATOR')) return 'ADMINISTRATOR'
+	if (roles.includes('CUSTUMER')) return 'CUSTUMER'
+	return 'ATTENDANT'
 }
+
+export const roles: AuthorizationRole[] = ['ADMINISTRATOR', 'ATTENDANT']; 

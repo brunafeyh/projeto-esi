@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { SidebarContainerOptions } from '../style'
-import { CollapsedOptions, ExpandedOptions } from '../sidebar-containers'
+import { CollapsedOptionsCliente, ExpandedOptionsCliente } from '../sidebar-containers/cliente'
+import { useAuth } from '../../../hooks/use-auth'
+import { CollapsedOptionsAdmin, ExpandedOptionsAdmin } from '../sidebar-containers/admin'
 
 interface SidebarOptionsProps {
 	isCollapsed: boolean
@@ -9,6 +11,7 @@ interface SidebarOptionsProps {
 const SidebarOptions: React.FC<SidebarOptionsProps> = ({ isCollapsed }) => {
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
+	const {user} = useAuth()
 
 	const handleChange = (value: string | null) => {
 		if (value === null) {
@@ -17,6 +20,21 @@ const SidebarOptions: React.FC<SidebarOptionsProps> = ({ isCollapsed }) => {
 			navigate(`/${value}`)
 		}
 	}
+	const renderOptions = () => {
+		if (user?.role === 'ADMINISTRATOR') {
+		  return isCollapsed ? (
+			<CollapsedOptionsAdmin onChange={handleChange} />
+		  ) : (
+			<ExpandedOptionsAdmin onChange={handleChange} />
+		  );
+		} else {
+		  return isCollapsed ? (
+			<CollapsedOptionsCliente onChange={handleChange} />
+		  ) : (
+			<ExpandedOptionsCliente onChange={handleChange} />
+		  );
+		}
+	  };
 
 	return (
 		<SidebarContainerOptions
@@ -27,7 +45,7 @@ const SidebarOptions: React.FC<SidebarOptionsProps> = ({ isCollapsed }) => {
 			onChange={(_, value) => handleChange(value)}
 			sx={{ gap: 0 }}
 		>
-			{isCollapsed ? <CollapsedOptions onChange={handleChange} /> : <ExpandedOptions onChange={handleChange} />}
+			{renderOptions()}
 		</SidebarContainerOptions>
 	)
 }

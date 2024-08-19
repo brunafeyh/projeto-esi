@@ -1,9 +1,11 @@
 import { FC } from 'react'
-import Table, { Column } from '../../components/table'
-import { usePaginateArray } from '../../hooks/use-paginate-array'
-import { PageLayout } from '../../layouts/page-layout'
-import { TableRowBody } from '../../components/table/styles'
-import { TableCell } from '../../components/table-cell-business-proposal'
+import Table, { Column } from '../../../components/table'
+import { usePaginateArray } from '../../../hooks/use-paginate-array'
+import { PageLayout } from '../../../layouts/page-layout'
+import { TableRowBody } from '../../../components/table/styles'
+import { TableCell } from '../../../components/table-cell-business-proposal'
+import { roles } from '../../../utils/auth'
+import { withAuthentication } from '../../../hocs/authentication/with-authentication'
 
 const Pedidos = [
 	{
@@ -32,7 +34,7 @@ const columns: Column[] = [
 	{ field: 'value', headerName: 'Valor' },
 ]
 
-const Pedido: FC = () => {
+const PedidosCliente: FC = () => {
 	const paginatedArray = usePaginateArray(Pedidos)
 	
 	return (
@@ -54,4 +56,4 @@ const Pedido: FC = () => {
 	)
 }
 
-export default Pedido
+export default withAuthentication(PedidosCliente, roles)

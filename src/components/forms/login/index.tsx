@@ -49,12 +49,12 @@ const LoginForm: React.FC = () => {
 			)}
 			<LoginFormContainer>
 				<LoginFormTextField
-					{...register('username', { required: 'Usuário é obrigatório' })}
+					{...register('email', { required: 'Usuário é obrigatório' })}
 					id="filled-basic"
 					label="Usuário"
 					variant="filled"
-					error={!!errors.username}
-					helperText={errors.username?.message}
+					error={!!errors.email}
+					helperText={errors.email?.message}
 				/>
 				<LoginFormTextField
 					{...register('password', { required: 'Senha é obrigatória' })}

@@ -2,54 +2,57 @@ import { FC, useEffect, useState } from 'react';
 import axios from 'axios';
 import { TitlePageSettings } from './styles';
 import { PageLayout } from '../../layouts/page-layout';
+import { Box, TextField, Typography } from '@mui/material';
+import { apiBaseUrl } from '../../shared/api';
 
 const Settings: FC = () => {
-    const [pratos, setPratos] = useState<any[]>([]);
-    const [pedidos, setPedidos] = useState<any[]>([]);
-    const [estatisticas, setEstatisticas] = useState<any>({});
-    const [ingredientes, setIngredientes] = useState<any[]>([]);
-    const [categorias, setCategorias] = useState<any[]>([]);
-    const apiBaseUrl = 'http://localhost:3000'; // URL base da API
+    const [prato, setPrato] = useState<any | null>(null); 
+    const [pratoId, setPratoId] = useState<number | null>(null); 
+
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const [pratosResponse, pedidosResponse, estatisticasResponse, ingredientesResponse, categoriasResponse] = await Promise.all([
-                    axios.get(`${apiBaseUrl}/pratos`),
-                    axios.get(`${apiBaseUrl}/pedidos`),
-                    axios.get(`${apiBaseUrl}/estatisticas`),
-                    axios.get(`${apiBaseUrl}/ingredientes`),
-                    axios.get(`${apiBaseUrl}/categorias`)
-                ]);
-
-                setPratos(pratosResponse.data);
-                setPedidos(pedidosResponse.data);
-                setEstatisticas(estatisticasResponse.data);
-                setIngredientes(ingredientesResponse.data);
-                setCategorias(categoriasResponse.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            if (pratoId !== null) {
+                try {
+                    const pratoResponse = await axios.get(`${apiBaseUrl}/pratos/${pratoId}`);
+                    setPrato(pratoResponse.data);
+					console.log(pratoResponse.data)
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
             }
         };
 
         fetchData();
-    }, []);
+    }, [pratoId]); // Dependência para atualizar quando o ID mudar
+
+    const handlePratoIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const id = parseInt(event.target.value, 10);
+        setPratoId(id);
+    };
 
     return (
         <PageLayout title="Settings">
             <TitlePageSettings>Configurações</TitlePageSettings>
-            <div>
-                <h2>Pratos</h2>
-                <pre>{JSON.stringify(pratos, null, 2)}</pre>
-                <h2>Pedidos</h2>
-                <pre>{JSON.stringify(pedidos, null, 2)}</pre>
-                <h2>Estatísticas</h2>
-                <pre>{JSON.stringify(estatisticas, null, 2)}</pre>
-                <h2>Ingredientes</h2>
-                <pre>{JSON.stringify(ingredientes, null, 2)}</pre>
-                <h2>Categorias</h2>
-                <pre>{JSON.stringify(categorias, null, 2)}</pre>
-            </div>
+            <Box>
+                <Typography>Buscar Prato por ID</Typography>
+                <TextField
+                    type="number"
+                    placeholder="Digite o ID do prato"
+                    onChange={handlePratoIdChange}
+                />
+                {prato ? (
+                    <div>
+                        <h2>Detalhes do Prato</h2>
+						<Typography> {prato.nome} </Typography>
+						<Typography> {prato.descricao} </Typography>
+						<Typography> {prato.valorReais} </Typography>
+                        <pre>{JSON.stringify(prato, null, 2)}</pre>
+                    </div>
+                ) : (
+                    <p>Informe um ID para buscar um prato específico.</p>
+                )}
+            </Box>
         </PageLayout>
     );
 };

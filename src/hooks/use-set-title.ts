@@ -7,7 +7,7 @@ export const useSetTitle = (title: string) => {
 	useLayoutEffect(() => {
 		if (!documentDefined) return
 
-		if (document.title !== title) document.title = `${title} - BP Generator`
+		if (document.title !== title) document.title = `${title}`
 
 		return () => {
 			document.title = String(originalTitle.current)

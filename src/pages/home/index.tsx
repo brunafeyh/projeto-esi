@@ -4,8 +4,8 @@ import { FC } from 'react'
 
 const HomePage: FC = () => {
 	return (
-		<PageLayout title="Cardápio">
-			<TitlePage>Cardápio</TitlePage>
+		<PageLayout title="HomePage">
+			<TitlePage>HomePage</TitlePage>
 		</PageLayout>
 	)
 }

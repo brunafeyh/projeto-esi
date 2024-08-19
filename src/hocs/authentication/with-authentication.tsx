@@ -2,11 +2,11 @@ import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Alert, Button, Snackbar, Stack, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { ContainerTitles } from './styles'
-import { AuthorizationRole } from '../../types/keycloak'
 import { Modal, useModal } from '../../components/modal'
 import ErrorPage from '../../pages/error'
 import { theme } from '../../themes'
 import { useAuth } from '../../hooks/use-auth'
+import { AuthorizationRole } from '../../types/auth'
 
 export const withAuthentication = <P extends object>(
 	Component: FunctionComponent<P>,

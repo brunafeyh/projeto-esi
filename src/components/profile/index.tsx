@@ -21,6 +21,7 @@ const Profile: React.FC = () => {
 		<>
 			<UserNameTitle>{user.name}</UserNameTitle>
 			<UserEmailTitle>{user.email}</UserEmailTitle>
+			<UserEmailTitle>{user.cpf}</UserEmailTitle>
 			<UserRoleTitle>{user.role}</UserRoleTitle>
 			<LogoutButton variant="contained" startIcon={<LogoutIconProfile />} onClick={handleLogout}>
 				Sair
