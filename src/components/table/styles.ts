@@ -18,7 +18,7 @@ export const TableRowHead = styled(TableRow)<TableRowProps>(({ theme }) => ({
 }))
 
 export const TableHead = styled(MuiTableHead)<TableHeadProps>(({ theme }) => ({
-	backgroundColor: theme.palette.pti.neutral.p30,
+	backgroundColor: theme.palette.unioeste.neutral.p30,
 	wordBreak: 'break-word',
 	whiteSpace: 'normal',
 	minWidth: theme.spacing(18.75),
@@ -27,7 +27,7 @@ export const TableHead = styled(MuiTableHead)<TableHeadProps>(({ theme }) => ({
 
 export const TableCellHead = styled(TableCell)<TableCellProps>(({ theme }) => ({
 	fontWeight: FONT_WEIGHTS.medium,
-	color: theme.palette.pti.neutral.p100,
+	color: theme.palette.unioeste.neutral.p100,
 	wordBreak: 'break-word',
 	whiteSpace: 'normal',
 	fontSize: theme.spacing(1.5),

@@ -30,7 +30,7 @@ export interface JuicyColors {
 
 declare module '@mui/material/styles/createPalette' {
 	interface Palette {
-		pti: {
+		unioeste: {
 			primary: JuicyColors
 			secondary: JuicyColors
 			neutral: JuicyColors
@@ -40,7 +40,7 @@ declare module '@mui/material/styles/createPalette' {
 		}
 	}
 	interface PaletteOptions {
-		pti: {
+		unioeste: {
 			primary: JuicyColors
 			secondary: JuicyColors
 			neutral: JuicyColors

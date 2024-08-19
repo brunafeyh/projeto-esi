@@ -31,7 +31,7 @@ export const PresentationContainer = styled(Stack)<StackProps>(({ theme }) => ({
 	height: '100vh',
 	alignItems: 'center',
 	justifyContent: 'center',
-	background: theme.palette.pti.neutral.p100,
+	background: theme.palette.unioeste.neutral.p100,
 }))
 
 export const TitleBP = styled(Typography)<TypographyProps>(({ theme }) => ({
@@ -40,7 +40,7 @@ export const TitleBP = styled(Typography)<TypographyProps>(({ theme }) => ({
 	textAlign: 'center',
 	fontSize: theme.spacing(4),
 	fontWeight: FONT_WEIGHTS.extralight,
-	color: theme.palette.pti.neutral.p10,
+	color: theme.palette.unioeste.neutral.p10,
 }))
 
 export const ContainerLogoImages = styled(Stack)<StackProps>(({ theme }) => ({

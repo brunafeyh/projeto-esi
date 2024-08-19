@@ -3,8 +3,8 @@ import { Avatar, AvatarProps, styled } from '@mui/material'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 
 export const AvatarIcon = styled(Avatar)<AvatarProps>(({ theme }) => ({
-	background: theme.palette.pti.neutral.p10,
-	color: theme.palette.pti.error.p50,
+	background: theme.palette.unioeste.neutral.p10,
+	color: theme.palette.unioeste.error.p50,
 	alignSelf: 'center',
 	fontSize: theme.spacing(1.5),
 	fontWeight: FONT_WEIGHTS.regular,

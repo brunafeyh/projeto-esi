@@ -24,7 +24,7 @@ export const MenuContainerApresentation = styled(Stack)<StackProps>(({ theme }) 
 
 export const BoxMenuApresentation = styled(Box)<BoxProps>(({ theme }) => ({
 	backgroundColor:'#000',
-	color: theme.palette.pti.neutral.p10,
+	color: theme.palette.unioeste.neutral.p10,
 	position: 'fixed',
 	top: theme.spacing(0),
 	left: theme.spacing(0),

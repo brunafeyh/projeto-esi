@@ -14,7 +14,7 @@ export const TitleApresentation = styled(Typography)<TypographyProps>(({ theme }
 	fontFamily: 'IBM Plex Sans',
 	fontSize: theme.spacing(2),
 	fontWeight: FONT_WEIGHTS.regular,
-	color: theme.palette.pti.neutral.p100,
+	color: theme.palette.unioeste.neutral.p100,
 }))
 
 export const ContainerInputLogin = styled(Stack)<StackProps>(({ theme }) => ({
@@ -31,6 +31,6 @@ export const TitleVersion = styled(Typography)<TypographyProps>(({ theme }) => (
 	textAlign: 'center',
 	fontSize: theme.spacing(1.75),
 	fontWeight: FONT_WEIGHTS.regular,
-	color: theme.palette.pti.neutral.p100,
+	color: theme.palette.unioeste.neutral.p100,
 	marginBottom: theme.spacing(3),
 }))

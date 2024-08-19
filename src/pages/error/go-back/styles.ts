@@ -1,8 +1,8 @@
 import { IconButton, IconButtonProps, styled } from '@mui/material'
 
 export const IconBottonStyled = styled(IconButton)<IconButtonProps>(({ theme }) => ({
-	backgroundColor: theme.palette.pti.neutral.p100,
-	color: theme.palette.pti.neutral.p10,
+	backgroundColor: theme.palette.unioeste.neutral.p100,
+	color: theme.palette.unioeste.neutral.p10,
 	textDecoration: 'none',
 	border: 'none',
 	padding: '10px 20px',

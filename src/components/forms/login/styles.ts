@@ -26,21 +26,21 @@ export const IconButtonLoginForm = styled(IconButton)<IconButtonProps>(({ theme 
 
 export const LoginFormTextField = styled(TextField)(({ theme }) => ({
 	'& .MuiFilledInput-root': {
-		backgroundColor: theme.palette.pti.neutral.p20,
+		backgroundColor: theme.palette.unioeste.neutral.p20,
 		'&:hover': {
-			backgroundColor: theme.palette.pti.neutral.p30,
+			backgroundColor: theme.palette.unioeste.neutral.p30,
 		},
 		'&.Mui-focused': {
-			backgroundColor: theme.palette.pti.neutral.p30,
+			backgroundColor: theme.palette.unioeste.neutral.p30,
 		},
 	},
 	'& .MuiFilledInput-underline:before': {
-		borderBottomColor: theme.palette.pti.neutral.p60,
+		borderBottomColor: theme.palette.unioeste.neutral.p60,
 	},
 	'& .MuiFilledInput-underline:after': {
-		borderBottomColor: theme.palette.pti.primary.p60,
+		borderBottomColor: theme.palette.unioeste.primary.p60,
 	},
 	'& .MuiFormLabel-root': {
-		color: theme.palette.pti.neutral.p70,
+		color: theme.palette.unioeste.neutral.p70,
 	},
 }))

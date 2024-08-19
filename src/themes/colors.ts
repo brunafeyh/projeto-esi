@@ -1,4 +1,4 @@
-export const PTI_COLORS = {
+export const UNIOESTE_COLORS = {
 	primary: {
 		p10: '#F0F7FB',
 		p20: '#CCE4F2',

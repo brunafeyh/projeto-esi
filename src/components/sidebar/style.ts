@@ -33,7 +33,7 @@ export const SidebarContainerOptions = styled(ToggleButtonGroup)<ToggleButtonGro
 	display: 'flex',
 
 	[`& .${toggleButtonClasses.root}`]: {
-		color: theme.palette.pti.neutral.p40,
+		color: theme.palette.unioeste.neutral.p40,
 		display: 'flex',
 		fontWeight: FONT_WEIGHTS.extralight,
 		gap: theme.spacing(),
@@ -54,7 +54,7 @@ export const SidebarContainerOptions = styled(ToggleButtonGroup)<ToggleButtonGro
 		},
 	},
 	'& .MuiButtonBase-root.Mui-selected': {
-		color: theme.palette.pti.error.p50,
+		color: theme.palette.unioeste.error.p50,
 		background: '#111',
 		paddingLeft: theme.spacing(3),
 		height: theme.spacing(6),
@@ -65,7 +65,7 @@ export const SidebarContainerOptions = styled(ToggleButtonGroup)<ToggleButtonGro
 			content: '""',
 			width: theme.spacing(0.5),
 			height: '100%',
-			background: theme.palette.pti.error.p50,
+			background: theme.palette.unioeste.error.p50,
 			position: 'absolute',
 			left: 0,
 			borderRadius: `0 ${theme.spacing()} ${theme.spacing()} 0`,

@@ -12,10 +12,10 @@ const ErrorPage: React.FC<Props> = ({ code, title }) => {
 	return (
 		<NotFoundContainer>
 			<Stack justifyContent="center" alignItems="center" height="100%" spacing={4}>
-				<Typography variant="h1" color="pti.neutral.p100" fontSize={(theme) => theme.spacing(10)}>
+				<Typography variant="h1" color="unioeste.neutral.p100" fontSize={(theme) => theme.spacing(10)}>
 					{code}
 				</Typography>
-				<Typography variant="h2" color="pti.neutral.p100" fontSize={(theme) => theme.spacing(4)}>
+				<Typography variant="h2" color="unioeste.neutral.p100" fontSize={(theme) => theme.spacing(4)}>
 					{title}
 				</Typography>
 				<GoBack />

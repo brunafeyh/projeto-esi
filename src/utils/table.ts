@@ -18,18 +18,18 @@ const getStatusStyles = (theme: Theme, status: ReactNode): StyleAttributes => {
 	switch (status) {
 		case 'Concluída':
 		case 'Em andamento':
-			styles.backgroundColor = theme.palette.pti.success.p10 || 'transparent'
-			styles.color = theme.palette.pti.success.p100 || 'inherit'
+			styles.backgroundColor = theme.palette.unioeste.success.p10 || 'transparent'
+			styles.color = theme.palette.unioeste.success.p100 || 'inherit'
 			styles.width = status === 'Concluída' ? theme.spacing(11) : theme.spacing(16)
 			break
 		case 'Cancelada':
-			styles.backgroundColor = theme.palette.pti.error.p10 || 'transparent'
-			styles.color = theme.palette.pti.error.p100 || 'inherit'
+			styles.backgroundColor = theme.palette.unioeste.error.p10 || 'transparent'
+			styles.color = theme.palette.unioeste.error.p100 || 'inherit'
 			styles.width = theme.spacing(11)
 			break
 		case 'Negada':
-			styles.backgroundColor = theme.palette.pti.warning.p10 || 'transparent'
-			styles.color = theme.palette.pti.warning.p100 || 'inherit'
+			styles.backgroundColor = theme.palette.unioeste.warning.p10 || 'transparent'
+			styles.color = theme.palette.unioeste.warning.p100 || 'inherit'
 			styles.width = theme.spacing(9)
 			break
 		default:
