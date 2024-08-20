@@ -6,6 +6,7 @@ import Settings from './pages/settings'
 import Cardapio from './pages/cardapio'
 import Pontuacao from './pages/pontuacao'
 import PedidosCliente from './pages/pedidos/cliente'
+import PedidosAdmin from './pages/pedidos/admin'
 
 export const router = createBrowserRouter([
 	{
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
 			{
 				path: 'meus-pedidos',
 				element: <PedidosCliente />,
+			},
+			{
+				path: 'pedidos',
+				element: <PedidosAdmin />,
 			},
 			{
 				path: '*',

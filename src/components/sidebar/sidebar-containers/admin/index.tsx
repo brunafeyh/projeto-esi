@@ -22,8 +22,8 @@ export const CollapsedOptionsAdmin: React.FC<CollapsedOptionsProps> = ({ onChang
 				<RestaurantMenuIcon fontSize="small" />
 			</ToggleButton>
 		</Tooltip>
-		<Tooltip title="Meus Pedidos" placement="top">
-			<ToggleButton value="meus-pedidos" onClick={() => onChange('meus-pedidos')}>
+		<Tooltip title="Pedidos" placement="top">
+			<ToggleButton value="pedidos" onClick={() => onChange('pedidos')}>
 				<AssignmentIcon fontSize="small" />
 			</ToggleButton>
 		</Tooltip>
@@ -40,9 +40,9 @@ export const ExpandedOptionsAdmin: React.FC<ExpandedOptionsProps> = ({ onChange 
 			<RestaurantMenuIcon fontSize="small" />
 			Cardápio
 		</ToggleButton>
-		<ToggleButton value="meus-pedidos" onClick={() => onChange('meus-pedidos')}>
+		<ToggleButton value="pedidos" onClick={() => onChange('pedidos')}>
 			<AssignmentIcon fontSize="small" />
-			Meus Pedidos
+			Pedidos
 		</ToggleButton>
 	</>
 )
