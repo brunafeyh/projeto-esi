@@ -1,408 +1,488 @@
 {
-    "pratos": [
-        {
-            "id": 1,
-            "nome": "Strogonoffe de Frango",
-            "descricao": "Strogonoffe de frango com arroz e batata palha.",
-            "valorReais": 35.99,
-            "valorPontos": 350,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 2,
-            "nome": "Macarrão",
-            "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
-            "valorReais": 25.99,
-            "valorPontos": 250,
-            "categoria": "Massas",
-            "status": "Disponível"
-        },
-        {
-            "id": 3,
-            "nome": "Pizza de Calabresa",
-            "descricao": "Pizza com molho de tomate, queijo e calabresa.",
-            "valorReais": 39.99,
-            "valorPontos": 400,
-            "categoria": "Massas",
-            "status": "Disponível"
-        },
-        {
-            "id": 4,
-            "nome": "Bife Acebolado",
-            "descricao": "Bife grelhado com cebolas caramelizadas.",
-            "valorReais": 29.99,
-            "valorPontos": 300,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 5,
-            "nome": "Prato Feito",
-            "descricao": "Arroz, feijão, carne, batata frita e salada.",
-            "valorReais": 19.99,
-            "valorPontos": 200,
-            "categoria": "Brasil",
-            "status": "Disponível"
-        },
-        {
-            "id": 6,
-            "nome": "Combo Brasil",
-            "descricao": "Combo de feijoada com guarnições e sobremesa.",
-            "valorReais": 49.99,
-            "valorPontos": 500,
-            "categoria": "Brasil",
-            "status": "Disponível"
-        },
-        {
-            "id": 7,
-            "nome": "Polenta Frita",
-            "descricao": "Polenta frita crocante.",
-            "valorReais": 12.99,
-            "valorPontos": 130,
-            "categoria": "Brasil",
-            "status": "Disponível"
-        },
-        {
-            "id": 8,
-            "nome": "Coxinha de Jaca",
-            "descricao": "Coxinha vegana recheada com carne de jaca.",
-            "valorReais": 9.99,
-            "valorPontos": 100,
-            "categoria": "Vegano",
-            "status": "Disponível"
-        },
-        {
-            "id": 9,
-            "nome": "Lasanha",
-            "descricao": "Lasanha de queijo e presunto ao molho bolonhesa.",
-            "valorReais": 44.99,
-            "valorPontos": 450,
-            "categoria": "Massas",
-            "status": "Disponível"
-        },
-        {
-            "id": 10,
-            "nome": "Bolo de Chocolate Belga",
-            "descricao": "Bolo de chocolate belga com recheio de ganache.",
-            "valorReais": 29.99,
-            "valorPontos": 300,
-            "categoria": "Sobremesas",
-            "status": "Disponível"
-        },
-        {
-            "id": 11,
-            "nome": "Churrasco com Farofa",
-            "descricao": "Churrasco de picanha com farofa de ovos.",
-            "valorReais": 54.99,
-            "valorPontos": 550,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 12,
-            "nome": "Espetinho",
-            "descricao": "Espetinho de carne com pimentões e cebola.",
-            "valorReais": 14.99,
-            "valorPontos": 150,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 13,
-            "nome": "Frango Frito",
-            "descricao": "Frango frito crocante com tempero especial.",
-            "valorReais": 22.99,
-            "valorPontos": 230,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 14,
-            "nome": "Carne de Panela",
-            "descricao": "Carne cozida lentamente com batatas e cenouras.",
-            "valorReais": 34.99,
-            "valorPontos": 350,
-            "categoria": "Carnes",
-            "status": "Disponível"
-        },
-        {
-            "id": 15,
-            "nome": "Pastel de Carne",
-            "descricao": "Pastel recheado com carne moída e temperos.",
-            "valorReais": 5.99,
-            "valorPontos": 60,
-            "categoria": "Massas",
-            "status": "Disponível"
-        }
-    ],
-    "pedidos": [
-        {
-            "id": 1,
-            "numeroPedido": "20240817-001",
-            "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
-            "observacoes": "Adicionar mais batata palha",
-            "data": "2024-08-17"
-        },
-        {
-            "id": 2,
-            "numeroPedido": "20240817-002",
-            "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
-            "observacoes": "Entregar até 19h",
-            "data": "2024-08-17"
-        },
-        {
-            "id": 3,
-            "numeroPedido": "20240816-001",
-            "descricao": "Pedido contendo Churrasco com Farofa e Espetinho",
-            "observacoes": "Ponto da carne mal passado",
-            "data": "2024-08-16"
-        },
-        {
-            "id": 4,
-            "numeroPedido": "20240815-003",
-            "descricao": "Pedido contendo Frango Frito e Carne de Panela",
-            "observacoes": "Adicionar mais tempero",
-            "data": "2024-08-15"
-        },
-        {
-            "id": 5,
-            "numeroPedido": "20240817-003",
-            "descricao": "Pedido contendo Pizza de Calabresa e Macarrão",
-            "observacoes": "Sem queijo adicional",
-            "data": "2024-08-17"
-        },
-        {
-            "id": 6,
-            "numeroPedido": "20240817-004",
-            "descricao": "Pedido contendo Combo Brasil e Coxinha de Jaca",
-            "observacoes": "Entregar em horário de almoço",
-            "data": "2024-08-17"
-        },
-        {
-            "id": 7,
-            "numeroPedido": "20240816-002",
-            "descricao": "Pedido contendo Bife Acebolado e Prato Feito",
-            "observacoes": "Com arroz integral",
-            "data": "2024-08-16"
-        },
-        {
-            "id": 8,
-            "numeroPedido": "20240815-004",
-            "descricao": "Pedido contendo Pastel de Carne e Suco de Laranja",
-            "observacoes": "Pastel extra crocante",
-            "data": "2024-08-15"
-        },
-        {
-            "id": 9,
-            "numeroPedido": "20240815-005",
-            "descricao": "Pedido contendo Strogonoffe de Frango e Bolo de Chocolate Belga",
-            "observacoes": "Sem cebola no strogonoffe",
-            "data": "2024-08-15"
-        },
-        {
-            "id": 10,
-            "numeroPedido": "20240814-001",
-            "descricao": "Pedido contendo Lasanha e Polenta Frita",
-            "observacoes": "Lasanha com extra queijo",
-            "data": "2024-08-14"
-        },
-        {
-            "id": 11,
-            "numeroPedido": "20240813-002",
-            "descricao": "Pedido contendo Frango Frito e Combo Brasil",
-            "observacoes": "Sem farofa",
-            "data": "2024-08-13"
-        },
-        {
-            "id": 12,
-            "numeroPedido": "20240812-003",
-            "descricao": "Pedido contendo Pizza de Calabresa e Espetinho",
-            "observacoes": "Sem cebola no espetinho",
-            "data": "2024-08-12"
-        },
-        {
-            "id": 13,
-            "numeroPedido": "20240811-001",
-            "descricao": "Pedido contendo Strogonoffe de Frango e Coxinha de Jaca",
-            "observacoes": "Strogonoffe sem creme de leite",
-            "data": "2024-08-11"
-        },
-        {
-            "id": 14,
-            "numeroPedido": "20240810-004",
-            "descricao": "Pedido contendo Churrasco com Farofa e Suco de Laranja",
-            "observacoes": "Farofa extra",
-            "data": "2024-08-10"
-        },
-        {
-            "id": 15,
-            "numeroPedido": "20240809-002",
-            "descricao": "Pedido contendo Bife Acebolado e Pastel de Carne",
-            "observacoes": "Pastel com pouca carne",
-            "data": "2024-08-09"
-        }
-    ],
-    "estatisticas": {
-        "data": "2024-08-17",
-        "pratosMaisVendidos": [
-            {
-                "id": 1,
-                "nome": "Strogonoffe de Frango",
-                "quantidadeVendida": 150
-            },
-            {
-                "id": 3,
-                "nome": "Pizza de Calabresa",
-                "quantidadeVendida": 120
-            },
-            {
-                "id": 11,
-                "nome": "Churrasco com Farofa",
-                "quantidadeVendida": 90
-            },
-            {
-                "id": 2,
-                "nome": "Macarrão",
-                "quantidadeVendida": 85
-            },
-            {
-                "id": 5,
-                "nome": "Prato Feito",
-                "quantidadeVendida": 70
-            },
-            {
-                "id": 6,
-                "nome": "Combo Brasil",
-                "quantidadeVendida": 65
-            },
-            {
-                "id": 9,
-                "nome": "Lasanha",
-                "quantidadeVendida": 60
-            }
-        ],
-        "pratosLideresVenda": [
-            {
-                "id": 1,
-                "nome": "Strogonoffe de Frango",
-                "quantidadeVendida": 150
-            },
-            {
-                "id": 3,
-                "nome": "Pizza de Calabresa",
-                "quantidadeVendida": 120
-            },
-            {
-                "id": 11,
-                "nome": "Churrasco com Farofa",
-                "quantidadeVendida": 90
-            },
-            {
-                "id": 4,
-                "nome": "Bife Acebolado",
-                "quantidadeVendida": 80
-            },
-            {
-                "id": 8,
-                "nome": "Coxinha de Jaca",
-                "quantidadeVendida": 75
-            },
-            {
-                "id": 7,
-                "nome": "Polenta Frita",
-                "quantidadeVendida": 70
-            },
-            {
-                "id": 12,
-                "nome": "Espetinho",
-                "quantidadeVendida": 65
-            }
-        ],
-        "lucroTotal": 32540.75
+  "pratos": [
+    {
+      "id": "1",
+      "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+      "nome": "Strogonoffe de Frango",
+      "descricao": "Strogonoffe de frango com arroz e batata palha.",
+      "valorReais": 35.99,
+      "valorPontos": 350,
+      "categoria": "Carnes",
+      "status": "Disponível"
     },
-    "ingredientes": [
-        {
-            "id": 1,
-            "nome": "Frango",
-            "quantidade": "50 kg"
-        },
-        {
-            "id": 2,
-            "nome": "Arroz",
-            "quantidade": "100 kg"
-        },
-        {
-            "id": 3,
-            "nome": "Batata Palha",
-            "quantidade": "30 kg"
-        },
-        {
-            "id": 4,
-            "nome": "Tomate",
-            "quantidade": "40 kg"
-        },
-        {
-            "id": 5,
-            "nome": "Queijo",
-            "quantidade": "20 kg"
-        },
-        {
-            "id": 6,
-            "nome": "Calabresa",
-            "quantidade": "25 kg"
-        },
-        {
-            "id": 7,
-            "nome": "Cebola",
-            "quantidade": "30 kg"
-        },
-        {
-            "id": 8,
-            "nome": "Carne Bovina",
-            "quantidade": "80 kg"
-        },
-        {
-            "id": 9,
-            "nome": "Farinha de Trigo",
-            "quantidade": "60 kg"
-        },
-        {
-            "id": 10,
-            "nome": "Jaca",
-            "quantidade": "15 kg"
-        },
-        {
-            "id": 11,
-            "nome": "Chocolate Belga",
-            "quantidade": "10 kg"
-        },
-        {
-            "id": 12,
-            "nome": "Farofa",
-            "quantidade": "25 kg"
-        }
+    {
+      "id": "2",
+      "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
+      "nome": "Macarrão",
+      "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
+      "valorReais": 25.99,
+      "valorPontos": 250,
+      "categoria": "Massas",
+      "status": "Disponível"
+    },
+    {
+      "id": "3",
+      "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
+      "nome": "Pizza de Calabresa",
+      "descricao": "Pizza com molho de tomate, queijo e calabresa.",
+      "valorReais": 39.99,
+      "valorPontos": 400,
+      "categoria": "Massas",
+      "status": "Disponível"
+    },
+    {
+      "id": "4",
+      "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhvk9n3KcmFDGZ3GCITvxNaY1H_Lzhf-aF1C9FlHsdwDGceBG7nf0RsrIC6NvWjZI-yVw6cDWNWW-sl0wirHbYjaO4jKLtKhkxjfB02AjBRkPOLbBJXnE6EcwsJ-ltxz5ovDgTwyQfr1F_/s1600/Bife+Acebolado.png",
+      "nome": "Bife Acebolado",
+      "descricao": "Bife grelhado com cebolas caramelizadas.",
+      "valorReais": 29.99,
+      "valorPontos": 300,
+      "categoria": "Carnes",
+      "status": "Disponível"
+    },
+    {
+      "id": "5",
+      "img": "https://t3.ftcdn.net/jpg/05/66/61/00/360_F_566610095_S4tDRuY2c7O4YuUYk5BSQdPDlRuW0kMc.jpg",
+      "nome": "Prato Feito",
+      "descricao": "Arroz, feijão, carne, batata frita e salada.",
+      "valorReais": 19.99,
+      "valorPontos": 200,
+      "categoria": "Brasil",
+      "status": "Disponível"
+    },
+    {
+      "id": "6",
+      "nome": "Combo Brasil",
+      "img": "https://img.freepik.com/fotos-gratis/variedade-plana-com-deliciosa-comida-brasileira_23-2148739179.jpg",
+      "descricao": "Combo de feijoada com guarnições e sobremesa.",
+      "valorReais": 49.99,
+      "valorPontos": 500,
+      "categoria": "Brasil",
+      "status": "Disponível"
+    },
+    {
+      "id": "7",
+      "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
+      "nome": "Polenta Frita",
+      "descricao": "Polenta frita crocante.",
+      "valorReais": 12.99,
+      "valorPontos": 130,
+      "categoria": "Brasil",
+      "status": "Disponível"
+    },
+    {
+      "id": "8",
+      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
+      "nome": "Coxinha de Jaca",
+      "descricao": "Coxinha vegana recheada com carne de jaca.",
+      "valorReais": 9.99,
+      "valorPontos": 100,
+      "categoria": "Vegano",
+      "status": "Disponível"
+    },
+    {
+      "id": "9",
+      "img": "https://wallpaper.forfun.com/fetch/68/688a328a838881302e19874992e60345.jpeg",
+      "nome": "Lasanha",
+      "descricao": "Lasanha de queijo e presunto ao molho bolonhesa.",
+      "valorReais": 44.99,
+      "valorPontos": 450,
+      "categoria": "Massas",
+      "status": "Disponível"
+    },
+    {
+      "id": "10",
+      "img": "https://i.pinimg.com/originals/86/d4/5d/86d45d132fabcf599228910a49684dd3.jpg",
+      "nome": "Bolo de Chocolate Belga",
+      "descricao": "Bolo de chocolate belga com recheio de ganache.",
+      "valorReais": 29.99,
+      "valorPontos": 300,
+      "categoria": "Sobremesas",
+      "status": "Disponível"
+    },
+    {
+      "id": "11",
+      "img": "https://st2.depositphotos.com/1672917/6989/i/450/depositphotos_69899447-stock-photo-traditional-brazilian-barbecue.jpg",
+      "nome": "Churrasco com Farofa",
+      "descricao": "Churrasco de picanha com farofa de ovos.",
+      "valorReais": 54.99,
+      "valorPontos": 550,
+      "categoria": "Carnes",
+      "status": "Disponível"
+    },
+    {
+      "id": "12",
+      "img": "https://t4.ftcdn.net/jpg/01/07/16/95/360_F_107169588_npa3G6IiqqqtsehxOCFTcAVAA6dTtKgX.jpg",
+      "nome": "Espetinho",
+      "descricao": "Espetinho de carne com pimentões e cebola.",
+      "valorReais": 14.99,
+      "valorPontos": 150,
+      "categoria": "Carnes",
+      "status": "Disponível"
+    },
+    {
+      "id": "13",
+      "img": "https://static.vecteezy.com/ti/fotos-gratis/p2/14214654-deliciosa-carne-de-frango-frito-quente-e-crocante-gratis-foto.jpg",
+      "nome": "Frango Frito",
+      "descricao": "Frango frito crocante com tempero especial.",
+      "valorReais": 22.99,
+      "valorPontos": 230,
+      "categoria": "Carnes",
+      "status": "Disponível"
+    },
+    {
+      "id": "14",
+      "img": "https://i.panelinha.com.br/i1/228-bk-2979-carne-de-panela-com-cenoura-e-batata-na-pressao.webp",
+      "nome": "Carne de Panela",
+      "descricao": "Carne cozida lentamente com batatas e cenouras.",
+      "valorReais": 34.99,
+      "valorPontos": 350,
+      "categoria": "Carnes",
+      "status": "Disponível"
+    },
+    {
+      "id": "15",
+      "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
+      "nome": "Pastel de Carne",
+      "descricao": "Pastel recheado com carne moída e temperos.",
+      "valorReais": 5.99,
+      "valorPontos": 60,
+      "categoria": "Massas",
+      "status": "Disponível"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": "1",
+      "numeroPedido": "20240817-001",
+      "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
+      "observacoes": "Adicionar mais batata palha",
+      "data": "2024-08-17"
+    },
+    {
+      "id": "2",
+      "numeroPedido": "20240817-002",
+      "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
+      "observacoes": "Entregar até 19h",
+      "data": "2024-08-17"
+    },
+    {
+      "id": "3",
+      "numeroPedido": "20240816-001",
+      "descricao": "Pedido contendo Churrasco com Farofa e Espetinho",
+      "observacoes": "Ponto da carne mal passado",
+      "data": "2024-08-16"
+    },
+    {
+      "id": "4",
+      "numeroPedido": "20240815-003",
+      "descricao": "Pedido contendo Frango Frito e Carne de Panela",
+      "observacoes": "Adicionar mais tempero",
+      "data": "2024-08-15"
+    },
+    {
+      "id": "5",
+      "numeroPedido": "20240817-003",
+      "descricao": "Pedido contendo Pizza de Calabresa e Macarrão",
+      "observacoes": "Sem queijo adicional",
+      "data": "2024-08-17"
+    },
+    {
+      "id": "6",
+      "numeroPedido": "20240817-004",
+      "descricao": "Pedido contendo Combo Brasil e Coxinha de Jaca",
+      "observacoes": "Entregar em horário de almoço",
+      "data": "2024-08-17"
+    },
+    {
+      "id": "7",
+      "numeroPedido": "20240816-002",
+      "descricao": "Pedido contendo Bife Acebolado e Prato Feito",
+      "observacoes": "Com arroz integral",
+      "data": "2024-08-16"
+    },
+    {
+      "id": "8",
+      "numeroPedido": "20240815-004",
+      "descricao": "Pedido contendo Pastel de Carne e Suco de Laranja",
+      "observacoes": "Pastel extra crocante",
+      "data": "2024-08-15"
+    },
+    {
+      "id": "9",
+      "numeroPedido": "20240815-005",
+      "descricao": "Pedido contendo Strogonoffe de Frango e Bolo de Chocolate Belga",
+      "observacoes": "Sem cebola no strogonoffe",
+      "data": "2024-08-15"
+    },
+    {
+      "id": "10",
+      "numeroPedido": "20240814-001",
+      "descricao": "Pedido contendo Lasanha e Polenta Frita",
+      "observacoes": "Lasanha com extra queijo",
+      "data": "2024-08-14"
+    },
+    {
+      "id": "11",
+      "numeroPedido": "20240813-002",
+      "descricao": "Pedido contendo Frango Frito e Combo Brasil",
+      "observacoes": "Sem farofa",
+      "data": "2024-08-13"
+    },
+    {
+      "id": "12",
+      "numeroPedido": "20240812-003",
+      "descricao": "Pedido contendo Pizza de Calabresa e Espetinho",
+      "observacoes": "Sem cebola no espetinho",
+      "data": "2024-08-12"
+    },
+    {
+      "id": "13",
+      "numeroPedido": "20240811-001",
+      "descricao": "Pedido contendo Strogonoffe de Frango e Coxinha de Jaca",
+      "observacoes": "Strogonoffe sem creme de leite",
+      "data": "2024-08-11"
+    },
+    {
+      "id": "14",
+      "numeroPedido": "20240810-004",
+      "descricao": "Pedido contendo Churrasco com Farofa e Suco de Laranja",
+      "observacoes": "Farofa extra",
+      "data": "2024-08-10"
+    },
+    {
+      "id": "15",
+      "numeroPedido": "20240809-002",
+      "descricao": "Pedido contendo Bife Acebolado e Pastel de Carne",
+      "observacoes": "Pastel com pouca carne",
+      "data": "2024-08-09"
+    }
+  ],
+  "estatisticas": {
+    "data": "2024-08-17",
+    "pratosMaisVendidos": [
+      {
+        "id": 1,
+        "nome": "Strogonoffe de Frango",
+        "quantidadeVendida": 150
+      },
+      {
+        "id": 3,
+        "nome": "Pizza de Calabresa",
+        "quantidadeVendida": 120
+      },
+      {
+        "id": 11,
+        "nome": "Churrasco com Farofa",
+        "quantidadeVendida": 90
+      },
+      {
+        "id": 2,
+        "nome": "Macarrão",
+        "quantidadeVendida": 85
+      },
+      {
+        "id": 5,
+        "nome": "Prato Feito",
+        "quantidadeVendida": 70
+      },
+      {
+        "id": 6,
+        "nome": "Combo Brasil",
+        "quantidadeVendida": 65
+      },
+      {
+        "id": 9,
+        "nome": "Lasanha",
+        "quantidadeVendida": 60
+      }
     ],
-    "categorias": [
-        {
-            "id": 1,
-            "nome": "Carnes"
-        },
-        {
-            "id": 2,
-            "nome": "Massas"
-        },
-        {
-            "id": 3,
-            "nome": "Brasil"
-        },
-        {
-            "id": 4,
-            "nome": "Vegano"
-        },
-        {
-            "id": 5,
-            "nome": "Sobremesas"
-        }
-    ]
+    "pratosLideresVenda": [
+      {
+        "id": 1,
+        "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+        "nome": "Strogonoffe de Frango",
+        "quantidadeVendida": 150
+      },
+      {
+        "id": 3,
+        "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
+        "nome": "Pizza de Calabresa",
+        "quantidadeVendida": 120
+      },
+      {
+        "id": 11,
+        "img": "https://st2.depositphotos.com/1672917/6989/i/450/depositphotos_69899447-stock-photo-traditional-brazilian-barbecue.jpg",
+        "nome": "Churrasco com Farofa",
+        "quantidadeVendida": 90
+      },
+      {
+        "id": 4,
+        "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhvk9n3KcmFDGZ3GCITvxNaY1H_Lzhf-aF1C9FlHsdwDGceBG7nf0RsrIC6NvWjZI-yVw6cDWNWW-sl0wirHbYjaO4jKLtKhkxjfB02AjBRkPOLbBJXnE6EcwsJ-ltxz5ovDgTwyQfr1F_/s1600/Bife+Acebolado.png",
+        "nome": "Bife Acebolado",
+        "quantidadeVendida": 80
+      },
+      {
+        "id": 8,
+        "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
+        "nome": "Coxinha de Jaca",
+        "quantidadeVendida": 75
+      },
+      {
+        "id": 7,
+        "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
+        "nome": "Polenta Frita",
+        "quantidadeVendida": 70
+      },
+      {
+        "id": 12,
+        "img": "https://t4.ftcdn.net/jpg/01/07/16/95/360_F_107169588_npa3G6IiqqqtsehxOCFTcAVAA6dTtKgX.jpg",
+        "nome": "Espetinho",
+        "quantidadeVendida": 65
+      }
+    ],
+    "lucroTotal": 32540.75
+  },
+  "ingredientes": [
+    {
+      "id": "1",
+      "nome": "Frango",
+      "quantidade": "50 kg"
+    },
+    {
+      "id": "2",
+      "nome": "Arroz",
+      "quantidade": "100 kg"
+    },
+    {
+      "id": "3",
+      "nome": "Batata Palha",
+      "quantidade": "30 kg"
+    },
+    {
+      "id": "4",
+      "nome": "Tomate",
+      "quantidade": "40 kg"
+    },
+    {
+      "id": "5",
+      "nome": "Queijo",
+      "quantidade": "20 kg"
+    },
+    {
+      "id": "6",
+      "nome": "Calabresa",
+      "quantidade": "25 kg"
+    },
+    {
+      "id": "7",
+      "nome": "Cebola",
+      "quantidade": "30 kg"
+    },
+    {
+      "id": "8",
+      "nome": "Carne Bovina",
+      "quantidade": "80 kg"
+    },
+    {
+      "id": "9",
+      "nome": "Farinha de Trigo",
+      "quantidade": "60 kg"
+    },
+    {
+      "id": "10",
+      "nome": "Jaca",
+      "quantidade": "15 kg"
+    },
+    {
+      "id": "11",
+      "nome": "Chocolate Belga",
+      "quantidade": "10 kg"
+    },
+    {
+      "id": "12",
+      "nome": "Farofa",
+      "quantidade": "25 kg"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Carnes"
+    },
+    {
+      "id": "2",
+      "nome": "Massas"
+    },
+    {
+      "id": "3",
+      "nome": "Brasil"
+    },
+    {
+      "id": "4",
+      "nome": "Vegano"
+    },
+    {
+      "id": "5",
+      "nome": "Sobremesas"
+    }
+  ],
+  "historicoPedidos": [
+    {
+      "numeroPedido": "20240817-001",
+      "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
+      "valorReais": 45.98,
+      "valorPontos": 460,
+      "data": "2024-08-17",
+      "id": "d4d4"
+    },
+    {
+      "numeroPedido": "20240817-002",
+      "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
+      "valorReais": 74.98,
+      "valorPontos": 750,
+      "data": "2024-08-17",
+      "id": "b02d"
+    },
+    {
+      "numeroPedido": "20240816-001",
+      "descricao": "Pedido contendo Churrasco com Farofa e Espetinho",
+      "valorReais": 69.98,
+      "valorPontos": 700,
+      "data": "2024-08-16",
+      "id": "297a"
+    },
+    {
+      "numeroPedido": "20240815-003",
+      "descricao": "Pedido contendo Frango Frito e Carne de Panela",
+      "valorReais": 57.98,
+      "valorPontos": 580,
+      "data": "2024-08-15",
+      "id": "1286"
+    },
+    {
+      "numeroPedido": "20240817-003",
+      "descricao": "Pedido contendo Pizza de Calabresa e Macarrão",
+      "valorReais": 64.98,
+      "valorPontos": 650,
+      "data": "2024-08-17",
+      "id": "cd0a"
+    }
+  ],
+  "carrinho": [
+    {
+      "id": "1",
+      "nome": "Strogonoffe de Frango",
+      "quantidade": 1,
+      "valorTotal": 35.99,
+      "valorReais": 35.99
+    },
+    {
+      "id": "1",
+      "nome": "Strogonoffe de Frango",
+      "quantidade": 1,
+      "valorTotal": 35.99,
+      "valorReais": 35.99
+    }
+  ]
 }
