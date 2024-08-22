@@ -39,7 +39,7 @@
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.2"
   },
   "description": "Este projeto visa desenvolver um sistema de gestão para restaurantes, abrangendo funcionalidades como controle de estoque, gestão de pedidos, e registro de pontos de fidelidade. O objetivo é automatizar processos operacionais, melhorar a eficiência e fornecer relatórios detalhados para a administração.",
   "main": "eslint.config.js",

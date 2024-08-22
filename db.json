@@ -476,6 +476,13 @@
       "quantidade": 1,
       "valorTotal": 35.99,
       "valorReais": 35.99
+    },
+    {
+      "id": "3",
+      "nome": "Pizza de Calabresa",
+      "quantidade": 1,
+      "valorTotal": 39.99,
+      "valorReais": 39.99
     }
   ]
 }
