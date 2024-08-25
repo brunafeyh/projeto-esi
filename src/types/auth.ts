@@ -1,4 +1,4 @@
-export type AuthorizationRole = 'ROLE_ADMINISTRATOR' | 'ROLE_CUSTUMER' | 'ROLE_ATTENDANT';
+export type AuthorizationRole = 'ROLE_ADMINISTRATOR' | 'ROLE_CUSTOMER' | 'ROLE_ATTENDANT';
 
 export interface User {
   name: string;

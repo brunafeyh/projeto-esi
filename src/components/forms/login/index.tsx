@@ -31,6 +31,7 @@ const LoginForm: React.FC = () => {
 			if (response) {
 				setLoginError(null)
 				navigate('/')
+				window.location.reload()
 			} else {
 				setLoginError('Usuário ou senha inválidos')
 			}

@@ -1,4 +1,8 @@
 {
+  "clientes": [
+    { "id": 1, "cpf": "123.456.789-00", "pontos": 1000 },
+    { "id": 2, "cpf": "987.654.321-00", "pontos": 1500 }
+  ],
   "pratos": [
     {
       "id": "1",
@@ -471,18 +475,18 @@
   ],
   "carrinho": [
     {
-      "id": "1",
-      "nome": "Strogonoffe de Frango",
+      "id": "15",
+      "nome": "Pastel de Carne",
       "quantidade": 1,
-      "valorTotal": 35.99,
-      "valorReais": 35.99
+      "valorTotal": 5.99,
+      "valorReais": 5.99
     },
     {
-      "id": "3",
-      "nome": "Pizza de Calabresa",
+      "id": "14",
+      "nome": "Carne de Panela",
       "quantidade": 1,
-      "valorTotal": 39.99,
-      "valorReais": 39.99
+      "valorTotal": 34.99,
+      "valorReais": 34.99
     }
   ]
 }
