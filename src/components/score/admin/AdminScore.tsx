@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { PageLayout } from '../../../layouts/page-layout';
-import { TextField, Box, Button, Typography, Card, CardContent } from '@mui/material';
+import { TextField, Box, Button, Typography, Card, CardContent, Avatar } from '@mui/material';
 import axios from 'axios';
+import StarIcon from '@mui/icons-material/Star';
+import { yellow } from '@mui/material/colors';
 import { apiBaseUrl } from '../../../shared/api';
 
 const AdminScore: React.FC = () => {
@@ -39,7 +41,7 @@ const AdminScore: React.FC = () => {
                     variant="filled"
                     value={cpf}
                     onChange={(e) => setCpf(e.target.value)}
-                    sx={{ width: '400px' }}
+                    sx={{ width: '300px' }}
                 />
                 <Button variant="contained" onClick={buscarPontos}>
                     Buscar Pontos
@@ -47,18 +49,20 @@ const AdminScore: React.FC = () => {
             </Box>
             {erro && <Typography color="error" sx={{ mb: 2 }}>{erro}</Typography>}
             {pontos !== null && (
-                <Card sx={{ minWidth: 275, mt: 2, textAlign: 'center', boxShadow: 3 }}>
-                    <CardContent>
-                        <Typography variant="h5" gutterBottom>
-                            Pontuação do Cliente
-                        </Typography>
-                        <Typography variant="h1" fontWeight="bold" color="primary.main">
-                            {pontos}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary">
-                            pontos acumulados
-                        </Typography>
-                    </CardContent>
+                <Card sx={{ minWidth: 275, mt: 2, textAlign: 'center', boxShadow: 3, p: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                        <Avatar sx={{ bgcolor: yellow[700], width: 56, height: 56 }}>
+                            <StarIcon fontSize="large" />
+                        </Avatar>
+                        <CardContent sx={{ p: 0 }}>
+                            <Typography variant="h5" gutterBottom>
+                                Pontuação do cliente
+                            </Typography>
+                            <Typography variant="h2" fontWeight="bold" color="text.primary">
+                                {pontos} pontos
+                            </Typography>
+                        </CardContent>
+                    </Box>
                 </Card>
             )}
         </PageLayout>
