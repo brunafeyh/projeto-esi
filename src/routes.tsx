@@ -3,10 +3,9 @@ import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import Settings from './pages/settings'
-import Cardapio from './pages/cardapio'
-import Pontuacao from './pages/pontuacao'
 import PedidosCliente from './pages/pedidos/cliente'
 import PedidosAdmin from './pages/pedidos/admin'
+import Cardapio from './pages/cardapio'
 
 export const router = createBrowserRouter([
 	{
@@ -27,10 +26,6 @@ export const router = createBrowserRouter([
 			{
 				path: 'settings',
 				element: <Settings />,
-			},
-			{
-				path: 'pontuacao',
-				element: <Pontuacao />,
 			},
 			{
 				path: 'meus-pedidos',

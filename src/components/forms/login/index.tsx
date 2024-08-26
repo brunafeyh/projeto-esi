@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { InputAdornment, Stack, Tooltip, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { ButtonLoginForm, IconButtonLoginForm, LoginFormContainer, LoginFormTextField } from './styles'
+import { ButtonLoginForm, IconButtonLoginForm, LoginFormContainer, TextField } from './styles'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAuth } from '../../../hooks/use-auth'
 import { AuthCredentials, credentialsSchema } from '../../../schemas/form-types'
@@ -49,7 +49,7 @@ const LoginForm: React.FC = () => {
 				</Typography>
 			)}
 			<LoginFormContainer>
-				<LoginFormTextField
+				<TextField
 					{...register('email', { required: 'Usuário é obrigatório' })}
 					id="filled-basic"
 					label="Usuário"
@@ -57,7 +57,7 @@ const LoginForm: React.FC = () => {
 					error={!!errors.email}
 					helperText={errors.email?.message}
 				/>
-				<LoginFormTextField
+				<TextField
 					{...register('password', { required: 'Senha é obrigatória' })}
 					id="password"
 					label="Senha"

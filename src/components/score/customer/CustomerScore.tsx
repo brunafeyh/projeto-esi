@@ -1,17 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { PageLayout } from '../../../layouts/page-layout';
-import { Typography, Card, CardContent, TextField, Box, Avatar, TableRow, TableCell } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography,  CardContent, Box, Avatar } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { yellow } from '@mui/material/colors';
-import Table from '../../../components/table';
 import axios from 'axios';
 import { apiBaseUrl } from '../../../shared/api';
-
-
-interface Column {
-    field: string;
-    headerName: string;
-}
+import { ContainerPontuation } from '../admin/styles';
 
 interface HistoricoPedido {
     id: string;
@@ -23,9 +16,7 @@ interface HistoricoPedido {
 }
 
 const CustomerScore: React.FC = () => {
-    const [filterDate, setFilterDate] = useState<string>('');
     const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);
-    const dateInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const fetchHistoricoPedidos = async () => {
@@ -40,32 +31,9 @@ const CustomerScore: React.FC = () => {
         fetchHistoricoPedidos();
     }, []);
 
-
-    const filteredRows = historicoPedidos.filter(row => {
-        if (!filterDate) return true;
-        return row.data === filterDate;
-    });
-
-    const columns: Column[] = [
-        { field: 'numeroPedido', headerName: 'Número Pedido' },
-        { field: 'descricao', headerName: 'Descrição' },
-        { field: 'valorReais', headerName: 'Valor (R$)' },
-        { field: 'valorPontos', headerName: 'Valor (Pontos)' },
-        { field: 'data', headerName: 'Data' },
-    ];
-
-    const renderData = (row: Record<string, any>, columns: Column[]) => (
-        <TableRow key={row.id}>
-            {columns.map((column) => (
-                <TableCell key={column.field}>{row[column.field]}</TableCell>
-            ))}
-        </TableRow>
-    );
-
     return (
-        <PageLayout title="Pontuação">
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
-                <Card sx={{ display: 'flex', alignItems: 'center', minWidth: 275, p: 3, mr: 8 }}>
+        <ContainerPontuation>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Avatar sx={{ bgcolor: yellow[700], mr: 2, width: 56, height: 56 }}>
                         <StarIcon fontSize="large" />
                     </Avatar>
@@ -77,31 +45,9 @@ const CustomerScore: React.FC = () => {
                             {historicoPedidos.reduce((total, item) => total + item.valorPontos, 0)} pontos
                         </Typography>
                     </CardContent>
-                </Card>
-
-                <TextField
-                    label="Filtrar por data"
-                    type="date"
-                    variant="filled"
-                    value={filterDate}
-                    onChange={(e) => setFilterDate(e.target.value)}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    inputRef={dateInputRef}
-                    onClick={() => dateInputRef.current?.focus()}
-                />
             </Box>
-
-            <Box sx={{ mt: 8 }}>
-                <Table
-                    columns={columns}
-                    data={filteredRows}
-                    renderData={(row) => renderData(row, columns)}
-                />
-            </Box>
-        </PageLayout>
+        </ContainerPontuation>
     );
 };
 
-export default CustomerScore;
+export default CustomerScore

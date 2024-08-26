@@ -1,4 +1,4 @@
-import { Button, ButtonProps, IconButton, IconButtonProps, Stack, StackProps, TextField, styled } from '@mui/material'
+import { Button, ButtonProps, IconButton, IconButtonProps, Stack, StackProps, TextField as TextFieldMui, styled } from '@mui/material'
 import { FONT_WEIGHTS } from '../../../themes/fonts'
 
 export const LoginFormContainer = styled(Stack)<StackProps>(({ theme }) => ({
@@ -24,7 +24,7 @@ export const IconButtonLoginForm = styled(IconButton)<IconButtonProps>(({ theme 
 	},
 }))
 
-export const LoginFormTextField = styled(TextField)(({ theme }) => ({
+export const TextField = styled(TextFieldMui)(({ theme }) => ({
 	'& .MuiFilledInput-root': {
 		backgroundColor: theme.palette.unioeste.neutral.p20,
 		'&:hover': {

@@ -1,8 +1,9 @@
 import React, { useState, MouseEvent } from 'react';
-import StarIcon from '@mui/icons-material/Star';
 import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import Score from '../score';
+import { StarIconMui } from './styles';
+import { Box } from '@mui/material';
 
 const Pontuation: React.FC = () => {
     // State to manage the anchor element for the popover
@@ -23,9 +24,9 @@ const Pontuation: React.FC = () => {
     const id = open ? 'simple-popover' : undefined;
 
     return (
-        <div>
+        <Box>
             <IconButton onClick={handleClick}>
-                <StarIcon />
+                <StarIconMui />
             </IconButton>
             <Popover
                 id={id}
@@ -43,7 +44,7 @@ const Pontuation: React.FC = () => {
             >
                 <Score/>
             </Popover>
-        </div>
+        </Box>
     );
 };
 
