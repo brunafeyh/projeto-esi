@@ -1,59 +1,17 @@
-import { FC } from 'react'
-import Table, { Column } from '../../../components/table'
-import { usePaginateArray } from '../../../hooks/use-paginate-array'
-import { PageLayout } from '../../../layouts/page-layout'
-import { TableRowBody } from '../../../components/table/styles'
-import { TableCell } from '../../../components/table-cell-business-proposal'
-import { roles } from '../../../utils/auth'
-import { withAuthentication } from '../../../hocs/authentication/with-authentication'
-
-const Pedidos = [
-	{
-		id: 1,
-		number: '001',
-		date: '2024-08-17',
-		descrition: 'Combo Shawarma',
-		observation: 'none',
-		value: 'R$ 30,00',
-	},
-	{
-		id: 2,
-		number: '001',
-		date: '2024-08-17',
-		descrition: 'Combo Shawarma',
-		observation: 'none',
-		value: 'R$ 30,00',
-	},
-]
-
-const columns: Column[] = [
-	{ field: 'number', headerName: 'Nº Pedido' },
-	{ field: 'date', headerName: 'Data' },
-	{ field: 'descrition', headerName: 'Descrição' },
-	{ field: 'observation', headerName: 'Observação' },
-	{ field: 'value', headerName: 'Valor' },
-]
+import { FC } from 'react';
+import { PageLayout } from '../../../layouts/page-layout';
+import { roles } from '../../../utils/auth';
+import { withAuthentication } from '../../../hocs/authentication/with-authentication';
+import CustomerOrder from '../../../components/order/customer/CustomerOrder';
+import { TitlePage } from '../../home/styles';
 
 const PedidosCliente: FC = () => {
-	const paginatedArray = usePaginateArray(Pedidos)
-	
-	return (
-		<PageLayout title="Pedidos">
-			<Table
-				columns={columns}
-				data={paginatedArray}
-				renderData={(row) => (
-					<TableRowBody key={row.id}>
-						<TableCell>{row.number}</TableCell>
-						<TableCell>{row.date}</TableCell>
-						<TableCell>{row.descrition}</TableCell>
-						<TableCell>{row.observation}</TableCell>
-						<TableCell>{row.value}</TableCell>
-					</TableRowBody>
-				)}
-			/>
-		</PageLayout>
-	)
+    return (
+        <PageLayout title="Pedidos">
+			<TitlePage>Meus pedidos</TitlePage>
+            <CustomerOrder />
+        </PageLayout>
+    );
 }
 
-export default withAuthentication(PedidosCliente, roles)
+export default withAuthentication(PedidosCliente, roles);

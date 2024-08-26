@@ -481,13 +481,5 @@
       "id": "cd0a"
     }
   ],
-  "carrinho": [
-    {
-      "id": "15",
-      "nome": "Pastel de Carne",
-      "quantidade": 1,
-      "valorTotal": 5.99,
-      "valorReais": 5.99
-    }
-  ]
+  "carrinho": []
 }
