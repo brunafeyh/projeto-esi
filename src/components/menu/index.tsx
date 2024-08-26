@@ -14,6 +14,7 @@ import CartButton, { CartItem } from '../cart/buttom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pontuation from '../pontuation';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
@@ -95,6 +96,7 @@ const Menu: React.FC = () => {
           </IconButton>
           <Stack direction="row" alignItems="center" flexGrow={1}>
             <Logo />
+            <Pontuation/>
             <CartButton
               cartItems={cartItems}
               onUpdateQuantity={handleUpdateQuantity}

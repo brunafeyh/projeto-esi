@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, Grid, IconButton, Chip } from '@mui/material';
 import { PageLayout } from '../../layouts/page-layout';
-import { TitlePage, TitlePageDown } from './styles';
+import { TitleCard, TitlePage, TitlePageDown } from './styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -98,7 +98,8 @@ const HomePage: FC = () => {
                 <IconButton color="primary" aria-label="add to shopping cart" onClick={() => adicionarAoCarrinho(prato)}>
                   <ShoppingCartIcon />
                 </IconButton>
-                <Typography variant="body2">R$ {prato.valorReais.toFixed(2)}</Typography>
+                <TitleCard>R$ {prato.valorReais.toFixed(2)}</TitleCard>
+                <TitleCard>{prato.valorPontos} pontos</TitleCard>
                 <Chip label={prato.categoria} />
               </CardActions>
             </Card>
@@ -129,7 +130,7 @@ const HomePage: FC = () => {
                 <IconButton color="primary" aria-label="add to shopping cart" onClick={() => adicionarAoCarrinho(prato)}>
                   <ShoppingCartIcon />
                 </IconButton>
-                <Typography variant="body2">R$ {prato.valorReais.toFixed(2)}</Typography>
+                <TitleCard>R$ {prato.valorReais.toFixed(2)}</TitleCard>
                 <Chip label={prato.categoria} />
               </CardActions>
             </Card>

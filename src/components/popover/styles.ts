@@ -4,4 +4,5 @@ export const PopoverContainer = styled(Stack)<StackProps>(({ theme }) => ({
 	minWidth: theme.spacing(19.5),
 	minHeight: theme.spacing(17),
 	borderRadius: theme.spacing(0),
+	padding: theme.spacing(1)
 }))

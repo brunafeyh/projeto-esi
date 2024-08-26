@@ -1,4 +1,5 @@
-import { Typography, TypographyProps, styled } from '@mui/material'
+import { Typography, TypographyProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 
 
@@ -31,4 +32,9 @@ export const TitlePontos = styled(Typography)<TypographyProps>(({ theme }) => ({
 	fontWeight: FONT_WEIGHTS.regular,
 	marginTop: theme.spacing(2),
 	marginBottom: theme.spacing(2),
+}))
+
+
+export const TitleCard = styled(Typography)<TypographyProps>(({ theme }) => ({
+	fontSize: theme.spacing(1.75),
 }))

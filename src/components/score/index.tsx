@@ -4,7 +4,7 @@ import CustomerScore from '../../components/score/customer/CustomerScore';
 import AdminScore from '../../components/score/admin/AdminScore';
 import { Box } from '@mui/material';
 
-const Pontuacao: React.FC = () => {
+const Score: React.FC = () => {
     const { user } = useAuth()
 
     if (user?.role === 'ROLE_ADMINISTRATOR' || user?.role === 'ROLE_ATTENDANT') {
@@ -16,4 +16,4 @@ const Pontuacao: React.FC = () => {
     }
 };
 
-export default Pontuacao;
+export default Score;

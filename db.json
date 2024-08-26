@@ -1,7 +1,15 @@
 {
   "clientes": [
-    { "id": 1, "cpf": "123.456.789-00", "pontos": 1000 },
-    { "id": 2, "cpf": "987.654.321-00", "pontos": 1500 }
+    {
+      "id": "1",
+      "cpf": "123.456.789-00",
+      "pontos": 1000
+    },
+    {
+      "id": "2",
+      "cpf": "987.654.321-00",
+      "pontos": 1500
+    }
   ],
   "pratos": [
     {
@@ -480,13 +488,6 @@
       "quantidade": 1,
       "valorTotal": 5.99,
       "valorReais": 5.99
-    },
-    {
-      "id": "14",
-      "nome": "Carne de Panela",
-      "quantidade": 1,
-      "valorTotal": 34.99,
-      "valorReais": 34.99
     }
   ]
 }
