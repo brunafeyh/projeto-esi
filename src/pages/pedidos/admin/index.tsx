@@ -4,8 +4,6 @@ import { usePaginateArray } from '../../../hooks/use-paginate-array'
 import { PageLayout } from '../../../layouts/page-layout'
 import { TableRowBody } from '../../../components/table/styles'
 import { TableCell } from '../../../components/table-cell-business-proposal'
-import { withAuthentication } from '../../../hocs/authentication/with-authentication'
-import { roles } from '../../../utils/auth'
 
 const Pedidos = [
 	{
@@ -56,4 +54,4 @@ const PedidosAdmin: FC = () => {
 	)
 }
 
-export default withAuthentication(PedidosAdmin, roles)
+export default PedidosAdmin

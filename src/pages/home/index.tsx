@@ -1,31 +1,30 @@
 import { FC, useEffect, useState } from 'react';
-import { Card, CardActions, CardContent, CardMedia, Typography, Grid, IconButton, Chip } from '@mui/material';
+import { Card, CardActions, CardContent, CardMedia, Typography, Grid, IconButton, Chip, Stack } from '@mui/material';
 import { PageLayout } from '../../layouts/page-layout';
 import { TitleCard, TitlePage, TitlePageDown } from './styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiBaseUrl } from '../../shared/api';
+
 interface Prato {
-	id: number;
-	nome: string;
-	descricao: string;
-	valorReais: number;
-	valorPontos: number;
-	categoria: string;
-	img: string;
-  }
-  
-  interface CartItem extends Prato {
-	quantidade: number;
-	valorTotal: number;
-  }
-  
+  id: number;
+  nome: string;
+  descricao: string;
+  valorReais: number;
+  valorPontos: number;
+  categoria: string;
+  img: string;
+}
+
+interface CartItem extends Prato {
+  quantidade: number;
+  valorTotal: number;
+}
 
 const HomePage: FC = () => {
   const [pratos, setPratos] = useState<Prato[]>([]);
   const [carrinho, setCarrinho] = useState<CartItem[]>([]);
-
 
   useEffect(() => {
     const fetchPratos = async () => {
@@ -41,35 +40,34 @@ const HomePage: FC = () => {
   }, []);
 
   const adicionarAoCarrinho = async (prato: Prato) => {
-	try {
-	  // Verifica se o item já existe no carrinho
-	  const itemExistente = carrinho.find(item => item.id === prato.id);
-	  if (itemExistente) {
-		setCarrinho(prevCarrinho =>
-		  prevCarrinho.map(item =>
-			item.id === prato.id
-			  ? { ...item, quantidade: item.quantidade + 1, valorTotal: item.valorTotal + prato.valorReais }
-			  : item
-		  )
-		);
-	  } else {
-		const response = await axios.post('http://localhost:3000/carrinho', {
-		  id: prato.id,
-		  nome: prato.nome,
-		  quantidade: 1, // Adiciona 1 unidade ao carrinho
-		  valorTotal: prato.valorReais,
-		  valorReais: prato.valorReais,
-		});
-		setCarrinho((prevCarrinho) => [...prevCarrinho, response.data]);
-	  }
-	  toast.success('Prato adicionado ao carrinho com sucesso!');
-	  window.location.reload()
-	} catch (error) {
-	  console.error('Erro ao adicionar ao carrinho:', error);
-	  toast.error('Erro ao adicionar ao carrinho.');
-	}
+    try {
+      // Verifica se o item já existe no carrinho
+      const itemExistente = carrinho.find(item => item.id === prato.id);
+      if (itemExistente) {
+        setCarrinho(prevCarrinho =>
+          prevCarrinho.map(item =>
+            item.id === prato.id
+              ? { ...item, quantidade: item.quantidade + 1, valorTotal: item.valorTotal + prato.valorReais }
+              : item
+          )
+        );
+      } else {
+        const response = await axios.post('http://localhost:3000/carrinho', {
+          id: prato.id,
+          nome: prato.nome,
+          quantidade: 1, // Adiciona 1 unidade ao carrinho
+          valorTotal: prato.valorReais,
+          valorReais: prato.valorReais,
+        });
+        setCarrinho((prevCarrinho) => [...prevCarrinho, response.data]);
+      }
+      toast.success('Prato adicionado ao carrinho com sucesso!');
+      window.location.reload()
+    } catch (error) {
+      console.error('Erro ao adicionar ao carrinho:', error);
+      toast.error('Erro ao adicionar ao carrinho.');
+    }
   };
-  
 
   const recomendados = pratos.slice(0, 3);
 
@@ -108,7 +106,7 @@ const HomePage: FC = () => {
       </Grid>
 
       <TitlePageDown>Recomendação da cozinha</TitlePageDown>
-      
+
       <Grid container spacing={2}>
         {recomendados.map((prato) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={prato.id}>
@@ -137,6 +135,21 @@ const HomePage: FC = () => {
           </Grid>
         ))}
       </Grid>
+      <Stack direction="column" spacing={2} style={{ textAlign: 'center', marginTop: '40px', alignItems: 'center' }}>
+        <TitlePage variant="h6" component="div">
+          Nossa Casa
+        </TitlePage>
+        <img
+          src="https://wallpapers.com/images/hd/restaurant-steak-dinner-over-fireplace-9deedgcb2up9t4dj.jpg"
+          alt="Restaurante"
+          style={{ maxWidth: '50%', height: 'auto' }}
+        />
+        <Typography variant="body1" component="div" style={{ backgroundColor: '#424242', color: '#fff', padding: '10px', display: 'inline-block' }}>
+          Rua Rio Grande, 678<br />
+          Vila A - Foz do Iguaçu
+        </Typography>
+      </Stack>
+
     </PageLayout>
   );
 };

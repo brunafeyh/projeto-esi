@@ -30,4 +30,4 @@ export const getExpirationTime = (token: string | null): number => {
 	return decodedToken.exp * 1000
 }
 
-export const roles: AuthorizationRole[] = ['ROLE_ADMINISTRATOR', 'ROLE_ATTENDANT']; 
+export const roles: AuthorizationRole[] = ['ROLE_ADMINISTRATOR', 'ROLE_ATTENDANT', 'ROLE_CUSTOMER']; 
