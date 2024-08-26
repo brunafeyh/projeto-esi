@@ -14,6 +14,9 @@ export const ButtonLoginForm = styled(Button)<ButtonProps>(({ theme }) => ({
 	fontSize: theme.spacing(1.5),
 	fontWeight: FONT_WEIGHTS.medium,
 	backgroundColor: '#EF4B0A',
+	'&:hover': {
+			backgroundColor: '#FFB79A',
+	},
 }))
 export const IconButtonLoginForm = styled(IconButton)<IconButtonProps>(({ theme }) => ({
 	width: theme.spacing(3),

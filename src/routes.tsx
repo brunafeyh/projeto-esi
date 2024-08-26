@@ -6,6 +6,8 @@ import Settings from './pages/settings'
 import PedidosCliente from './pages/pedidos/cliente'
 import PedidosAdmin from './pages/pedidos/admin'
 import Cardapio from './pages/cardapio'
+import Estatisticas from './pages/estatisticas'
+import Estoque from './pages/estoque'
 
 export const router = createBrowserRouter([
 	{
@@ -30,6 +32,14 @@ export const router = createBrowserRouter([
 			{
 				path: 'meus-pedidos',
 				element: <PedidosCliente />,
+			},
+			{
+				path: 'estatisticas',
+				element: <Estatisticas />,
+			},
+			{
+				path: 'estoque',
+				element: <Estoque />,
 			},
 			{
 				path: 'pedidos',

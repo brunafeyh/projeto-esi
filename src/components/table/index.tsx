@@ -23,7 +23,7 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ columns, data, renderData }) => {
 
 	return (
-		<Paper elevation={0}>
+		<Paper elevation={1}>
 			<MuiTable>
 				<TableHead>
 					<TableRowHead>
