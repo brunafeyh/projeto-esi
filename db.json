@@ -385,7 +385,21 @@
       "valorReais": 45.98,
       "valorPontos": 460,
       "data": "2024-08-17",
-      "id": "d4d4"
+      "id": "d4d4",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     },
     {
       "numeroPedido": "20240817-002",
@@ -393,7 +407,21 @@
       "valorReais": 74.98,
       "valorPontos": 750,
       "data": "2024-08-17",
-      "id": "b02d"
+      "id": "b02d",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     },
     {
       "numeroPedido": "20240816-001",
@@ -401,7 +429,21 @@
       "valorReais": 69.98,
       "valorPontos": 700,
       "data": "2024-08-16",
-      "id": "297a"
+      "id": "297a",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     },
     {
       "numeroPedido": "20240815-003",
@@ -409,7 +451,21 @@
       "valorReais": 57.98,
       "valorPontos": 580,
       "data": "2024-08-15",
-      "id": "1286"
+      "id": "1286",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     },
     {
       "numeroPedido": "20240817-003",
@@ -417,7 +473,21 @@
       "valorReais": 64.98,
       "valorPontos": 650,
       "data": "2024-08-17",
-      "id": "cd0a"
+      "id": "cd0a",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     },
     {
       "id": "097c",
@@ -425,7 +495,21 @@
       "descricao": "",
       "valorReais": 0,
       "valorPontos": 0,
-      "data": ""
+      "data": "",
+      "pratos": [
+        {
+          "id": "9",
+          "nome": "Lasanha",
+          "quantidade": 1,
+          "valor": 44.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
     }
   ],
   "carrinho": [

@@ -266,10 +266,10 @@ const AdminOrder: React.FC = () => {
                         <>
                             <ModalTitle>Pedido: {selectedOrder.numeroPedido}</ModalTitle>
                             <ModalText>Data: {selectedOrder.data}</ModalText>
-                            <ModalText>Descrição:{selectedOrder.descricao}</ModalText>
-                            <ModalText>Valor (R$):{selectedOrder.valorReais}</ModalText>
+                            <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
+                            <ModalText>Valor (R$): {selectedOrder.valorReais}</ModalText>
                             <ModalText>Valor (Pontos): {selectedOrder.valorPontos}</ModalText>
-                            <ModalText>Pratos:</ModalText>
+                            <ModalText>Pratos: </ModalText>
                             <Box>
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
                                     selectedOrder.pratos.map((prato, index) => (
