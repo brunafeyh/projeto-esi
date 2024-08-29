@@ -22,7 +22,7 @@ interface HistoricoPedido {
     valorReais: number;
     valorPontos: number;
     data: string;
-    pratos?: Prato[]; // Adicionando pratos como opcional
+    pratos?: Prato[]; 
 }
 
 const CustomerOrder: React.FC = () => {
@@ -174,4 +174,4 @@ const CustomerOrder: React.FC = () => {
     );
 };
 
-export default CustomerOrder;
+export default CustomerOrder

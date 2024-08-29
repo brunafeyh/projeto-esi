@@ -2,11 +2,11 @@ import { FC, useEffect, useState } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, Grid, IconButton, Chip, Stack, TextField, MenuItem, Select, FormControl, InputLabel, InputAdornment } from '@mui/material';
 import { PageLayout } from '../../layouts/page-layout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiBaseUrl } from '../../shared/api';
 import { TitleCard, TitlePage } from '../home/styles';
+import { IconSearch } from './styles';
 
 export interface Prato {
 	id: number;
@@ -84,18 +84,43 @@ const Cardapio: FC = () => {
 			<Stack direction="row" spacing={2} style={{ marginBottom: '20px' }}>
 				<TextField
 					label="Pesquisar"
-					variant="outlined"
+					variant="standard"
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
-					size="small" // Smaller input size
+					size="small"
 					InputProps={{
 						startAdornment: (
 							<InputAdornment position="start">
-								<SearchIcon />
+								<IconSearch />
 							</InputAdornment>
 						),
+						disableUnderline: false, // Mostra a linha inferior
 					}}
-					sx={{ maxWidth: '300px' }} // Adjust the width of the input
+					sx={{
+						backgroundColor: '#f5f5f5', // Cor de fundo
+						'& .MuiInputBase-root': {
+							borderBottom: '1px solid #b0bec5', // Borda inferior de cor suave
+							paddingLeft: '8px',
+							paddingRight: '8px',
+							display: 'flex',
+							alignItems: 'center', // Centraliza o conteúdo verticalmente
+						},
+						'& .MuiInputLabel-root': {
+							color: '#9e9e9e', // Cor do label quando não em foco
+							transform: 'translate(0, 6px) scale(1)', // Move o label mais para baixo
+						},
+						'& .MuiInputLabel-shrink': {
+							color: '#424242', // Cor do label quando em foco
+							transform: 'translate(4px, 3px) scale(0.75)', // Ajusta o label encolhido mais para baixo
+						},
+						'& .MuiInputBase-input': {
+							paddingTop: '6px', // Ajusta o preenchimento superior para deixar o campo mais fino
+							paddingBottom: '6px', // Ajusta o preenchimento inferior
+							fontSize: '14px', // Tamanho da fonte menor para um campo mais fino
+						},
+						width: '100%', // Largura completa do campo
+						maxWidth: '600px', // Largura máxima
+					}}
 				/>
 				<FormControl variant="outlined" size="small" sx={{ minWidth: '200px' }}>
 					<InputLabel>Categoria</InputLabel>

@@ -32,8 +32,8 @@ const AdminOrder: React.FC = () => {
     const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
     const [filterStartDate, setFilterStartDate] = useState<string>('');
     const [filterEndDate, setFilterEndDate] = useState<string>('');
-    const addOrderModalRef = useModal(); // Referência para o modal de adicionar pedido
-    const detailsModalRef = useModal(); // Referência para o modal de detalhes do pedido
+    const addOrderModalRef = useModal();
+    const detailsModalRef = useModal(); 
     const [newOrder, setNewOrder] = useState<Partial<HistoricoPedido>>({
         numeroPedido: '',
         descricao: '',
