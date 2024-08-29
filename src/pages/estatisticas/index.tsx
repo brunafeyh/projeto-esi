@@ -1,13 +1,17 @@
-import { FC } from 'react';
+import { Typography } from '@mui/material';
 import { PageLayout } from '../../layouts/page-layout';
-import { TitlePage } from '../home/styles';
+import { FC } from 'react';
+import SalesBarChart from './chart';
 
 const Estatisticas: FC = () => {
-	return (
-		<PageLayout title="Estatísticas">
-			<TitlePage>Estatísticas</TitlePage>
-		</PageLayout>
-	);
+    return (
+        <PageLayout title='Estatísticas'>
+            <Typography variant="h4" gutterBottom>
+                Estatísticas
+            </Typography>
+            <SalesBarChart/>
+        </PageLayout>
+    );
 };
 
 export default Estatisticas;

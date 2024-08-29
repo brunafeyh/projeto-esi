@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { apiBaseUrl } from '../../shared/api';
 import { TitleCard, TitlePage } from '../home/styles';
 
-interface Prato {
+export interface Prato {
 	id: number;
 	nome: string;
 	descricao: string;

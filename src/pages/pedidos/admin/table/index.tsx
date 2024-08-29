@@ -1,14 +1,21 @@
-import { useState, useEffect } from 'react'
-import { Box, Button } from '@mui/material'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import { apiBaseUrl } from '../../../../shared/api'
-import Table, { Column } from '../../../../components/table'
-import { TableRowBody } from '../../../../components/table/styles'
-import { TableCell } from '../../../../components/table-cell-business-proposal'
-import { Modal, useModal } from '../../../../components/modal'
-import { ContainedButton, ModalTitle, Stack } from '../styles'
-import { TextField } from '../../../../components/forms/login/styles'
+import { useState, useEffect } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { apiBaseUrl } from '../../../../shared/api';
+import Table, { Column } from '../../../../components/table';
+import { TableRowBody } from '../../../../components/table/styles';
+import { TableCell } from '../../../../components/table-cell-business-proposal';
+import { Modal, useModal } from '../../../../components/modal';
+import { ContainedButton, ModalText, ModalTitle, Stack } from '../styles';
+import { TextField } from '../../../../components/forms/login/styles';
+
+interface Prato {
+    id: string;
+    nome: string;
+    quantidade: number;
+    valor: number;
+}
 
 interface HistoricoPedido {
     id: string;
@@ -17,6 +24,7 @@ interface HistoricoPedido {
     valorReais: number;
     valorPontos: number;
     data: string;
+    pratos: Prato[];
 }
 
 const AdminOrder: React.FC = () => {
@@ -24,14 +32,17 @@ const AdminOrder: React.FC = () => {
     const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
     const [filterStartDate, setFilterStartDate] = useState<string>('');
     const [filterEndDate, setFilterEndDate] = useState<string>('');
-    const modalRef = useModal(); // Cria a referência para o Modal
+    const addOrderModalRef = useModal(); // Referência para o modal de adicionar pedido
+    const detailsModalRef = useModal(); // Referência para o modal de detalhes do pedido
     const [newOrder, setNewOrder] = useState<Partial<HistoricoPedido>>({
         numeroPedido: '',
         descricao: '',
         valorReais: 0,
         valorPontos: 0,
         data: '',
+        pratos: [],
     });
+    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
 
     useEffect(() => {
         const fetchHistoricoPedidos = async () => {
@@ -71,12 +82,36 @@ const AdminOrder: React.FC = () => {
         setFilteredPedidos(filtered);
     };
 
-    const handleOpen = () => {
-        modalRef.current?.openModal();
+    const handleRowClick = async (id: string) => {
+        try {
+            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
+            setSelectedOrder(response.data);
+            detailsModalRef.current?.openModal();
+        } catch (error) {
+            console.error('Erro ao buscar detalhes do pedido:', error);
+            toast.error('Erro ao buscar detalhes do pedido.');
+        }
     };
 
-    const handleClose = () => {
-        modalRef.current?.closeModal();
+    const handleOpenAddOrderModal = () => {
+        addOrderModalRef.current?.openModal();
+    };
+
+    const handleCloseAddOrderModal = () => {
+        setNewOrder({
+            numeroPedido: '',
+            descricao: '',
+            valorReais: 0,
+            valorPontos: 0,
+            data: '',
+            pratos: [],
+        });
+        addOrderModalRef.current?.closeModal();
+    };
+
+    const handleCloseDetailsModal = () => {
+        setSelectedOrder(null);
+        detailsModalRef.current?.closeModal();
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +129,7 @@ const AdminOrder: React.FC = () => {
             setHistoricoPedidos(updatedPedidos);
             setFilteredPedidos(updatedPedidos);
             toast.success('Pedido adicionado com sucesso!');
-            handleClose();
+            handleCloseAddOrderModal();
         } catch (error) {
             console.error('Erro ao adicionar pedido:', error);
             toast.error('Erro ao adicionar pedido.');
@@ -139,7 +174,7 @@ const AdminOrder: React.FC = () => {
                         Buscar
                     </ContainedButton>
                 </Box>
-                <ContainedButton variant="contained" onClick={handleOpen}>
+                <ContainedButton variant="contained" onClick={handleOpenAddOrderModal}>
                     Adicionar Pedido
                 </ContainedButton>
             </Box>
@@ -148,7 +183,7 @@ const AdminOrder: React.FC = () => {
                 columns={columns}
                 data={filteredPedidos}
                 renderData={(row) => (
-                    <TableRowBody key={row.id}>
+                    <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} style={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
                         <TableCell>{row.data}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
@@ -157,8 +192,7 @@ const AdminOrder: React.FC = () => {
                     </TableRowBody>
                 )}
             />
-
-            <Modal ref={modalRef} title="Adicionar Novo Pedido">
+            <Modal ref={addOrderModalRef} title="Adicionar Novo Pedido">
                 <Stack>
                     <ModalTitle>Adicionar Pedido</ModalTitle>
                     <TextField
@@ -215,15 +249,47 @@ const AdminOrder: React.FC = () => {
                             shrink: true,
                         }}
                     />
-                
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                    <Button onClick={handleClose} variant="outlined">
-                        Cancelar
-                    </Button>
-                    <ContainedButton onClick={handleAddOrder} variant="contained" sx={{ ml: 2 }}>
-                        Adicionar
-                    </ContainedButton>
-                </Box>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                        <Button onClick={handleCloseAddOrderModal} variant="outlined">
+                            Cancelar
+                        </Button>
+                        <ContainedButton onClick={handleAddOrder} variant="contained" sx={{ ml: 2 }}>
+                            Adicionar
+                        </ContainedButton>
+                    </Box>
+                </Stack>
+            </Modal>
+            <Modal ref={detailsModalRef} title="Detalhes do Pedido">
+                <Stack spacing={2}>
+                    {selectedOrder ? (
+                        <>
+                            <ModalTitle>Pedido: {selectedOrder.numeroPedido}</ModalTitle>
+                            <ModalText>Data: {selectedOrder.data}</ModalText>
+                            <ModalText>Descrição:{selectedOrder.descricao}</ModalText>
+                            <ModalText>Valor (R$):{selectedOrder.valorReais}</ModalText>
+                            <ModalText>Valor (Pontos): {selectedOrder.valorPontos}</ModalText>
+                            <ModalText>Pratos:</ModalText>
+                            <Box>
+                                {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
+                                    selectedOrder.pratos.map((prato, index) => (
+                                        <Typography key={index} variant="body2">
+                                            {prato.quantidade}x {prato.nome} - R$ {prato.valor.toFixed(2)}
+                                        </Typography>
+                                    ))
+                                ) : (
+                                    <ModalText>Nenhum prato registrado para este pedido.</ModalText>
+                                )}
+                            </Box>
+                        </>
+                    ) : (
+                        <Typography variant="body1">Carregando detalhes do pedido...</Typography>
+                    )}
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                        <Button onClick={handleCloseDetailsModal} variant="outlined">
+                            Fechar
+                        </Button>
+                    </Box>
                 </Stack>
             </Modal>
         </Box>

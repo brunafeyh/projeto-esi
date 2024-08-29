@@ -20,3 +20,9 @@ export const ModalTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
 	fontSize: theme.spacing(2),
 	fontWeight: FONT_WEIGHTS.medium,
 }))
+
+export const ModalText = styled(Typography)<TypographyProps>(({ theme }) => ({
+	paddingLeft: theme.spacing(0),
+	fontSize: theme.spacing(1.75),
+	fontWeight: FONT_WEIGHTS.regular,
+}))
