@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { AvatarProfile } from '../avatar-profile';
 import { Popover, usePopover } from '../popover';
 import Profile from '../profile';
-import { BoxMenuApresentation, MenuContainerApresentation } from './styles';
+import { BoxMenuApresentation, Button, MenuContainerApresentation } from './styles';
 import Logo from '../logo';
 import { isCollapsedAtom } from '../../contexts/is-collapsed-atom';
 import { openPopover } from '../../utils/popover';
@@ -15,10 +15,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Pontuation from '../pontuation';
+import { useAuth } from '../../hooks/use-auth';
+import { useNavigate } from 'react-router-dom';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate(); 
 
   const popoverRef = usePopover();
 
@@ -44,7 +48,7 @@ const Menu: React.FC = () => {
   const handleUpdateQuantity = async (id: number, quantity: number) => {
     try {
       const updatedItem = cartItems.find((item) => item.id === id);
-	  if (updatedItem) {
+      if (updatedItem) {
         updatedItem.quantidade = quantity;
         updatedItem.valorTotal = updatedItem.valorReais * quantity;
 
@@ -79,6 +83,10 @@ const Menu: React.FC = () => {
     }
   };
 
+  const handleLoginRedirect = () => {
+    navigate('/login'); // Redireciona para a página de login
+  };
+
   return (
     <>
       <BoxMenuApresentation component="header" zIndex={1000}>
@@ -96,15 +104,21 @@ const Menu: React.FC = () => {
           </IconButton>
           <Stack direction="row" alignItems="center" flexGrow={1}>
             <Logo />
-            <Pontuation/>
+            <Pontuation />
             <CartButton
               cartItems={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
               onRemoveItem={handleRemoveItem}
             />
-            <IconButton onClick={openPopover(popoverRef)}>
-              <AvatarProfile />
-            </IconButton>
+            {isAuthenticated() ? (
+              <IconButton onClick={openPopover(popoverRef)}>
+                <AvatarProfile />
+              </IconButton>
+            ) : (
+              <Button onClick={handleLoginRedirect}>
+                Fazer Login
+              </Button>
+            )}
           </Stack>
         </MenuContainerApresentation>
       </BoxMenuApresentation>
@@ -118,4 +132,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu;
+export default Menu

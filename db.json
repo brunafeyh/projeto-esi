@@ -481,5 +481,13 @@
       "id": "cd0a"
     }
   ],
-  "carrinho": []
+  "carrinho": [
+    {
+      "id": "4",
+      "nome": "Bife Acebolado",
+      "quantidade": 1,
+      "valorTotal": 29.99,
+      "valorReais": 29.99
+    }
+  ]
 }
