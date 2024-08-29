@@ -73,7 +73,7 @@ export const theme = createTheme({
 					fontWeight: FONT_WEIGHTS.medium,
 					padding: '8px 16px',
 					color: `${UNIOESTE_COLORS.primary.p10}`,
-					backgroundColor: `${UNIOESTE_COLORS.primary.p60}`,
+					backgroundColor: `${UNIOESTE_COLORS.error.p50}`,
 					transition: 'all .2s',
 					borderRadius: 0,
 					border: 'none',
@@ -84,6 +84,9 @@ export const theme = createTheme({
 
 						height: '1.5rem',
 					},
+					'&:hover': {
+						backgroundColor: '#FFB79A',
+				},
 				},
 			},
 			variants: [
@@ -94,8 +97,9 @@ export const theme = createTheme({
 						opacity: '.5',
 						color: `${UNIOESTE_COLORS.primary.p60} !important`,
 						'& :is(p, span, strong, svg)': {
-							fill: UNIOESTE_COLORS.primary.p60,
+							fill: UNIOESTE_COLORS.error.p50,
 						},
+						
 					},
 				},
 				{
@@ -117,7 +121,7 @@ export const theme = createTheme({
 						color: `${UNIOESTE_COLORS.primary.p60}`,
 						backgroundColor: 'transparent',
 						'&:hover': {
-							backgroundColor: `${UNIOESTE_COLORS.primary.p10}`,
+							backgroundColor: `${UNIOESTE_COLORS.error.p10}`,
 						},
 					},
 				},

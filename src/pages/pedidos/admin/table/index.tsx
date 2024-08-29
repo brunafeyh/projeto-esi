@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { apiBaseUrl } from '../../../../shared/api';
-import Table, { Column } from '../../../../components/table';
-import { Button } from '../../../../components/order/customer/style';
-import { TableRowBody } from '../../../../components/table/styles';
-import { TableCell } from '../../../../components/table-cell-business-proposal';
+import { useState, useEffect } from 'react'
+import { Box, Button } from '@mui/material'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { apiBaseUrl } from '../../../../shared/api'
+import Table, { Column } from '../../../../components/table'
+import { TableRowBody } from '../../../../components/table/styles'
+import { TableCell } from '../../../../components/table-cell-business-proposal'
+import { Modal, useModal } from '../../../../components/modal'
+import { ContainedButton, ModalTitle, Stack } from '../styles'
+import { TextField } from '../../../../components/forms/login/styles'
 
 interface HistoricoPedido {
     id: string;
@@ -22,7 +24,7 @@ const AdminOrder: React.FC = () => {
     const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
     const [filterStartDate, setFilterStartDate] = useState<string>('');
     const [filterEndDate, setFilterEndDate] = useState<string>('');
-    const [open, setOpen] = useState(false);
+    const modalRef = useModal(); // Cria a referência para o Modal
     const [newOrder, setNewOrder] = useState<Partial<HistoricoPedido>>({
         numeroPedido: '',
         descricao: '',
@@ -35,7 +37,7 @@ const AdminOrder: React.FC = () => {
         const fetchHistoricoPedidos = async () => {
             try {
                 const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
-                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) => 
+                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
                     new Date(a.data).getTime() - new Date(b.data).getTime()
                 );
                 setHistoricoPedidos(sortedData);
@@ -52,16 +54,16 @@ const AdminOrder: React.FC = () => {
         let filtered = historicoPedidos;
 
         if (filterStartDate && filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) => 
+            filtered = historicoPedidos.filter((pedido) =>
                 new Date(pedido.data) >= new Date(filterStartDate) &&
                 new Date(pedido.data) <= new Date(filterEndDate)
             );
         } else if (filterStartDate) {
-            filtered = historicoPedidos.filter((pedido) => 
+            filtered = historicoPedidos.filter((pedido) =>
                 new Date(pedido.data) >= new Date(filterStartDate)
             );
         } else if (filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) => 
+            filtered = historicoPedidos.filter((pedido) =>
                 new Date(pedido.data) <= new Date(filterEndDate)
             );
         }
@@ -70,11 +72,11 @@ const AdminOrder: React.FC = () => {
     };
 
     const handleOpen = () => {
-        setOpen(true);
+        modalRef.current?.openModal();
     };
 
     const handleClose = () => {
-        setOpen(false);
+        modalRef.current?.closeModal();
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,13 +135,13 @@ const AdminOrder: React.FC = () => {
                         }}
                         sx={{ mr: 2, width: '200px' }}
                     />
-                    <Button variant="contained" onClick={handleSearch}>
+                    <ContainedButton variant="contained" onClick={handleSearch}>
                         Buscar
-                    </Button>
+                    </ContainedButton>
                 </Box>
-                <Button variant="contained" onClick={handleOpen}>
+                <ContainedButton variant="contained" onClick={handleOpen}>
                     Adicionar Pedido
-                </Button>
+                </ContainedButton>
             </Box>
 
             <Table
@@ -156,16 +158,16 @@ const AdminOrder: React.FC = () => {
                 )}
             />
 
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Adicionar Novo Pedido</DialogTitle>
-                <DialogContent>
+            <Modal ref={modalRef} title="Adicionar Novo Pedido">
+                <Stack>
+                    <ModalTitle>Adicionar Pedido</ModalTitle>
                     <TextField
                         autoFocus
                         margin="dense"
                         label="Nº Pedido"
                         type="text"
                         fullWidth
-                        variant="outlined"
+                        variant="filled"
                         name="numeroPedido"
                         value={newOrder.numeroPedido}
                         onChange={handleInputChange}
@@ -175,7 +177,7 @@ const AdminOrder: React.FC = () => {
                         label="Descrição"
                         type="text"
                         fullWidth
-                        variant="outlined"
+                        variant="filled"
                         name="descricao"
                         value={newOrder.descricao}
                         onChange={handleInputChange}
@@ -185,7 +187,7 @@ const AdminOrder: React.FC = () => {
                         label="Valor (R$)"
                         type="number"
                         fullWidth
-                        variant="outlined"
+                        variant="filled"
                         name="valorReais"
                         value={newOrder.valorReais}
                         onChange={handleInputChange}
@@ -195,7 +197,7 @@ const AdminOrder: React.FC = () => {
                         label="Valor (Pontos)"
                         type="number"
                         fullWidth
-                        variant="outlined"
+                        variant="filled"
                         name="valorPontos"
                         value={newOrder.valorPontos}
                         onChange={handleInputChange}
@@ -205,7 +207,7 @@ const AdminOrder: React.FC = () => {
                         label="Data"
                         type="date"
                         fullWidth
-                        variant="outlined"
+                        variant="filled"
                         name="data"
                         value={newOrder.data}
                         onChange={handleInputChange}
@@ -213,16 +215,17 @@ const AdminOrder: React.FC = () => {
                             shrink: true,
                         }}
                     />
-                </DialogContent>
-                <DialogActions>
+                
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                     <Button onClick={handleClose} variant="outlined">
                         Cancelar
                     </Button>
-                    <Button onClick={handleAddOrder} variant="contained">
+                    <ContainedButton onClick={handleAddOrder} variant="contained" sx={{ ml: 2 }}>
                         Adicionar
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                    </ContainedButton>
+                </Box>
+                </Stack>
+            </Modal>
         </Box>
     );
 };

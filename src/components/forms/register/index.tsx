@@ -9,7 +9,6 @@ import { useAuth } from '../../../hooks/use-auth';
 import { ButtonLoginForm } from '../login/styles';
 import { credentialsSchema, RegisterCredentials } from '../../../types/auth';
 
-
 const RegisterForm: React.FC = () => {
   const { register } = useAuth(); 
   const {
@@ -31,11 +30,10 @@ const RegisterForm: React.FC = () => {
 
   const onSubmit = async (data: RegisterCredentials) => {
     try {
-      // Substitua o login por uma chamada para a função de registro
       const response = await register(data);
       if (response) {
         setRegistrationError(null);
-        navigate('/logins[');
+        navigate('/login');
         window.location.reload();
       } else {
         setRegistrationError('Erro ao registrar usuário');

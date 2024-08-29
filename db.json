@@ -479,6 +479,14 @@
       "valorPontos": 650,
       "data": "2024-08-17",
       "id": "cd0a"
+    },
+    {
+      "id": "097c",
+      "numeroPedido": "",
+      "descricao": "",
+      "valorReais": 0,
+      "valorPontos": 0,
+      "data": ""
     }
   ],
   "carrinho": [

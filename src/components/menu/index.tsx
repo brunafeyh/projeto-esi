@@ -22,7 +22,7 @@ const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const popoverRef = usePopover();
 
@@ -104,7 +104,9 @@ const Menu: React.FC = () => {
           </IconButton>
           <Stack direction="row" alignItems="center" flexGrow={1}>
             <Logo />
-            <Pontuation />
+            {isAuthenticated() && (
+              <Pontuation />)
+            }
             <CartButton
               cartItems={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
