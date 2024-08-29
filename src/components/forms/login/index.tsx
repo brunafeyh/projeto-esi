@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { InputAdornment, Stack, Tooltip, Typography } from '@mui/material'
+import { InputAdornment, Stack, Tooltip, Typography, Link as MuiLink } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { ButtonLoginForm, IconButtonLoginForm, LoginFormContainer, TextField } from './styles'
+import { ButtonLoginForm, IconButtonLoginForm, LoginFormContainer, TextField, TitleRegister } from './styles'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAuth } from '../../../hooks/use-auth'
 import { AuthCredentials, credentialsSchema } from '../../../schemas/form-types'
@@ -81,10 +81,16 @@ const LoginForm: React.FC = () => {
 					}}
 				/>
 			</LoginFormContainer>
-			<Stack>
+			<Stack spacing={2}>
 				<ButtonLoginForm type="submit" variant="contained">
 					Entrar
 				</ButtonLoginForm>
+				<TitleRegister>
+					Não tem conta?{' '}
+					<MuiLink href="/register" sx={{ fontSize: '0.75rem' }} color="primary">
+						Faça o seu cadastro
+					</MuiLink>
+				</TitleRegister>
 			</Stack>
 		</form>
 	)

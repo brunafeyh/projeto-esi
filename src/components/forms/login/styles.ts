@@ -1,4 +1,4 @@
-import { Button, ButtonProps, IconButton, IconButtonProps, Stack, StackProps, TextField as TextFieldMui, styled } from '@mui/material'
+import { Button, ButtonProps, IconButton, IconButtonProps, Stack, StackProps, TextField as TextFieldMui, Typography, TypographyProps, styled } from '@mui/material'
 import { FONT_WEIGHTS } from '../../../themes/fonts'
 
 export const LoginFormContainer = styled(Stack)<StackProps>(({ theme }) => ({
@@ -46,4 +46,8 @@ export const TextField = styled(TextFieldMui)(({ theme }) => ({
 	'& .MuiFormLabel-root': {
 		color: theme.palette.unioeste.neutral.p70,
 	},
+}))
+
+export const TitleRegister = styled(Typography)<TypographyProps>(({ theme }) => ({
+	fontSize: theme.spacing(1.5)
 }))

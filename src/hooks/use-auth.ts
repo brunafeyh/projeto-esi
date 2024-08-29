@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { accessTokenAtom, refreshTokenAtom } from '../contexts/auth';
 import { getExpirationTime, getUserFromToken } from '../utils/auth';
 import { AuthCredentials } from '../schemas/form-types';
-import { AuthorizationRole } from '../types/auth';
+import { AuthorizationRole, RegisterCredentials } from '../types/auth';
 
 const API_BASE_URL = 'https://menu-master-production.up.railway.app';
 
@@ -27,7 +27,7 @@ export const useAuth = () => {
 
   const login = useCallback(async (credentials: AuthCredentials) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/authentication/login`, credentials)
+      const response = await axios.post(`${API_BASE_URL}/authentication/login`, credentials);
       const { token } = response.data;
       updateTokens(token, token);
       toast.success('Login successful!');
@@ -35,6 +35,28 @@ export const useAuth = () => {
     } catch (error) {
       toast.error('Error logging in. Please check your credentials.');
       console.error('Error logging in:', error);
+      return false;
+    }
+  }, []);
+
+  const register = useCallback(async (credentials: RegisterCredentials) => {
+    try {
+      const { email, password, cpf, name } = credentials;
+      const role = 'ROLE_CUSTOMER'; // Define a role default as ROLE_CUSTOMER
+
+      await axios.post(`${API_BASE_URL}/authentication/create-user`, {
+        email,
+        password,
+        cpf,
+        name,
+        role,
+      });
+
+      toast.success('Registration successful!');
+      return true;
+    } catch (error) {
+      toast.error('Error registering user. Please check your details.');
+      console.error('Error registering user:', error);
       return false;
     }
   }, []);
@@ -100,6 +122,7 @@ export const useAuth = () => {
     refreshToken,
     user,
     login,
+    register, // Include register in the return object
     logout,
     isAuthenticated,
     isRefreshTokenExpired,

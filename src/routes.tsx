@@ -8,6 +8,7 @@ import PedidosAdmin from './pages/pedidos/admin'
 import Cardapio from './pages/cardapio'
 import Estatisticas from './pages/estatisticas'
 import Estoque from './pages/estoque'
+import RegisterPage from './pages/register'
 
 export const router = createBrowserRouter([
 	{
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
 				path: 'meus-pedidos',
 				element: <PedidosCliente />,
 			},
+			{
+				path: 'register',
+				element: <RegisterPage />,
+			},			
 			{
 				path: 'estatisticas',
 				element: <Estatisticas />,
