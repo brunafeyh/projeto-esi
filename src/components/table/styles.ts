@@ -18,7 +18,7 @@ export const TableRowHead = styled(TableRow)<TableRowProps>(({ theme }) => ({
 }))
 
 export const TableHead = styled(MuiTableHead)<TableHeadProps>(({ theme }) => ({
-	backgroundColor: '#faba8e',
+	backgroundColor: theme.palette.unioeste.neutral.p20,
 	wordBreak: 'break-word',
 	whiteSpace: 'normal',
 	minWidth: theme.spacing(18.75),

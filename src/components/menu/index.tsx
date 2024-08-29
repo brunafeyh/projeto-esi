@@ -126,7 +126,7 @@ const Menu: React.FC = () => {
       </BoxMenuApresentation>
 
       <Popover ref={popoverRef}>
-        <Stack spacing={2}>
+        <Stack>
           <Profile />
         </Stack>
       </Popover>

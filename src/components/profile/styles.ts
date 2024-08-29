@@ -1,4 +1,4 @@
-import { Button, ButtonProps, IconButtonProps, Typography, TypographyProps, styled } from '@mui/material'
+import { Button, ButtonProps, IconButtonProps, StackProps, Typography, TypographyProps, styled, Stack as StackMui} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 
@@ -7,8 +7,6 @@ export const UserNameTitle = styled(Typography)<TypographyProps>(({ theme }) => 
 	fontSize: theme.spacing(1.75),
 	fontWeight: FONT_WEIGHTS.medium,
 	color: theme.palette.unioeste.neutral.p100,
-	marginTop: theme.spacing(2),
-	marginLeft: theme.spacing(2),
 	marginBottom: theme.spacing(1),
 }))
 
@@ -17,7 +15,6 @@ export const UserEmailTitle = styled(Typography)<TypographyProps>(({ theme }) =>
 	fontSize: theme.spacing(1.5),
 	fontWeight: FONT_WEIGHTS.regular,
 	color: theme.palette.unioeste.neutral.p70,
-	marginLeft: theme.spacing(2),
 	marginBottom: theme.spacing(1),
 }))
 
@@ -26,8 +23,7 @@ export const UserRoleTitle = styled(Typography)<TypographyProps>(({ theme }) => 
 	fontSize: theme.spacing(1.5),
 	fontWeight: FONT_WEIGHTS.medium,
 	color: theme.palette.unioeste.neutral.p80,
-	marginLeft: theme.spacing(2),
-	marginBottom: theme.spacing(1),
+	marginBottom: theme.spacing(2),
 }))
 
 export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -36,10 +32,8 @@ export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	fontSize: theme.spacing(1.5),
 	fontWeight: FONT_WEIGHTS.medium,
 	justifyContent: 'center',
-	color: theme.palette.unioeste.primary.p60,
+	color: theme.palette.unioeste.error.p50,
 	backgroundColor: theme.palette.unioeste.neutral.p10,
-	marginLeft: theme.spacing(2),
-	marginBottom: theme.spacing(2),
 	padding: theme.spacing(1),
 	boxShadow: 'none',
 	'& .MuiButton-startIcon': {
@@ -53,8 +47,8 @@ export const LogoutButton = styled(Button)<ButtonProps>(({ theme }) => ({
 		gap: theme.spacing(1),
 	},
 	'&:hover': {
-		backgroundColor: theme.palette.unioeste.primary.p10,
-		color: theme.palette.unioeste.primary.p60,
+		backgroundColor: theme.palette.unioeste.neutral.p10,
+		color: theme.palette.unioeste.error.p50,
 		boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
 	},
 }))
@@ -64,4 +58,8 @@ export const LogoutIconProfile = styled(LogoutIcon)<IconButtonProps>(() => ({
 		width: '16px',
 		height: '16px',
 	},
+}))
+
+export const Stack = styled(StackMui)<StackProps>(({ theme }) => ({
+	padding: theme.spacing(2)
 }))

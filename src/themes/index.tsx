@@ -99,7 +99,7 @@ export const theme = createTheme({
 						'& :is(p, span, strong, svg)': {
 							fill: UNIOESTE_COLORS.error.p50,
 						},
-						
+
 					},
 				},
 				{
@@ -118,7 +118,7 @@ export const theme = createTheme({
 				{
 					props: { variant: 'text' },
 					style: {
-						color: `${UNIOESTE_COLORS.primary.p60}`,
+						color: `${UNIOESTE_COLORS.error.p50}`,
 						backgroundColor: 'transparent',
 						'&:hover': {
 							backgroundColor: `${UNIOESTE_COLORS.error.p10}`,
