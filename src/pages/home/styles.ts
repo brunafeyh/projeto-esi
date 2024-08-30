@@ -1,4 +1,4 @@
-import { Typography, TypographyProps } from '@mui/material'
+import { Tabs as TabsMui, Typography, TypographyProps } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 
@@ -37,4 +37,12 @@ export const TitlePontos = styled(Typography)<TypographyProps>(({ theme }) => ({
 
 export const TitleCard = styled(Typography)<TypographyProps>(({ theme }) => ({
 	fontSize: theme.spacing(1.75),
+}))
+
+export const Tabs = styled(TabsMui)(() => ({
+	'& .MuiTabs-indicator': { backgroundColor: '#e53935' },
+	'& .MuiTab-root.Mui-selected': { color: '#e53935' },
+	'& .MuiTab-root': {
+		color: '#757575',
+	},
 }))

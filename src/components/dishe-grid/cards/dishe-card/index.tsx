@@ -4,12 +4,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TitleCard } from '../../../../pages/home/styles';
 import { Prato } from '../../../../types/pratos';
 
-interface PratoCardProps {
+interface DisheCardProps {
 	prato: Prato;
 	adicionarAoCarrinho: (prato: Prato) => void;
 }
 
-const PratoCard: FC<PratoCardProps> = ({ prato, adicionarAoCarrinho }) => {
+const DisheCard: FC<DisheCardProps> = ({ prato, adicionarAoCarrinho }) => {
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
@@ -37,4 +37,4 @@ const PratoCard: FC<PratoCardProps> = ({ prato, adicionarAoCarrinho }) => {
 	);
 };
 
-export default PratoCard;
+export default DisheCard;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
-import PratoCard from './cards/prato-card';
+import PratoCard from './cards/dishe-card';
 import { Prato } from '../../types/pratos';
 
 interface PratoGridProps {

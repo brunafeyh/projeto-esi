@@ -3,7 +3,7 @@ import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
 import { useFilteredPratos } from '../../hooks/use-filtered-pratos';
 import CardapioFilter from '../../components/cardapio-filter';
-import PratoGrid from '../../components/prato-grid';
+import PratoGrid from '../../components/dishe-grid';
 
 const Cardapio: FC = () => {
 	const {

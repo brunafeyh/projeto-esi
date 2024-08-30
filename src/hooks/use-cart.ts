@@ -3,15 +3,15 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CartItem, Prato } from '../types/pratos';
 
-export const useCarrinho = () => {
-  const [carrinho, setCarrinho] = useState<CartItem[]>([]);
+export const useCart = () => {
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-  const adicionarAoCarrinho = async (prato: Prato) => {
+  const addToCart= async (prato: Prato) => {
     try {
-      const itemExistente = carrinho.find((item) => item.id === prato.id);
+      const itemExistente = cart.find((item) => item.id === prato.id);
       if (itemExistente) {
-        setCarrinho((prevCarrinho) =>
-          prevCarrinho.map((item) =>
+        setCart((prevCart) =>
+          prevCart.map((item) =>
             item.id === prato.id
               ? { ...item, quantidade: item.quantidade + 1, valorTotal: item.valorTotal + prato.valorReais }
               : item
@@ -25,7 +25,7 @@ export const useCarrinho = () => {
           valorTotal: prato.valorReais,
           valorReais: prato.valorReais,
         });
-        setCarrinho((prevCarrinho) => [...prevCarrinho, response.data]);
+        setCart((prevCart) => [...prevCart, response.data]);
       }
       toast.success('Prato adicionado ao carrinho com sucesso!');
       window.location.reload();
@@ -36,7 +36,7 @@ export const useCarrinho = () => {
   };
 
   return {
-    carrinho,
-    adicionarAoCarrinho,
+    cart,
+    addToCart,
   };
 };

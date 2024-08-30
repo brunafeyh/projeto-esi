@@ -1,22 +1,22 @@
 import { Grid } from '@mui/material';
-import PratoCard from './prato-card';
+import PratoCard from './dishe-card';
 import { FC } from 'react';
 
 interface MaisVendidosProps {
-  pratos: any[];
+  dishes: any[];
   onAddToCart: (prato: any) => void;
 }
 
-const MaisVendidos: FC<MaisVendidosProps> = ({ pratos, onAddToCart }) => {
+const MoreSelled: FC<MaisVendidosProps> = ({ dishes, onAddToCart }) => {
   return (
     <Grid container spacing={2}>
-      {pratos.map((prato) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={prato.id}>
-          <PratoCard prato={prato} onAddToCart={onAddToCart} />
+      {dishes.map((dishe) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
+          <PratoCard dishe={dishe} onAddToCart={onAddToCart} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default MaisVendidos;
+export default MoreSelled;

@@ -3,14 +3,14 @@ import axios from 'axios';
 import { apiBaseUrl } from '../shared/api';
 import { Prato } from '../types/pratos';
 
-export const usePratos = () => {
-  const [pratos, setPratos] = useState<Prato[]>([]);
+export const useDishes = () => {
+  const [dishes, setDishes] = useState<Prato[]>([]);
 
   useEffect(() => {
     const fetchPratos = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/pratos`);
-        setPratos(response.data);
+        setDishes(response.data);
       } catch (error) {
         console.error('Erro ao buscar pratos:', error);
       }
@@ -19,5 +19,5 @@ export const usePratos = () => {
     fetchPratos();
   }, []);
 
-  return pratos;
+  return dishes;
 };
