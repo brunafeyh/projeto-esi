@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
-import PratoCard from './dishe-card';
 import { FC } from 'react';
+import DisheCard from '../dishe-grid/cards/dishe-card';
 
 interface MaisVendidosProps {
   dishes: any[];
@@ -12,7 +12,7 @@ const MoreSelled: FC<MaisVendidosProps> = ({ dishes, onAddToCart }) => {
     <Grid container spacing={2}>
       {dishes.map((dishe) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
-          <PratoCard dishe={dishe} onAddToCart={onAddToCart} />
+          <DisheCard dishe={dishe} addToCart={onAddToCart} />
         </Grid>
       ))}
     </Grid>

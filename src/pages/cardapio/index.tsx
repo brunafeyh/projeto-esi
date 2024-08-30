@@ -28,7 +28,7 @@ const Cardapio: FC = () => {
 				sortOrder={sortOrder} 
 				setSortOrder={setSortOrder} 
 			/>
-			<PratoGrid dishes={filteredDishes} addToCard={addToCart} />
+			<PratoGrid dishes={filteredDishes} addToCart={addToCart} />
 		</PageLayout>
 	);
 };

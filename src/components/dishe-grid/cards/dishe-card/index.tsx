@@ -5,33 +5,33 @@ import { TitleCard } from '../../../../pages/home/styles';
 import { Prato } from '../../../../types/dishes';
 
 interface DisheCardProps {
-	prato: Prato;
-	addToCard: (prato: Prato) => void;
+	dishe: Prato;
+	addToCart: (prato: Prato) => void;
 }
 
-const DisheCard: FC<DisheCardProps> = ({ prato, addToCard }) => {
+const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
 				sx={{ height: 140 }}
-				image={prato.img || '/images/logo-restaurante-clara.png'}
-				title={prato.nome}
+				image={dishe.img || '/images/logo-restaurante-clara.png'}
+				title={dishe.nome}
 			/>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
-					{prato.nome}
+					{dishe.nome}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
-					{prato.descricao}
+					{dishe.descricao}
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
-				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCard(prato)}>
+				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart(dishe)}>
 					<ShoppingCartIcon />
 				</IconButton>
-				<TitleCard>R$ {prato.valorReais.toFixed(2)}</TitleCard>
-				<TitleCard>{prato.valorPontos} pontos</TitleCard>
-				<Chip label={prato.categoria} />
+				<TitleCard>R$ {dishe.valorReais.toFixed(2)}</TitleCard>
+				<TitleCard>{dishe.valorPontos} pontos</TitleCard>
+				<Chip label={dishe.categoria} />
 			</CardActions>
 		</Card>
 	);

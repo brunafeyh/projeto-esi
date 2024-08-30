@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
-import DisheCard from '../more-selled/dishe-card';
 import { Prato } from '../../types/dishes';
+import DisheCard from '../dishe-grid/cards/dishe-card';
 
 interface RecomendadosProps {
   pratos: Prato[];
@@ -13,7 +13,7 @@ const RecommendedDishes: FC<RecomendadosProps> = ({ pratos, onAddToCart }) => {
     <Grid container spacing={2}>
       {pratos.map((prato) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={prato.id}>
-          <DisheCard dishe={prato} onAddToCart={onAddToCart} />
+          <DisheCard dishe={prato} addToCart={onAddToCart} />
         </Grid>
       ))}
     </Grid>

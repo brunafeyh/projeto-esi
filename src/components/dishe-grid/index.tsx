@@ -5,15 +5,15 @@ import DisheCard from './cards/dishe-card';
 
 interface DisheGridProps {
 	dishes: Prato[];
-	addToCard: (prato: Prato) => void;
+	addToCart: (prato: Prato) => void;
 }
 
-const DisheGrid: FC<DisheGridProps> = ({ dishes, addToCard }) => {
+const DisheGrid: FC<DisheGridProps> = ({ dishes, addToCart }) => {
 	return (
 		<Grid container spacing={2}>
 			{dishes.map((dishe) => (
 				<Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
-					<DisheCard prato={dishe} addToCard={addToCard} />
+					<DisheCard dishe={dishe} addToCart={addToCart} />
 				</Grid>
 			))}
 		</Grid>
