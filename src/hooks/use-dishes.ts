@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from '../shared/api';
-import { Prato } from '../types/pratos';
+import { Prato } from '../types/dishes';
 
 export const useDishes = () => {
   const [dishes, setDishes] = useState<Prato[]>([]);

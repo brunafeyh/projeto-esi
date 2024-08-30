@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from '../shared/api';
-import { HistoricoPedido } from '../types/pratos';
+import { HistoricoPedido } from '../types/dishes';
 
 
 export const useCustomerOrder = () => {

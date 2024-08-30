@@ -2,14 +2,14 @@ import { FC } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Chip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TitleCard } from '../../../../pages/home/styles';
-import { Prato } from '../../../../types/pratos';
+import { Prato } from '../../../../types/dishes';
 
 interface DisheCardProps {
 	prato: Prato;
-	adicionarAoCarrinho: (prato: Prato) => void;
+	addToCard: (prato: Prato) => void;
 }
 
-const DisheCard: FC<DisheCardProps> = ({ prato, adicionarAoCarrinho }) => {
+const DisheCard: FC<DisheCardProps> = ({ prato, addToCard }) => {
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
@@ -26,7 +26,7 @@ const DisheCard: FC<DisheCardProps> = ({ prato, adicionarAoCarrinho }) => {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
-				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => adicionarAoCarrinho(prato)}>
+				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCard(prato)}>
 					<ShoppingCartIcon />
 				</IconButton>
 				<TitleCard>R$ {prato.valorReais.toFixed(2)}</TitleCard>

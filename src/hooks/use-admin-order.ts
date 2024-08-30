@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiBaseUrl } from '../shared/api';
-import { HistoricoPedido } from '../types/pratos';
+import { HistoricoPedido } from '../types/dishes';
 
 export const useAdminOrder = () => {
     const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);

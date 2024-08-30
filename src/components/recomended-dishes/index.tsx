@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
 import DisheCard from '../more-selled/dishe-card';
-import { Prato } from '../../types/pratos';
+import { Prato } from '../../types/dishes';
 
 interface RecomendadosProps {
   pratos: Prato[];

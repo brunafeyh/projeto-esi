@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { CartItem, Prato } from '../types/pratos';
+import { CartItem, Prato } from '../types/dishes';
 
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);

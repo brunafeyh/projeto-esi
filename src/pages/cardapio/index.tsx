@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
-import { useFilteredPratos } from '../../hooks/use-filtered-pratos';
+import { useFilteredDishes } from '../../hooks/use-filtered-dishes';
 import CardapioFilter from '../../components/cardapio-filter';
 import PratoGrid from '../../components/dishe-grid';
 
@@ -13,9 +13,9 @@ const Cardapio: FC = () => {
 		setSearchTerm,
 		setSortOrder,
 		setSelectedCategory,
-		adicionarAoCarrinho,
-		filteredPratos
-	} = useFilteredPratos();
+		addToCart,
+		filteredDishes
+	} = useFilteredDishes();
 
 	return (
 		<PageLayout title="Cardápio">
@@ -28,7 +28,7 @@ const Cardapio: FC = () => {
 				sortOrder={sortOrder} 
 				setSortOrder={setSortOrder} 
 			/>
-			<PratoGrid pratos={filteredPratos} adicionarAoCarrinho={adicionarAoCarrinho} />
+			<PratoGrid dishes={filteredDishes} addToCard={addToCart} />
 		</PageLayout>
 	);
 };

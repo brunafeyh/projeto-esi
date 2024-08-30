@@ -1,23 +1,23 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
-import PratoCard from './cards/dishe-card';
-import { Prato } from '../../types/pratos';
+import { Prato } from '../../types/dishes';
+import DisheCard from './cards/dishe-card';
 
-interface PratoGridProps {
-	pratos: Prato[];
-	adicionarAoCarrinho: (prato: Prato) => void;
+interface DisheGridProps {
+	dishes: Prato[];
+	addToCard: (prato: Prato) => void;
 }
 
-const PratoGrid: FC<PratoGridProps> = ({ pratos, adicionarAoCarrinho }) => {
+const DisheGrid: FC<DisheGridProps> = ({ dishes, addToCard }) => {
 	return (
 		<Grid container spacing={2}>
-			{pratos.map((prato) => (
-				<Grid item xs={12} sm={6} md={4} lg={3} key={prato.id}>
-					<PratoCard prato={prato} adicionarAoCarrinho={adicionarAoCarrinho} />
+			{dishes.map((dishe) => (
+				<Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
+					<DisheCard prato={dishe} addToCard={addToCard} />
 				</Grid>
 			))}
 		</Grid>
 	);
 };
 
-export default PratoGrid;
+export default DisheGrid;

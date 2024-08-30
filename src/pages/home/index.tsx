@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Tab, Tabs } from '@mui/material';
+import { Tab } from '@mui/material';
 import { PageLayout } from '../../layouts/page-layout';
 import { useCart } from '../../hooks/use-cart';
 import TabPanel from '../../components/tab';
@@ -7,6 +7,7 @@ import MoreSelled from '../../components/more-selled';
 import AboutUs from '../../components/about-us';
 import RecommendedDishes from '../../components/recomended-dishes';
 import { useDishes } from '../../hooks/use-dishes';
+import { Tabs } from './styles';
 
 const HomePage: FC = () => {
   const dishes = useDishes();
