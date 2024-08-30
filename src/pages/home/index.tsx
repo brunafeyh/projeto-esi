@@ -82,8 +82,11 @@ const HomePage: React.FC = () => {
         onChange={handleChange}
         aria-label="Menu Tabs"
         sx={{
-          '& .MuiTabs-indicator': { backgroundColor: '#e53935' },
-          '& .Mui-selected': { color: '#e53935' }, 
+          '& .MuiTabs-indicator': { backgroundColor: '#e53935' }, 
+          '& .MuiTab-root.Mui-selected': { color: '#e53935' }, 
+          '& .MuiTab-root': {
+            color: '#757575', 
+          },
         }}
       >
         <Tab label="Recomendações da Casa" />
@@ -179,7 +182,7 @@ function TabPanel(props: { children?: React.ReactNode; value: number; index: num
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`tabpanel-${index}`}
@@ -191,7 +194,7 @@ function TabPanel(props: { children?: React.ReactNode; value: number; index: num
           {children}
         </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
