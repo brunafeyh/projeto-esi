@@ -4,7 +4,7 @@ import axios from 'axios';
 import { apiBaseUrl } from '../../../shared/api';
 import Table, { Column } from '../../../components/table';
 import { TableRowBody } from '../../../components/table/styles';
-import { TableCell } from '../../../components/table-cell-business-proposal';
+import { TableCell } from '../../../components/table-cell';
 import { Modal, useModal } from '../../../components/modal'; 
 import { ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
 

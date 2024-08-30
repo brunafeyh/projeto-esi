@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { apiBaseUrl } from '../../../../shared/api';
-import Table, { Column } from '../../../../components/table';
-import { TableRowBody } from '../../../../components/table/styles';
-import { TableCell } from '../../../../components/table-cell-business-proposal';
-import { Modal, useModal } from '../../../../components/modal';
-import { ContainedButton, ModalText, ModalTitle, Stack } from '../styles';
-import { TextField } from '../../../../components/forms/login/styles';
+import { apiBaseUrl } from '../../../shared/api';
+import Table, { Column } from '../../table';
+import { TableRowBody } from '../../table/styles';
+import { TableCell } from '../../table-cell';
+import { Modal, useModal } from '../../modal';
+import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
+import { TextField } from '../../forms/login/styles';
 
 interface Prato {
     id: string;
