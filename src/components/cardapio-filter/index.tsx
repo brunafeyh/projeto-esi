@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Stack, MenuItem, InputAdornment, InputLabel } from '@mui/material';
-import { IconSearch, Select, TextField, FormControl } from '../../pages/cardapio/styles';
+import { Stack, MenuItem, InputAdornment } from '@mui/material';
+import { IconSearch, Select, TextField, FormControl, InputLabel } from '../../pages/cardapio/styles';
 
 interface CardapioFilterProps {
 	searchTerm: string;
@@ -46,8 +46,8 @@ const CardapioFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, se
 				</Select>
 			</FormControl>
 
-			<FormControl variant="filled" size="small" sx={{ minWidth: '200px', backgroundColor: '#f5f5f5' }}>
-				<InputLabel sx={{ fontSize: '0.875rem' }}>Ordenar por Preço</InputLabel>
+			<FormControl variant="filled" size="small">
+				<InputLabel>Ordenar por Preço</InputLabel>
 				<Select
 					value={sortOrder}
 					onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}

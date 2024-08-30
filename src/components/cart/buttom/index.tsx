@@ -1,25 +1,42 @@
-import React, { useState } from 'react';
-import { IconButton, Badge, Popover, Box, Button } from '@mui/material';
+import React, { useState, useMemo } from 'react';
+import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
+import VisaIcon from '@mui/icons-material/CreditCard';
+import MasterCardIcon from '@mui/icons-material/LocalAtm'; 
+import { useCart } from '../../../hooks/use-cart';
 
-export interface CartItem {
-    id: number
-    nome: string
-    quantidade: number
-    valorTotal: number
-    valorReais: number 
-  }
-
-const CartButton: React.FC<{ cartItems: CartItem[], onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ cartItems, onUpdateQuantity, onRemoveItem }) => {
+const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cartao');
+  const { cartItems } = useCart();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClosePopover = () => {
     setAnchorEl(null);
   };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    handleClosePopover();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleFinalizeOrder = () => {
+    console.log('Pedido finalizado:', cartItems, `Método de pagamento: ${paymentMethod}`);
+    setIsModalOpen(false);
+  };
+
+  const totalAmount = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.valorTotal, 0).toFixed(2);
+  }, [cartItems]);
 
   const open = Boolean(anchorEl);
   const id = open ? 'cart-popover' : undefined;
@@ -35,7 +52,7 @@ const CartButton: React.FC<{ cartItems: CartItem[], onUpdateQuantity: (id: numbe
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={handleClosePopover}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -46,12 +63,63 @@ const CartButton: React.FC<{ cartItems: CartItem[], onUpdateQuantity: (id: numbe
         }}
       >
         <Box p={2} width={300}>
-              <Cart items={cartItems} onUpdateQuantity={onUpdateQuantity} onRemoveItem={onRemoveItem} />
-              <Button fullWidth variant="contained" color="primary" onClick={handleClose}>Finalizar Compra</Button>
+          <Cart items={cartItems} onUpdateQuantity={onUpdateQuantity} onRemoveItem={onRemoveItem} />
+          <Button fullWidth variant="contained" color="primary" onClick={handleOpenModal}>
+            Finalizar Compra
+          </Button>
         </Box>
       </Popover>
+
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <Box
+          p={4}
+          bgcolor="white"
+          borderRadius={2}
+          boxShadow={24}
+          mx="auto"
+          mt={10}
+          width={400}
+        >
+          <Typography variant="h6" gutterBottom>
+            Detalhes da Compra
+          </Typography>
+          {cartItems.map((item) => (
+            <Typography key={item.id} variant="body1">
+             {item.nome} - {item.quantidade} x R$ {item.valorReais.toFixed(2)} = R$ {item.valorTotal.toFixed(2)}
+            </Typography>
+          ))}
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="h6" gutterBottom>
+            Total: R$ {totalAmount}
+          </Typography>
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="h6" gutterBottom>
+            Método de Pagamento
+          </Typography>
+          <RadioGroup
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
+            <FormControlLabel value="cartao" control={<Radio />} label="Cartão de Crédito" />
+            <FormControlLabel value="dinheiro" control={<Radio />} label="Dinheiro" />
+            <FormControlLabel value="pix" control={<Radio />} label="Pix" />
+          </RadioGroup>
+          {paymentMethod === 'cartao' && (
+            <Box mt={2} display="flex" justifyContent="space-between">
+              <VisaIcon fontSize="large" />
+              <MasterCardIcon fontSize="large" />
+              {/* Adicione outros ícones de bandeiras de cartão aqui */}
+            </Box>
+          )}
+          <Box mt={2}>
+            <Button fullWidth variant="contained" color="primary" onClick={handleFinalizeOrder}>
+              Finalizar Pedido
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
-}
+};
 
 export default CartButton;

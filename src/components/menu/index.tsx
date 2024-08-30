@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
-  const { cartItems, updateQuantity, removeItem } = useCart();
+  const { updateQuantity, removeItem } = useCart();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -72,7 +72,6 @@ const Menu: React.FC = () => {
             <Logo />
             {isAuthenticated() && <Pontuation />}
             <CartButton
-              cartItems={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
               onRemoveItem={handleRemoveItem}
             />

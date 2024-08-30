@@ -514,18 +514,6 @@
   ],
   "carrinho": [
     {
-      "id": "8",
-      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
-      "nome": "Coxinha de Jaca",
-      "descricao": "Coxinha vegana recheada com carne de jaca.",
-      "valorReais": 9.99,
-      "valorPontos": 100,
-      "categoria": "Vegano",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 9.99
-    },
-    {
       "id": "7",
       "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
       "nome": "Polenta Frita",
@@ -538,18 +526,6 @@
       "valorTotal": 12.99
     },
     {
-      "id": "12",
-      "img": "https://t4.ftcdn.net/jpg/01/07/16/95/360_F_107169588_npa3G6IiqqqtsehxOCFTcAVAA6dTtKgX.jpg",
-      "nome": "Espetinho",
-      "descricao": "Espetinho de carne com pimentões e cebola.",
-      "valorReais": 14.99,
-      "valorPontos": 150,
-      "categoria": "Carnes",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 14.99
-    },
-    {
       "id": "15",
       "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
       "nome": "Pastel de Carne",
@@ -560,18 +536,6 @@
       "status": "Disponível",
       "quantidade": 1,
       "valorTotal": 5.99
-    },
-    {
-      "id": "3",
-      "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
-      "nome": "Pizza de Calabresa",
-      "descricao": "Pizza com molho de tomate, queijo e calabresa.",
-      "valorReais": 39.99,
-      "valorPontos": 400,
-      "categoria": "Massas",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 39.99
     }
   ]
 }
