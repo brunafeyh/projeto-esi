@@ -11,6 +11,18 @@
       "pontos": 1500
     }
   ],
+  "pontuacaoClientes": [
+    {
+      "cpf": "13037025921",
+      "nome": "João Silva",
+      "pontosAcumulados": 1460
+    },
+    {
+      "cpf": "11111111111",
+      "nome": "Maria Oliveira",
+      "pontosAcumulados": 2250
+    }
+  ],
   "pratos": [
     {
       "id": "1",
@@ -381,6 +393,8 @@
   "historicoPedidos": [
     {
       "numeroPedido": "20240817-001",
+      "cpf": "13037025921",
+      "nome": "João Silva",
       "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
       "valorReais": 45.98,
       "valorPontos": 460,
@@ -403,6 +417,8 @@
     },
     {
       "numeroPedido": "20240817-002",
+      "cpf": "11111111111",
+      "nome": "Maria Oliveira",
       "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
       "valorReais": 74.98,
       "valorPontos": 750,
@@ -422,120 +438,20 @@
           "valor": 29.99
         }
       ]
-    },
-    {
-      "numeroPedido": "20240816-001",
-      "descricao": "Pedido contendo Churrasco com Farofa e Espetinho",
-      "valorReais": 69.98,
-      "valorPontos": 700,
-      "data": "2024-08-16",
-      "id": "297a",
-      "pratos": [
-        {
-          "id": "9",
-          "nome": "Lasanha",
-          "quantidade": 1,
-          "valor": 44.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "numeroPedido": "20240815-003",
-      "descricao": "Pedido contendo Frango Frito e Carne de Panela",
-      "valorReais": 57.98,
-      "valorPontos": 580,
-      "data": "2024-08-15",
-      "id": "1286",
-      "pratos": [
-        {
-          "id": "9",
-          "nome": "Lasanha",
-          "quantidade": 1,
-          "valor": 44.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "numeroPedido": "20240817-003",
-      "descricao": "Pedido contendo Pizza de Calabresa e Macarrão",
-      "valorReais": 64.98,
-      "valorPontos": 650,
-      "data": "2024-08-17",
-      "id": "cd0a",
-      "pratos": [
-        {
-          "id": "9",
-          "nome": "Lasanha",
-          "quantidade": 1,
-          "valor": 44.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "id": "097c",
-      "numeroPedido": "",
-      "descricao": "",
-      "valorReais": 0,
-      "valorPontos": 0,
-      "data": "",
-      "pratos": [
-        {
-          "id": "9",
-          "nome": "Lasanha",
-          "quantidade": 1,
-          "valor": 44.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
     }
   ],
   "carrinho": [
     {
-      "id": "7",
-      "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
-      "nome": "Polenta Frita",
-      "descricao": "Polenta frita crocante.",
-      "valorReais": 12.99,
-      "valorPontos": 130,
-      "categoria": "Brasil",
+      "id": "8",
+      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
+      "nome": "Coxinha de Jaca",
+      "descricao": "Coxinha vegana recheada com carne de jaca.",
+      "valorReais": 9.99,
+      "valorPontos": 100,
+      "categoria": "Vegano",
       "status": "Disponível",
       "quantidade": 1,
-      "valorTotal": 12.99
-    },
-    {
-      "id": "15",
-      "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
-      "nome": "Pastel de Carne",
-      "descricao": "Pastel recheado com carne moída e temperos.",
-      "valorReais": 5.99,
-      "valorPontos": 60,
-      "categoria": "Massas",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 5.99
+      "valorTotal": 9.99
     }
   ]
 }

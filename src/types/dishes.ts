@@ -18,7 +18,6 @@ export interface Prato {
     quantidade: number;
     valor: number;
 }
-
 export interface HistoricoPedido {
     id: string;
     numeroPedido: string;
@@ -26,5 +25,7 @@ export interface HistoricoPedido {
     valorReais: number;
     valorPontos: number;
     data: string;
+    cpf: string; // CPF do cliente
+    nome: string; // Nome do cliente
     pratos?: Prato[];
 }

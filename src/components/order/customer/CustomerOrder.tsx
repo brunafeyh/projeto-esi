@@ -1,91 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { TextField, Box, Typography, Button } from '@mui/material';
-import axios from 'axios';
-import { apiBaseUrl } from '../../../shared/api';
 import Table, { Column } from '../../../components/table';
 import { TableRowBody } from '../../../components/table/styles';
 import { TableCell } from '../../../components/table-cell';
-import { Modal, useModal } from '../../../components/modal'; 
+import { Modal, useModal } from '../../../components/modal';
 import { ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
-
-interface Prato {
-    id: string;
-    nome: string;
-    quantidade: number;
-    valor: number;
-}
-
-interface HistoricoPedido {
-    id: string;
-    numeroPedido: string;
-    descricao: string;
-    valorReais: number;
-    valorPontos: number;
-    data: string;
-    pratos?: Prato[]; 
-}
+import { useCustomerOrder } from '../../../hooks/use-custumer-order';
 
 const CustomerOrder: React.FC = () => {
-    const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);
-    const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
-    const [filterStartDate, setFilterStartDate] = useState<string>('');
-    const [filterEndDate, setFilterEndDate] = useState<string>('');
-    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
-    const modalRef = useModal(); // Cria a referência para o Modal
+    const modalRef = useModal(); 
 
-    useEffect(() => {
-        const fetchHistoricoPedidos = async () => {
-            try {
-                const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
-                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
-                    new Date(a.data).getTime() - new Date(b.data).getTime()
-                );
-                setHistoricoPedidos(sortedData);
-                setFilteredPedidos(sortedData);
-            } catch (error) {
-                console.error('Erro ao buscar histórico de pedidos:', error);
-            }
-        };
-
-        fetchHistoricoPedidos();
-    }, []);
-
-    const handleSearch = () => {
-        let filtered = historicoPedidos;
-
-        if (filterStartDate && filterEndDate) {
-            // Filtrar entre as duas datas
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) >= new Date(filterStartDate) &&
-                new Date(pedido.data) <= new Date(filterEndDate)
-            );
-        } else if (filterStartDate) {
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) >= new Date(filterStartDate)
-            );
-        } else if (filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) <= new Date(filterEndDate)
-            );
-        }
-
-        setFilteredPedidos(filtered);
-    };
-
-    const handleRowClick = async (id: string) => {
-        try {
-            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
-            setSelectedOrder(response.data);
-            modalRef.current?.openModal();
-        } catch (error) {
-            console.error('Erro ao buscar detalhes do pedido:', error);
-        }
-    };
-
-    const handleCloseModal = () => {
-        setSelectedOrder(null);
-        modalRef.current?.closeModal();
-    };
+    const {
+        filteredPedidos = [],
+        filterStartDate = '',
+        filterEndDate = '',
+        selectedOrder = null,
+        setFilterStartDate = () => {},
+        setFilterEndDate = () => {},
+        handleSearch = () => {},
+        handleRowClick = () => {},
+        handleCloseModal = () => {},
+    } = useCustomerOrder() || {}; 
 
     const columns: Column[] = [
         { field: 'numeroPedido', headerName: 'Nº Pedido' },
@@ -174,4 +109,4 @@ const CustomerOrder: React.FC = () => {
     );
 };
 
-export default CustomerOrder
+export default CustomerOrder;
