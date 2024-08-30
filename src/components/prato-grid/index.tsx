@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
 import PratoCard from './cards/prato-card';
-import { Prato } from '../../hooks/use-filtered-pratos';
+import { Prato } from '../../types/pratos';
 
 interface PratoGridProps {
 	pratos: Prato[];

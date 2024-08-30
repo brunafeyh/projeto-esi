@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Chip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Prato } from '../../../../pages/cardapio';
 import { TitleCard } from '../../../../pages/home/styles';
+import { Prato } from '../../../../types/pratos';
 
 interface PratoCardProps {
 	prato: Prato;

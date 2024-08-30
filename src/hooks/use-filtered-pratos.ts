@@ -2,21 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiBaseUrl } from '../shared/api';
+import { CartItem, Prato } from '../types/pratos';
 
-export interface Prato {
-	id: number;
-	nome: string;
-	descricao: string;
-	valorReais: number;
-	valorPontos: number;
-	categoria: string;
-	img: string;
-}
-
-export interface CartItem extends Prato {
-	quantidade: number;
-	valorTotal: number;
-}
 
 export const useFilteredPratos = () => {
 	const [pratos, setPratos] = useState<Prato[]>([]);
