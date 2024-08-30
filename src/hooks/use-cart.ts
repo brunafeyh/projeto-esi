@@ -1,42 +1,105 @@
-import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { CartItem, Prato } from '../types/dishes';
+import { CartItem, Prato as Dish } from '../types/dishes';
 
 export const useCart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const queryClient = useQueryClient();
 
-  const addToCart= async (prato: Prato) => {
-    try {
-      const itemExistente = cart.find((item) => item.id === prato.id);
-      if (itemExistente) {
-        setCart((prevCart) =>
-          prevCart.map((item) =>
-            item.id === prato.id
-              ? { ...item, quantidade: item.quantidade + 1, valorTotal: item.valorTotal + prato.valorReais }
-              : item
-          )
-        );
+  const { data: cartItems = [], isLoading, error } = useQuery<CartItem[]>({
+    queryKey: ['cart'],
+    queryFn: async () => {
+      const response = await axios.get('http://localhost:3000/carrinho');
+      return response.data;
+    },
+  });
+
+  const addToCartMutation = useMutation({
+    mutationFn: async (newItem: CartItem) => {
+      if (newItem.id && cartItems.some((item) => item.id === newItem.id)) {
+        return axios.put(`http://localhost:3000/carrinho/${newItem.id}`, newItem);
       } else {
-        const response = await axios.post('http://localhost:3000/carrinho', {
-          id: prato.id,
-          nome: prato.nome,
-          quantidade: 1,
-          valorTotal: prato.valorReais,
-          valorReais: prato.valorReais,
-        });
-        setCart((prevCart) => [...prevCart, response.data]);
+        return axios.post('http://localhost:3000/carrinho', newItem);
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Prato adicionado ao carrinho com sucesso!');
-      window.location.reload();
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Erro ao adicionar ao carrinho:', error);
       toast.error('Erro ao adicionar ao carrinho.');
+    },
+  });
+
+  const addToCart = (dish: Dish) => {
+    const existingItem = cartItems.find((item) => item.id === dish.id);
+
+    if (existingItem) {
+      addToCartMutation.mutate({
+        ...existingItem,
+        quantidade: existingItem.quantidade + 1,
+        valorTotal: existingItem.valorTotal + dish.valorReais,
+      });
+    } else {
+      addToCartMutation.mutate({
+        ...dish,
+        quantidade: 1,
+        valorTotal: dish.valorReais,
+      });
     }
   };
 
+  const updateQuantityMutation = useMutation({
+    mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
+      const updatedItem = cartItems.find((item) => item.id === id);
+      if (updatedItem) {
+        const newItem = {
+          ...updatedItem,
+          quantidade: quantity,
+          valorTotal: updatedItem.valorReais * quantity,
+        };
+        return axios.put(`http://localhost:3000/carrinho/${id}`, newItem);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Quantidade do item atualizada com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao atualizar a quantidade do item:', error);
+      toast.error('Erro ao atualizar a quantidade do item.');
+    },
+  });
+
+  const updateQuantity = (id: number, quantity: number) => {
+    updateQuantityMutation.mutate({ id, quantity });
+  };
+
+  const removeItemMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return axios.delete(`http://localhost:3000/carrinho/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Item removido do carrinho com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao remover o item do carrinho:', error);
+      toast.error('Erro ao remover o item do carrinho.');
+    },
+  });
+
+  const removeItem = (id: number) => {
+    removeItemMutation.mutate(id);
+  };
+
   return {
-    cart,
+    cartItems,
     addToCart,
+    updateQuantity,
+    removeItem,
+    isLoading,
+    error,
   };
 };

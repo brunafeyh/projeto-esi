@@ -1,32 +1,32 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiBaseUrl } from '../shared/api';
 import { HistoricoPedido } from '../types/dishes';
 
+const fetchHistoricoPedidos = async (): Promise<HistoricoPedido[]> => {
+    const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
+    return response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
+        new Date(a.data).getTime() - new Date(b.data).getTime()
+    );
+};
 
 export const useCustomerOrder = () => {
-    const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);
     const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
     const [filterStartDate, setFilterStartDate] = useState<string>('');
     const [filterEndDate, setFilterEndDate] = useState<string>('');
     const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
 
-    useEffect(() => {
-        const fetchHistoricoPedidos = async () => {
-            try {
-                const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
-                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
-                    new Date(a.data).getTime() - new Date(b.data).getTime()
-                );
-                setHistoricoPedidos(sortedData);
-                setFilteredPedidos(sortedData);
-            } catch (error) {
-                console.error('Erro ao buscar histórico de pedidos:', error);
-            }
-        };
+    const { data: historicoPedidos = [], error, isLoading } = useQuery({
+        queryKey: ['historicoPedidos'],
+        queryFn: fetchHistoricoPedidos,
+    });
 
-        fetchHistoricoPedidos();
-    }, []);
+    useEffect(() => {
+        if (historicoPedidos) {
+            setFilteredPedidos(historicoPedidos);
+        }
+    }, [historicoPedidos]);
 
     const handleSearch = () => {
         let filtered = historicoPedidos;
@@ -68,6 +68,8 @@ export const useCustomerOrder = () => {
         filterStartDate,
         filterEndDate,
         selectedOrder,
+        isLoading,
+        error,
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,

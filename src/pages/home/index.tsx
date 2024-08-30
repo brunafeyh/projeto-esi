@@ -10,7 +10,7 @@ import { useDishes } from '../../hooks/use-dishes';
 import { Tabs } from './styles';
 
 const HomePage: FC = () => {
-  const dishes = useDishes();
+  const { dishes } = useDishes();
   const { addToCart } = useCart();
   const [tabIndex, setTabIndex] = useState(0);
 

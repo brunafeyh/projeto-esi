@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton, Stack, Tooltip } from '@mui/material';
 import { useAtom } from 'jotai';
@@ -10,17 +10,16 @@ import Logo from '../logo';
 import { isCollapsedAtom } from '../../contexts/is-collapsed-atom';
 import { openPopover } from '../../utils/popover';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import CartButton, { CartItem } from '../cart/buttom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import CartButton from '../cart/buttom';
 import Pontuation from '../pontuation';
 import { useAuth } from '../../hooks/use-auth';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../../hooks/use-cart';
+import { toast } from 'react-toastify';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { cartItems, updateQuantity, removeItem } = useCart();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -30,61 +29,28 @@ const Menu: React.FC = () => {
     setIsCollapsed((collapsed) => !collapsed);
   };
 
-  useEffect(() => {
-    // Carregar os itens do carrinho da API ao montar o componente
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/carrinho');
-        setCartItems(response.data);
-      } catch (error) {
-        console.error('Erro ao carregar itens do carrinho:', error);
-        toast.error('Erro ao carregar itens do carrinho');
-      }
-    };
+  const handleLoginRedirect = () => {
+    navigate('/login'); // Redireciona para a página de login
+  };
 
-    fetchCartItems();
-  }, []);
-
-  const handleUpdateQuantity = async (id: number, quantity: number) => {
+  const handleUpdateQuantity = (id: number, quantity: number) => {
     try {
-      const updatedItem = cartItems.find((item) => item.id === id);
-      if (updatedItem) {
-        updatedItem.quantidade = quantity;
-        updatedItem.valorTotal = updatedItem.valorReais * quantity;
-
-        // Atualizar a quantidade no servidor
-        await axios.put(`http://localhost:3000/carrinho/${id}`, updatedItem);
-
-        // Atualizar a quantidade no estado local
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === id ? { ...item, quantidade: quantity, valorTotal: item.valorReais * quantity } : item
-          )
-        );
-        toast.success('Quantidade do item atualizada com sucesso!');
-      }
+      updateQuantity(id, quantity);
+      toast.success('Quantidade do item atualizada com sucesso!');
     } catch (error) {
       console.error('Erro ao atualizar a quantidade do item no carrinho:', error);
       toast.error('Erro ao atualizar a quantidade do item');
     }
   };
 
-  const handleRemoveItem = async (id: number) => {
+  const handleRemoveItem = (id: number) => {
     try {
-      // Remover o item do servidor
-      await axios.delete(`http://localhost:3000/carrinho/${id}`);
-
-      // Remover o item do estado local
-      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      removeItem(id);
       toast.success('Item removido do carrinho com sucesso!');
     } catch (error) {
       console.error('Erro ao remover o item do carrinho:', error);
       toast.error('Erro ao remover o item do carrinho');
     }
-  };
-
-  const handleLoginRedirect = () => {
-    navigate('/login'); // Redireciona para a página de login
   };
 
   return (
@@ -104,9 +70,7 @@ const Menu: React.FC = () => {
           </IconButton>
           <Stack direction="row" alignItems="center" flexGrow={1}>
             <Logo />
-            {isAuthenticated() && (
-              <Pontuation />)
-            }
+            {isAuthenticated() && <Pontuation />}
             <CartButton
               cartItems={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
@@ -117,9 +81,7 @@ const Menu: React.FC = () => {
                 <AvatarProfile />
               </IconButton>
             ) : (
-              <Button onClick={handleLoginRedirect}>
-                Fazer Login
-              </Button>
+              <Button onClick={handleLoginRedirect}>Fazer Login</Button>
             )}
           </Stack>
         </MenuContainerApresentation>
@@ -134,4 +96,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu
+export default Menu;

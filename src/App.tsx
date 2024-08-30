@@ -17,7 +17,7 @@ const App: React.FC = () => {
 				<CssBaseline />
 				<ErrorBoundary>
 					<Suspense fallback={<Loading />}>
-						<ToastContainer />
+						<ToastContainer position="top-center"  />
 						<RouterProvider router={router} />
 					</Suspense>
 				</ErrorBoundary>

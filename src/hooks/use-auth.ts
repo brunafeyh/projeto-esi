@@ -42,7 +42,7 @@ export const useAuth = () => {
   const register = useCallback(async (credentials: RegisterCredentials) => {
     try {
       const { email, password, cpf, name } = credentials;
-      const role = 'ROLE_CUSTOMER'; // Define a role default as ROLE_CUSTOMER
+      const role = 'ROLE_CUSTOMER'; 
 
       await axios.post(`${API_BASE_URL}/authentication/create-user`, {
         email,
@@ -78,10 +78,6 @@ export const useAuth = () => {
     if (isRefreshTokenExpired() || !refreshToken) return;
 
     try {
-      // Assuming token refresh endpoint is available in the future
-      // const response = await axios.post(`${API_BASE_URL}/authentication/refresh-token`, { refreshToken });
-      // const newTokens = response.data;
-      // updateTokens(newTokens.access_token, newTokens.refresh_token);
       toast.info('Token renewal not implemented.');
       console.log('Token renewal not implemented');
     } catch (error) {
