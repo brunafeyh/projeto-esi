@@ -1,139 +1,43 @@
-import { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { apiBaseUrl } from '../../../shared/api';
 import Table, { Column } from '../../table';
 import { TableRowBody } from '../../table/styles';
 import { TableCell } from '../../table-cell';
 import { Modal, useModal } from '../../modal';
 import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
 import { TextField } from '../../forms/login/styles';
+import { useAdminOrder } from '../../../hooks/use-admin-order';
+import { FC } from 'react';
 
-interface Prato {
-    id: string;
-    nome: string;
-    quantidade: number;
-    valor: number;
-}
+const AdminOrder: FC = () => {
+    const {
+        filteredPedidos,
+        filterStartDate,
+        filterEndDate,
+        newOrder,
+        selectedOrder,
+        setFilterStartDate,
+        setFilterEndDate,
+        handleSearch,
+        handleRowClick,
+        handleInputChange,
+        handleAddOrder,
+        resetNewOrder,
+    } = useAdminOrder();
 
-interface HistoricoPedido {
-    id: string;
-    numeroPedido: string;
-    descricao: string;
-    valorReais: number;
-    valorPontos: number;
-    data: string;
-    pratos: Prato[];
-}
-
-const AdminOrder: React.FC = () => {
-    const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);
-    const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
-    const [filterStartDate, setFilterStartDate] = useState<string>('');
-    const [filterEndDate, setFilterEndDate] = useState<string>('');
     const addOrderModalRef = useModal();
-    const detailsModalRef = useModal(); 
-    const [newOrder, setNewOrder] = useState<Partial<HistoricoPedido>>({
-        numeroPedido: '',
-        descricao: '',
-        valorReais: 0,
-        valorPontos: 0,
-        data: '',
-        pratos: [],
-    });
-    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
-
-    useEffect(() => {
-        const fetchHistoricoPedidos = async () => {
-            try {
-                const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
-                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
-                    new Date(a.data).getTime() - new Date(b.data).getTime()
-                );
-                setHistoricoPedidos(sortedData);
-                setFilteredPedidos(sortedData);
-            } catch (error) {
-                console.error('Erro ao buscar histórico de pedidos:', error);
-            }
-        };
-
-        fetchHistoricoPedidos();
-    }, []);
-
-    const handleSearch = () => {
-        let filtered = historicoPedidos;
-
-        if (filterStartDate && filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) >= new Date(filterStartDate) &&
-                new Date(pedido.data) <= new Date(filterEndDate)
-            );
-        } else if (filterStartDate) {
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) >= new Date(filterStartDate)
-            );
-        } else if (filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) =>
-                new Date(pedido.data) <= new Date(filterEndDate)
-            );
-        }
-
-        setFilteredPedidos(filtered);
-    };
-
-    const handleRowClick = async (id: string) => {
-        try {
-            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
-            setSelectedOrder(response.data);
-            detailsModalRef.current?.openModal();
-        } catch (error) {
-            console.error('Erro ao buscar detalhes do pedido:', error);
-            toast.error('Erro ao buscar detalhes do pedido.');
-        }
-    };
+    const detailsModalRef = useModal();
 
     const handleOpenAddOrderModal = () => {
+        resetNewOrder();
         addOrderModalRef.current?.openModal();
     };
 
     const handleCloseAddOrderModal = () => {
-        setNewOrder({
-            numeroPedido: '',
-            descricao: '',
-            valorReais: 0,
-            valorPontos: 0,
-            data: '',
-            pratos: [],
-        });
         addOrderModalRef.current?.closeModal();
     };
 
     const handleCloseDetailsModal = () => {
-        setSelectedOrder(null);
         detailsModalRef.current?.closeModal();
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setNewOrder((prevOrder) => ({
-            ...prevOrder,
-            [name]: value,
-        }));
-    };
-
-    const handleAddOrder = async () => {
-        try {
-            const response = await axios.post(`${apiBaseUrl}/historicoPedidos`, newOrder);
-            const updatedPedidos = [...historicoPedidos, response.data];
-            setHistoricoPedidos(updatedPedidos);
-            setFilteredPedidos(updatedPedidos);
-            toast.success('Pedido adicionado com sucesso!');
-            handleCloseAddOrderModal();
-        } catch (error) {
-            console.error('Erro ao adicionar pedido:', error);
-            toast.error('Erro ao adicionar pedido.');
-        }
     };
 
     const columns: Column[] = [
@@ -192,6 +96,7 @@ const AdminOrder: React.FC = () => {
                     </TableRowBody>
                 )}
             />
+
             <Modal ref={addOrderModalRef} title="Adicionar Novo Pedido">
                 <Stack>
                     <ModalTitle>Adicionar Pedido</ModalTitle>
@@ -260,6 +165,7 @@ const AdminOrder: React.FC = () => {
                     </Box>
                 </Stack>
             </Modal>
+
             <Modal ref={detailsModalRef} title="Detalhes do Pedido">
                 <Stack spacing={2}>
                     {selectedOrder ? (
