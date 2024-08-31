@@ -66,7 +66,7 @@ const PopularCategorys: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: '200px', height: '200px' }}>
+    <Box sx={{ width: '270px', height: '270px' }}>
       <Doughnut data={data} options={options} />
     </Box>
   );

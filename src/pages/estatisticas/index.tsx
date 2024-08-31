@@ -8,6 +8,8 @@ import { People, RestaurantMenu } from '@mui/icons-material';
 import DailyStatistics from '../../components/graphs/daily';
 import SellYearGraph from '../../components/graphs/sellforyear';
 import PopularCategorys from '../../components/graphs/categorys';
+import SalesLeaders from '../../components/sales-grid';
+import { Container, GraphTypography, Stack } from './styles';
 
 const Estatisticas: FC = () => {
     const { allClients, isLoading: isLoadingClientes, error: errorClientes } = useAllClients();
@@ -48,14 +50,27 @@ const Estatisticas: FC = () => {
                 </Grid>
             </Box>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={8}>
+                <Stack>
+                    <GraphTypography>Pedidos no Ano</GraphTypography>
                     <SellYearGraph />
-                </Grid>
-                <Grid item xs={12} md={4}>
+                </Stack>
+                <Grid>
+                    <GraphTypography>Categorias mais vendidas</GraphTypography>
                     <PopularCategorys />
                 </Grid>
             </Grid>
-            <DailyStatistics/>
+            <Box mb={4}>
+                <Grid container spacing={2}>
+                    <Grid>
+                        <Container>
+                            <DailyStatistics />
+                        </Container>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <SalesLeaders />
+                    </Grid>
+                </Grid>
+            </Box>
         </PageLayout>
     );
 };

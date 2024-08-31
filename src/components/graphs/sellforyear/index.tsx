@@ -79,7 +79,7 @@ const SellYearGraph: FC = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', height: 'auto' }}>
+    <Box>
       <Grid container spacing={2} mb={2}>
         <Grid item xs={6}>
           <FormControl variant = 'filled' fullWidth>
