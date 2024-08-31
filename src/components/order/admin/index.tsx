@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Table, { Column } from '../../table';
 import { TableRowBody } from '../../table/styles';
@@ -7,6 +8,7 @@ import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pe
 import { TextField } from '../../forms/login/styles';
 import { useAdminOrder } from '../../../hooks/use-admin-order';
 import { FC } from 'react';
+import { HistoricoPedido } from '../../../types/dishes';
 
 const AdminOrder: FC = () => {
     const {
@@ -14,7 +16,6 @@ const AdminOrder: FC = () => {
         filterStartDate,
         filterEndDate,
         newOrder,
-        selectedOrder,
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,
@@ -23,6 +24,8 @@ const AdminOrder: FC = () => {
         handleAddOrder,
         resetNewOrder,
     } = useAdminOrder();
+
+    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
 
     const addOrderModalRef = useModal();
     const detailsModalRef = useModal();
@@ -36,7 +39,16 @@ const AdminOrder: FC = () => {
         addOrderModalRef.current?.closeModal();
     };
 
+    const handleOpenDetailsModal = async (id: string) => {
+        const order = await handleRowClick(id);
+        if (order) {
+            setSelectedOrder(order);
+            detailsModalRef.current?.openModal();
+        }
+    };
+
     const handleCloseDetailsModal = () => {
+        setSelectedOrder(null);
         detailsModalRef.current?.closeModal();
     };
 
@@ -87,7 +99,7 @@ const AdminOrder: FC = () => {
                 columns={columns}
                 data={filteredPedidos}
                 renderData={(row) => (
-                    <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} style={{ cursor: 'pointer' }}>
+                    <TableRowBody key={row.id} onClick={() => handleOpenDetailsModal(row.id)} style={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
                         <TableCell>{row.data}</TableCell>
                         <TableCell>{row.descricao}</TableCell>

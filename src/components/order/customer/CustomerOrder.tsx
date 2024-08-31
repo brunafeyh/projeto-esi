@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Box, Typography, Button } from '@mui/material';
 import Table, { Column } from '../../../components/table';
 import { TableRowBody } from '../../../components/table/styles';
@@ -6,21 +6,43 @@ import { TableCell } from '../../../components/table-cell';
 import { Modal, useModal } from '../../../components/modal';
 import { ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
 import { useCustomerOrder } from '../../../hooks/use-custumer-order';
+import { HistoricoPedido } from '../../../types/dishes';
+import axios from 'axios';
+import { apiBaseUrl } from '../../../shared/api';
 
 const CustomerOrder: React.FC = () => {
     const modalRef = useModal(); 
+    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
+
+    const customerOrder = useCustomerOrder();
+
+    if (!customerOrder) {
+        return <Typography variant="body1">Erro ao carregar os pedidos do cliente.</Typography>;
+    }
 
     const {
         filteredPedidos = [],
         filterStartDate = '',
         filterEndDate = '',
-        selectedOrder = null,
-        setFilterStartDate = () => {},
-        setFilterEndDate = () => {},
-        handleSearch = () => {},
-        handleRowClick = () => {},
-        handleCloseModal = () => {},
-    } = useCustomerOrder() || {}; 
+        setFilterStartDate,
+        setFilterEndDate,
+        handleSearch,
+    } = customerOrder;
+
+    const handleRowClick = async (id: string) => {
+        try {
+            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
+            setSelectedOrder(response.data);
+            modalRef.current?.openModal();
+        } catch (error) {
+            console.error('Erro ao buscar detalhes do pedido:', error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setSelectedOrder(null);
+        modalRef.current?.closeModal();
+    };
 
     const columns: Column[] = [
         { field: 'numeroPedido', headerName: 'Nº Pedido' },

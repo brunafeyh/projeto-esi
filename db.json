@@ -442,6 +442,18 @@
   ],
   "carrinho": [
     {
+      "id": "15",
+      "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
+      "nome": "Pastel de Carne",
+      "descricao": "Pastel recheado com carne moída e temperos.",
+      "valorReais": 5.99,
+      "valorPontos": 60,
+      "categoria": "Massas",
+      "status": "Disponível",
+      "quantidade": 2,
+      "valorTotal": 11.98
+    },
+    {
       "id": "8",
       "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
       "nome": "Coxinha de Jaca",
@@ -452,6 +464,18 @@
       "status": "Disponível",
       "quantidade": 1,
       "valorTotal": 9.99
+    },
+    {
+      "id": "1",
+      "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+      "nome": "Strogonoffe de Frango",
+      "descricao": "Strogonoffe de frango com arroz e batata palha.",
+      "valorReais": 35.99,
+      "valorPontos": 350,
+      "categoria": "Carnes",
+      "status": "Disponível",
+      "quantidade": 1,
+      "valorTotal": 35.99
     }
   ]
 }

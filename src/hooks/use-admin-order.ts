@@ -17,7 +17,6 @@ export const useAdminOrder = () => {
         data: '',
         pratos: [],
     });
-    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
 
     useEffect(() => {
         const fetchHistoricoPedidos = async () => {
@@ -30,6 +29,7 @@ export const useAdminOrder = () => {
                 setFilteredPedidos(sortedData);
             } catch (error) {
                 console.error('Erro ao buscar histórico de pedidos:', error);
+                toast.error('Erro ao buscar histórico de pedidos.');
             }
         };
 
@@ -60,10 +60,11 @@ export const useAdminOrder = () => {
     const handleRowClick = async (id: string) => {
         try {
             const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
-            setSelectedOrder(response.data);
+            return response.data;
         } catch (error) {
             console.error('Erro ao buscar detalhes do pedido:', error);
             toast.error('Erro ao buscar detalhes do pedido.');
+            return null;
         }
     };
 
@@ -105,7 +106,6 @@ export const useAdminOrder = () => {
         filterStartDate,
         filterEndDate,
         newOrder,
-        selectedOrder,
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,
