@@ -5,14 +5,14 @@ import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
 import MasterCardIcon from '@mui/icons-material/LocalAtm'; 
 import { useCart } from '../../../hooks/use-cart';
-import { usePedidos } from '../../../hooks/use-pedidos';
+import { useOrders } from '../../../hooks/use-orders';
 
 const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');
   const { cartItems, clearCart } = useCart();
-  const { addPedido } = usePedidos();
+  const { addOrder } = useOrders();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -32,30 +32,27 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
   };
 
   const handleFinalizeOrder = async () => {
-    const pedido = {
-      id: Date.now().toString(), // Gerar um ID único como string
-      numeroPedido: `Pedido-${Date.now()}`, // Gerar um número de pedido único
-      cpf: '123.456.789-00', // Exemplo de CPF, substitua pelo CPF real do usuário logado
-      descricao: cartItems.map(item => item.nome).join(', '), // Descrição dos itens
-      observacoes: '', // Caso haja alguma observação
-      data: new Date().toISOString().split('T')[0], // Data atual no formato YYYY-MM-DD
-      valorTotal: parseFloat(totalAmount), // Valor total do pedido
-      metodoPagamento: paymentMethod, // Método de pagamento
+    const order = {
+      id: Date.now().toString(),
+      numeroPedido: `Pedido-${Date.now()}`,
+      cpf: '123.456.789-00',
+      descricao: cartItems.map(item => item.nome).join(', '),
+      observacoes: '', 
+      data: new Date().toISOString().split('T')[0],
+      valorTotal: parseFloat(totalAmount), 
+      metodoPagamento: paymentMethod,
       pratos: cartItems.map(item => ({
-        id: item.id.toString(), // Convertendo o ID para string
+        id: item.id.toString(),
         nome: item.nome,
         quantidade: item.quantidade,
         valor: item.valorReais,
-      })), // Lista de pratos
+      })),
     };
   
     try {
-      // Enviar o pedido para a API do json-server
-      addPedido(pedido);
-  
-      console.log('Pedido finalizado:', pedido);
-      clearCart(); // Limpar o carrinho após finalizar o pedido
-      setIsModalOpen(false); // Fechar o modal após finalizar o pedido
+      addOrder(order);
+      clearCart(); 
+      setIsModalOpen(false); 
     } catch (error) {
       console.error('Erro ao finalizar o pedido:', error);
     }

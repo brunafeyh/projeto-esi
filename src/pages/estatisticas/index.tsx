@@ -5,9 +5,9 @@ import { useAllClients } from '../../hooks/use-clients';
 import { useDishes } from '../../hooks/use-dishes';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import { People, RestaurantMenu } from '@mui/icons-material';
-import VendasMensais from './sellformonth';
-import CategoriasPopulares from './month';
-import DailyStatistics from './daily';
+import DailyStatistics from '../../components/graphs/daily';
+import SellYearGraph from '../../components/graphs/sellforyear';
+import PopularCategorys from '../../components/graphs/categorys';
 
 const Estatisticas: FC = () => {
     const { allClients, isLoading: isLoadingClientes, error: errorClientes } = useAllClients();
@@ -49,10 +49,10 @@ const Estatisticas: FC = () => {
             </Box>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
-                    <VendasMensais />
+                    <SellYearGraph />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <CategoriasPopulares />
+                    <PopularCategorys />
                 </Grid>
             </Grid>
             <DailyStatistics/>

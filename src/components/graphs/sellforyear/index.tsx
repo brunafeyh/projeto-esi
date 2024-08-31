@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,12 +10,14 @@ import {
   Legend,
   ChartOptions,
 } from 'chart.js';
-import { Box, Typography } from '@mui/material';
-import { usePedidos } from '../../../hooks/use-pedidos';
+import { Box, Grid, MenuItem } from '@mui/material';
+import { useOrders } from '../../../hooks/use-orders';
+import { FormControl, InputLabel, Select } from '../../cardapio-filter/styles';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VendasMensais: React.FC = () => {
+const SellYearGraph: FC = () => {
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [data, setData] = useState({
     labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     datasets: [
@@ -27,16 +29,19 @@ const VendasMensais: React.FC = () => {
     ],
   });
 
-  const { pedidos, isLoading, error } = usePedidos();
+  const { orders } = useOrders();
 
   useEffect(() => {
-    if (isLoading || !pedidos.length) return;
+    if (!orders.length) return;
 
     const vendasPorMes = Array(12).fill(0); 
 
-    pedidos.forEach((pedido) => {
-      const mes = new Date(pedido.data).getMonth(); 
-      vendasPorMes[mes] += pedido.valorTotal; 
+    orders.forEach((order) => {
+      const date = new Date(order.data);
+      if (date.getFullYear() === selectedYear) {
+        const monthIndex = date.getMonth();
+        vendasPorMes[monthIndex] += order.valorTotal;
+      }
     });
 
     setData({
@@ -44,20 +49,12 @@ const VendasMensais: React.FC = () => {
       datasets: [
         {
           label: 'Vendas',
-          data: vendasPorMes, 
+          data: vendasPorMes,
           backgroundColor: '#ff5722',
         },
       ],
     });
-  }, [pedidos, isLoading]);
-
-  if (isLoading) {
-    return <Typography>Carregando...</Typography>;
-  }
-
-  if (error) {
-    return <Typography>Erro ao carregar os dados.</Typography>;
-  }
+  }, [orders, selectedYear]);
 
   const options: ChartOptions<'bar'> = {
     responsive: true,
@@ -82,10 +79,29 @@ const VendasMensais: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: '500px', height: '300px' }}>
+    <Box sx={{ width: '100%', height: 'auto' }}>
+      <Grid container spacing={2} mb={2}>
+        <Grid item xs={6}>
+          <FormControl variant = 'filled' fullWidth>
+            <InputLabel id="select-year-label">Ano</InputLabel>
+            <Select
+              labelId="select-year-label"
+              value={selectedYear}
+              label="Ano"
+              onChange={(e) => setSelectedYear(e.target.value as number)}
+            >
+              {[2022, 2023, 2024, 2025].map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
       <Bar data={data} options={options} />
     </Box>
   );
 };
 
-export default VendasMensais;
+export default SellYearGraph;

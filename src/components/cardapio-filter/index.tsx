@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Stack, MenuItem, InputAdornment } from '@mui/material';
-import { IconSearch, Select, TextField, FormControl, InputLabel } from '../../pages/cardapio/styles';
+import { IconSearch, Select, TextField, FormControl, InputLabel } from './styles';
 
 interface CardapioFilterProps {
 	searchTerm: string;

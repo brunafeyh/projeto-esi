@@ -1,27 +1,35 @@
-import React from 'react'
-import { Stack, Typography } from '@mui/material'
-import GoBack from './go-back'
-import NotFoundContainer from '../../layouts/not-found-container'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import NotFoundContainer from '../../layouts/not-found-container';
+import { Button, ErrorCode, ErrorTitle, Stack } from './styles';
 
 interface Props {
-	code: number
-	title: string
+  code: number;
+  title: string;
 }
 
 const ErrorPage: React.FC<Props> = ({ code, title }) => {
-	return (
-		<NotFoundContainer>
-			<Stack justifyContent="center" alignItems="center" height="100%" spacing={4}>
-				<Typography variant="h1" color="unioeste.neutral.p100" fontSize={(theme) => theme.spacing(10)}>
-					{code}
-				</Typography>
-				<Typography variant="h2" color="unioeste.neutral.p100" fontSize={(theme) => theme.spacing(4)}>
-					{title}
-				</Typography>
-				<GoBack />
-			</Stack>
-		</NotFoundContainer>
-	)
-}
+  const navigate = useNavigate();
 
-export default ErrorPage
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
+  return (
+    <NotFoundContainer>
+      <Stack justifyContent="center" alignItems="center">
+        <ErrorCode variant="h1">
+          {code}
+        </ErrorCode>
+        <ErrorTitle variant="h2">
+          {title}
+        </ErrorTitle>
+        <Button variant='contained' onClick={handleGoHome}>
+          Voltar para a Página Inicial
+        </Button>
+      </Stack>
+    </NotFoundContainer>
+  );
+};
+
+export default ErrorPage;

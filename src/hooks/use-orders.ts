@@ -19,25 +19,23 @@ export interface Pedido {
   }>;
 }
 
-export const usePedidos = () => {
+export const useOrders = () => {
   const queryClient = useQueryClient();
 
-  // Função para buscar todos os pedidos
-  const { data: pedidos = [], isLoading, error } = useQuery<Pedido[]>({
-    queryKey: ['pedidos'],
+  const { data: orders = [], isLoading, error } = useQuery<Pedido[]>({
+    queryKey: ['orders'],
     queryFn: async () => {
       const response = await axios.get('http://localhost:3000/pedidos');
       return response.data;
     },
   });
 
-  // Função para adicionar um novo pedido
-  const addPedidoMutation = useMutation({
+  const addOrderMutation = useMutation({
     mutationFn: async (newPedido: Pedido) => {
       return axios.post('http://localhost:3000/pedidos', newPedido);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pedidos'] });
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
       toast.success('Pedido adicionado com sucesso!');
     },
     onError: (error) => {
@@ -46,12 +44,11 @@ export const usePedidos = () => {
     },
   });
 
-  const addPedido = (pedido: Pedido) => {
-    addPedidoMutation.mutate(pedido);
+  const addOrder = (pedido: Pedido) => {
+    addOrderMutation.mutate(pedido);
   };
 
-  // Função para atualizar um pedido existente
-  const updatePedidoMutation = useMutation({
+  const updateOrderMutation = useMutation({
     mutationFn: async (updatedPedido: Pedido) => {
       return axios.put(`http://localhost:3000/pedidos/${updatedPedido.id}`, updatedPedido);
     },
@@ -65,12 +62,11 @@ export const usePedidos = () => {
     },
   });
 
-  const updatePedido = (pedido: Pedido) => {
-    updatePedidoMutation.mutate(pedido);
+  const updateOrder = (pedido: Pedido) => {
+    updateOrderMutation.mutate(pedido);
   };
 
-  // Função para remover um pedido
-  const removePedidoMutation = useMutation({
+  const removeOrderMutation = useMutation({
     mutationFn: async (id: string) => {
       return axios.delete(`http://localhost:3000/pedidos/${id}`);
     },
@@ -84,16 +80,16 @@ export const usePedidos = () => {
     },
   });
 
-  const removePedido = (id: string) => {
-    removePedidoMutation.mutate(id);
+  const removeOrder = (id: string) => {
+    removeOrderMutation.mutate(id);
   };
 
   return {
-    pedidos,
+    orders,
     isLoading,
     error,
-    addPedido,
-    updatePedido,
-    removePedido,
+    addOrder,
+    updateOrder,
+    removeOrder,
   };
 };

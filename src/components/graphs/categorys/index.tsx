@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Box, Typography } from '@mui/material';
-import { usePedidos } from '../../../hooks/use-pedidos';
+import { Box } from '@mui/material';
+import { useOrders } from '../../../hooks/use-orders';
 import { useDishes } from '../../../hooks/use-dishes';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CategoriasPopulares: React.FC = () => {
+const PopularCategorys: React.FC = () => {
   const [data, setData] = useState({
     labels: [] as string[],
     datasets: [
@@ -20,20 +20,20 @@ const CategoriasPopulares: React.FC = () => {
     ],
   });
 
-  const { pedidos, isLoading: isLoadingPedidos, error: errorPedidos } = usePedidos();
-  const { dishes, isLoading: isLoadingDishes, error: errorDishes } = useDishes();
+  const { orders} = useOrders();
+  const { dishes } = useDishes();
 
   useEffect(() => {
-    if (!isLoadingPedidos && !isLoadingDishes && pedidos && dishes) {
-      const pratosMap = dishes.reduce((map: any, prato: any) => {
-        map[prato.id] = prato.categoria;
+    if (orders && dishes) {
+      const dishesMap = dishes.reduce((map: any, dishe: any) => {
+        map[dishe.id] = dishe.categoria;
         return map;
       }, {});
 
       const categoriasCount: { [key: string]: number } = {};
-      pedidos.forEach((pedido: any) => {
-        pedido.pratos.forEach((prato: any) => {
-          const categoria = pratosMap[prato.id];
+      orders.forEach((orders: any) => {
+        orders.pratos.forEach((prato: any) => {
+          const categoria = dishesMap[prato.id];
           if (categoria) {
             if (categoriasCount[categoria]) {
               categoriasCount[categoria] += prato.quantidade;
@@ -54,7 +54,7 @@ const CategoriasPopulares: React.FC = () => {
         ],
       });
     }
-  }, [isLoadingPedidos, isLoadingDishes, pedidos, dishes]);
+  }, [orders, dishes]);
 
   const options = {
     responsive: true,
@@ -65,9 +65,6 @@ const CategoriasPopulares: React.FC = () => {
     },
   };
 
-  if (isLoadingPedidos || isLoadingDishes) return <Typography>Carregando...</Typography>;
-  if (errorPedidos || errorDishes) return <Typography>Erro ao carregar dados.</Typography>;
-
   return (
     <Box sx={{ width: '200px', height: '200px' }}>
       <Doughnut data={data} options={options} />
@@ -75,4 +72,4 @@ const CategoriasPopulares: React.FC = () => {
   );
 };
 
-export default CategoriasPopulares;
+export default PopularCategorys;
