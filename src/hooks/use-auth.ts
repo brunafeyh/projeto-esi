@@ -42,8 +42,9 @@ export const useAuth = () => {
   const register = useCallback(async (credentials: RegisterCredentials) => {
     try {
       const { email, password, cpf, name } = credentials;
-      const role = 'ROLE_CUSTOMER'; 
+      const role = 'ROLE_CUSTOMER';
 
+      // Registrar usuário na API de autenticação
       await axios.post(`${API_BASE_URL}/authentication/create-user`, {
         email,
         password,
@@ -51,6 +52,14 @@ export const useAuth = () => {
         name,
         role,
       });
+
+      // Após o registro bem-sucedido, adicionar o cliente à API local (json-server)
+      await axios.post(`localhost:3000/clientes`, {
+        cpf,
+        pontos: 0, // Novo cliente começa com 0 pontos
+      });
+
+      console.log('registrado com sucesso')
 
       toast.success('Registration successful!');
       return true;

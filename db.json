@@ -178,10 +178,11 @@
   "pedidos": [
     {
       "id": "1",
-      "numeroPedido": "20240817-001",
+      "numeroPedido": "20240816-001",
+      "cpf": "123.456.789-00",
       "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
       "observacoes": "Adicionar mais batata palha",
-      "data": "2024-08-17",
+      "data": "2024-01-15",
       "valorTotal": 45.98,
       "pratos": [
         {
@@ -200,10 +201,11 @@
     },
     {
       "id": "2",
-      "numeroPedido": "20240817-002",
+      "numeroPedido": "20240816-002",
+      "cpf": "987.654.321-00",
       "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
       "observacoes": "Entregar até 19h",
-      "data": "2024-08-17",
+      "data": "2024-02-20",
       "valorTotal": 74.98,
       "pratos": [
         {
@@ -217,6 +219,144 @@
           "nome": "Bolo de Chocolate Belga",
           "quantidade": 1,
           "valor": 29.99
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "numeroPedido": "20240816-003",
+      "cpf": "123.456.789-00",
+      "descricao": "Pedido contendo Pizza de Calabresa e Coxinha de Jaca",
+      "observacoes": "Entrega rápida",
+      "data": "2024-03-12",
+      "valorTotal": 50.98,
+      "pratos": [
+        {
+          "id": "3",
+          "nome": "Pizza de Calabresa",
+          "quantidade": 1,
+          "valor": 39.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 10.99
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "numeroPedido": "20240816-004",
+      "cpf": "111.222.333-44",
+      "descricao": "Pedido contendo Churrasco com Farofa e Frango Frito",
+      "observacoes": "Comida extra quente",
+      "data": "2024-04-05",
+      "valorTotal": 77.98,
+      "pratos": [
+        {
+          "id": "11",
+          "nome": "Churrasco com Farofa",
+          "quantidade": 1,
+          "valor": 54.99
+        },
+        {
+          "id": "13",
+          "nome": "Frango Frito",
+          "quantidade": 1,
+          "valor": 22.99
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "numeroPedido": "20240816-005",
+      "cpf": "555.666.777-88",
+      "descricao": "Pedido contendo Pastel de Carne e Prato Feito",
+      "observacoes": "Sem cebola",
+      "data": "2024-05-22",
+      "valorTotal": 25.98,
+      "pratos": [
+        {
+          "id": "15",
+          "nome": "Pastel de Carne",
+          "quantidade": 1,
+          "valor": 5.99
+        },
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "numeroPedido": "20240816-006",
+      "cpf": "999.888.777-66",
+      "descricao": "Pedido contendo Combo Brasil e Espetinho",
+      "observacoes": "Entrega até 13h",
+      "data": "2024-06-10",
+      "valorTotal": 64.98,
+      "pratos": [
+        {
+          "id": "6",
+          "nome": "Combo Brasil",
+          "quantidade": 1,
+          "valor": 49.99
+        },
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "numeroPedido": "20240816-007",
+      "cpf": "444.555.666-77",
+      "descricao": "Pedido contendo Strogonoffe de Frango e Bolo de Chocolate Belga",
+      "observacoes": "Sem alterações",
+      "data": "2024-07-18",
+      "valorTotal": 65.98,
+      "pratos": [
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 1,
+          "valor": 35.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "numeroPedido": "20240816-008",
+      "cpf": "123.456.789-00",
+      "descricao": "Pedido contendo Pizza de Calabresa e Polenta Frita",
+      "observacoes": "Molho extra na pizza",
+      "data": "2024-08-25",
+      "valorTotal": 49.98,
+      "pratos": [
+        {
+          "id": "3",
+          "nome": "Pizza de Calabresa",
+          "quantidade": 1,
+          "valor": 39.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 9.99
         }
       ]
     }
@@ -440,42 +580,5 @@
       ]
     }
   ],
-  "carrinho": [
-    {
-      "id": "15",
-      "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
-      "nome": "Pastel de Carne",
-      "descricao": "Pastel recheado com carne moída e temperos.",
-      "valorReais": 5.99,
-      "valorPontos": 60,
-      "categoria": "Massas",
-      "status": "Disponível",
-      "quantidade": 2,
-      "valorTotal": 11.98
-    },
-    {
-      "id": "8",
-      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
-      "nome": "Coxinha de Jaca",
-      "descricao": "Coxinha vegana recheada com carne de jaca.",
-      "valorReais": 9.99,
-      "valorPontos": 100,
-      "categoria": "Vegano",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 9.99
-    },
-    {
-      "id": "1",
-      "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
-      "nome": "Strogonoffe de Frango",
-      "descricao": "Strogonoffe de frango com arroz e batata palha.",
-      "valorReais": 35.99,
-      "valorPontos": 350,
-      "categoria": "Carnes",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 35.99
-    }
-  ]
+  "carrinho": []
 }

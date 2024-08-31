@@ -94,11 +94,33 @@ export const useCart = () => {
     removeItemMutation.mutate(id);
   };
 
+  const clearCartMutation = useMutation({
+    mutationFn: async () => {
+      const deletePromises = cartItems.map((item) =>
+        axios.delete(`http://localhost:3000/carrinho/${item.id}`)
+      );
+      return Promise.all(deletePromises);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      toast.success('Carrinho limpo com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao limpar o carrinho:', error);
+      toast.error('Erro ao limpar o carrinho.');
+    },
+  });
+
+  const clearCart = () => {
+    clearCartMutation.mutate();
+  };
+
   return {
     cartItems,
     addToCart,
     updateQuantity,
     removeItem,
+    clearCart, // Função para limpar o carrinho
     isLoading,
     error,
   };

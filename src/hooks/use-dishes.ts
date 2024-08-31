@@ -6,32 +6,36 @@ export const useDishes = () => {
   const queryClient = useQueryClient();
 
   const { data: dishes = [], error, isLoading } = useQuery<Prato[], Error>({
-    queryKey: ['pratos'],
+    queryKey: ['dishes'],
     queryFn: fetchPratos,
   });
 
   const addPratoMutation = useMutation({
     mutationFn: addPrato,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pratos'] });
+      queryClient.invalidateQueries({ queryKey: ['dishes'] });
     },
   });
 
   const updatePratoMutation = useMutation({
     mutationFn: updatePrato,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pratos'] });
-    },
-  });
-  const deletePratoMutation = useMutation({
-    mutationFn: deletePrato,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pratos'] });
+      queryClient.invalidateQueries({ queryKey: ['dishes'] });
     },
   });
 
+  const deletePratoMutation = useMutation({
+    mutationFn: deletePrato,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dishes'] });
+    },
+  });
+
+  const totalDishes = dishes.length;
+
   return {
     dishes,
+    totalDishes,
     isLoading,
     error,
     addPrato: addPratoMutation.mutate,

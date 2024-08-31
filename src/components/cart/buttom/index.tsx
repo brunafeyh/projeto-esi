@@ -5,12 +5,14 @@ import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
 import MasterCardIcon from '@mui/icons-material/LocalAtm'; 
 import { useCart } from '../../../hooks/use-cart';
+import { usePedidos } from '../../../hooks/use-pedidos';
 
 const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
+  const { addPedido } = usePedidos();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,10 +31,36 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
     setIsModalOpen(false);
   };
 
-  const handleFinalizeOrder = () => {
-    console.log('Pedido finalizado:', cartItems, `Método de pagamento: ${paymentMethod}`);
-    setIsModalOpen(false);
+  const handleFinalizeOrder = async () => {
+    const pedido = {
+      id: Date.now().toString(), // Gerar um ID único como string
+      numeroPedido: `Pedido-${Date.now()}`, // Gerar um número de pedido único
+      cpf: '123.456.789-00', // Exemplo de CPF, substitua pelo CPF real do usuário logado
+      descricao: cartItems.map(item => item.nome).join(', '), // Descrição dos itens
+      observacoes: '', // Caso haja alguma observação
+      data: new Date().toISOString().split('T')[0], // Data atual no formato YYYY-MM-DD
+      valorTotal: parseFloat(totalAmount), // Valor total do pedido
+      metodoPagamento: paymentMethod, // Método de pagamento
+      pratos: cartItems.map(item => ({
+        id: item.id.toString(), // Convertendo o ID para string
+        nome: item.nome,
+        quantidade: item.quantidade,
+        valor: item.valorReais,
+      })), // Lista de pratos
+    };
+  
+    try {
+      // Enviar o pedido para a API do json-server
+      addPedido(pedido);
+  
+      console.log('Pedido finalizado:', pedido);
+      clearCart(); // Limpar o carrinho após finalizar o pedido
+      setIsModalOpen(false); // Fechar o modal após finalizar o pedido
+    } catch (error) {
+      console.error('Erro ao finalizar o pedido:', error);
+    }
   };
+  
 
   const totalAmount = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.valorTotal, 0).toFixed(2);
@@ -85,7 +113,7 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
           </Typography>
           {cartItems.map((item) => (
             <Typography key={item.id} variant="body1">
-             {item.nome} - {item.quantidade} x R$ {item.valorReais.toFixed(2)} = R$ {item.valorTotal.toFixed(2)}
+              {item.nome} - {item.quantidade} x R$ {item.valorReais.toFixed(2)} = R$ {item.valorTotal.toFixed(2)}
             </Typography>
           ))}
           <Divider sx={{ my: 2 }} />
@@ -108,7 +136,6 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
             <Box mt={2} display="flex" justifyContent="space-between">
               <VisaIcon fontSize="large" />
               <MasterCardIcon fontSize="large" />
-              {/* Adicione outros ícones de bandeiras de cartão aqui */}
             </Box>
           )}
           <Box mt={2}>
