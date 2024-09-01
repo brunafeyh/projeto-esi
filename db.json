@@ -15,12 +15,14 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 1460
+      "pontosAcumulados": 1460,
+      "id": "d0cb"
     },
     {
       "cpf": "11111111111",
       "nome": "Maria Oliveira",
-      "pontosAcumulados": 2250
+      "pontosAcumulados": 2250,
+      "id": "d4a3"
     }
   ],
   "pratos": [
@@ -448,24 +450,9 @@
   },
   "ingredientes": [
     {
-      "id": "1",
-      "nome": "Frango",
-      "quantidade": "50 kg"
-    },
-    {
-      "id": "2",
-      "nome": "Arroz",
-      "quantidade": "100 kg"
-    },
-    {
-      "id": "3",
-      "nome": "Batata Palha",
-      "quantidade": "30 kg"
-    },
-    {
-      "id": "4",
-      "nome": "Tomate",
-      "quantidade": "40 kg"
+      "nome": "ewrfwefr",
+      "quantidade": "40 kg",
+      "id": "4"
     },
     {
       "id": "5",
