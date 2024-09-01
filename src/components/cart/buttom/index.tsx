@@ -3,9 +3,10 @@ import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup,
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
-import MasterCardIcon from '@mui/icons-material/LocalAtm'; 
+import MasterCardIcon from '@mui/icons-material/LocalAtm';
 import { useCart } from '../../../hooks/use-cart';
 import { useOrders } from '../../../hooks/use-orders';
+import { useAuth } from '../../../hooks/use-auth';
 
 const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -13,6 +14,7 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
   const [paymentMethod, setPaymentMethod] = useState('cartao');
   const { cartItems, clearCart } = useCart();
   const { addOrder } = useOrders();
+  const { user } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -32,14 +34,19 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
   };
 
   const handleFinalizeOrder = async () => {
+    if (!user || !user.cpf) {
+      console.error('Usuário não autenticado ou CPF não encontrado.');
+      return;
+    }
+
     const order = {
       id: Date.now().toString(),
       numeroPedido: `Pedido-${Date.now()}`,
-      cpf: '123.456.789-00',
+      cpf: user.cpf,
       descricao: cartItems.map(item => item.nome).join(', '),
-      observacoes: '', 
+      observacoes: '',
       data: new Date().toISOString().split('T')[0],
-      valorTotal: parseFloat(totalAmount), 
+      valorTotal: parseFloat(totalAmount),
       metodoPagamento: paymentMethod,
       pratos: cartItems.map(item => ({
         id: item.id.toString(),
@@ -48,20 +55,20 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
         valor: item.valorReais,
       })),
     };
-  
+
     try {
       addOrder(order);
-      clearCart(); 
-      setIsModalOpen(false); 
+      clearCart();
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Erro ao finalizar o pedido:', error);
     }
   };
-  
 
   const totalAmount = useMemo(() => {
-    return cartItems.reduce((total, item) => total + item.valorTotal, 0).toFixed(2);
+    return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
   }, [cartItems]);
+
 
   const open = Boolean(anchorEl);
   const id = open ? 'cart-popover' : undefined;
@@ -110,7 +117,7 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) 
           </Typography>
           {cartItems.map((item) => (
             <Typography key={item.id} variant="body1">
-              {item.nome} - {item.quantidade} x R$ {item.valorReais.toFixed(2)} = R$ {item.valorTotal.toFixed(2)}
+              {item.nome} - {item.quantidade} x R$ {(item.valorReais || 0).toFixed(2)} = R$ {(item.valorTotal || 0).toFixed(2)}
             </Typography>
           ))}
           <Divider sx={{ my: 2 }} />

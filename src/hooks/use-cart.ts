@@ -55,11 +55,11 @@ export const useCart = () => {
       toast.error('Erro ao atualizar a quantidade do item.');
     },
   });
-
+  
   const updateQuantity = (id: number, quantity: number) => {
     updateQuantityMutation.mutate({ id, quantity });
   };
-
+  
   const removeItemMutation = useMutation({
     mutationFn: (id: number) => cartService.removeCartItem(id),
     onSuccess: () => {

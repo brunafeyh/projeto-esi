@@ -17,6 +17,7 @@ const CustomerOrder: React.FC = () => {
     const modalRef = useModal();
     const { user } = useAuth();
     const { orders, isLoading, error } = useOrders();
+    const [customerOrders, setCustomerOrders] = useState<Pedido[]>([]);
     const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
 
     const {
@@ -26,10 +27,12 @@ const CustomerOrder: React.FC = () => {
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,
-    } = useOrderFilter(orders || []);
+    } = useOrderFilter(customerOrders);
 
     useEffect(() => {
         if (orders && user) {
+            const userOrders = orders.filter(order => order.cpf === user.cpf);
+            setCustomerOrders(userOrders);
             handleSearch(); 
         }
     }, [orders, user, handleSearch]);

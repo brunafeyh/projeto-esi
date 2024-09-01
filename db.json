@@ -370,6 +370,201 @@
       "metodoPagamento": "1341R",
       "data": "2024-09-01",
       "pratos": []
+    },
+    {
+      "id": "1725228707110",
+      "numeroPedido": "Pedido-1725228707110",
+      "cpf": "123.456.789-00",
+      "descricao": "",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 0,
+      "metodoPagamento": "cartao",
+      "pratos": []
+    },
+    {
+      "id": "1725229081807",
+      "numeroPedido": "Pedido-1725229081807",
+      "cpf": "123.456.789-00",
+      "descricao": "Pastel de Carne, Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 15.98,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "15",
+          "nome": "Pastel de Carne",
+          "quantidade": 1,
+          "valor": 5.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725229139391",
+      "numeroPedido": "Pedido-1725229139391",
+      "cpf": "123.456.789-00",
+      "descricao": "Prato Feito, Bolo de Chocolate Belga",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 49.98,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
+        },
+        {
+          "id": "10",
+          "nome": "Bolo de Chocolate Belga",
+          "quantidade": 1,
+          "valor": 29.99
+        }
+      ]
+    },
+    {
+      "id": "1725229282738",
+      "numeroPedido": "Pedido-1725229282738",
+      "cpf": "123.456.789-00",
+      "descricao": "Prato Feito, Frango Frito",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 42.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
+        },
+        {
+          "id": "13",
+          "nome": "Frango Frito",
+          "quantidade": 1,
+          "valor": 22.99
+        }
+      ]
+    },
+    {
+      "id": "1725229937027",
+      "numeroPedido": "Pedido-1725229937027",
+      "cpf": "123.456.789-00",
+      "descricao": "Macarrão, Pizza de Calabresa",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 65.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "2",
+          "nome": "Macarrão",
+          "quantidade": 1,
+          "valor": 25.99
+        },
+        {
+          "id": "3",
+          "nome": "Pizza de Calabresa",
+          "quantidade": 1,
+          "valor": 39.99
+        }
+      ]
+    },
+    {
+      "id": "1725230234857",
+      "numeroPedido": "Pedido-1725230234857",
+      "cpf": "123.456.789-00",
+      "descricao": "Pastel de Carne, Polenta Frita",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 18.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "15",
+          "nome": "Pastel de Carne",
+          "quantidade": 1,
+          "valor": 5.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1725230292404",
+      "numeroPedido": "Pedido-1725230292404",
+      "cpf": "123.456.789-00",
+      "descricao": "Espetinho, Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 24.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725230719466",
+      "numeroPedido": "Pedido-1725230719466",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca, ",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 35.97,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        },
+        {
+          "id": "7",
+          "quantidade": 2
+        }
+      ]
+    },
+    {
+      "id": "1725231168837",
+      "numeroPedido": "Pedido-1725231168837",
+      "cpf": "13037025921",
+      "descricao": "Macarrão",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 51.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "2",
+          "nome": "Macarrão",
+          "quantidade": 2,
+          "valor": 25.99
+        }
+      ]
     }
   ],
   "estatisticas": {

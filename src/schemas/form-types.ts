@@ -8,5 +8,4 @@ export const credentialsSchema = z.object({
 	password: z.string().nonempty('Senha é obrigatória'),
 })
 
-// Create an interface for the form data
 export type AuthCredentials = z.output<typeof credentialsSchema>

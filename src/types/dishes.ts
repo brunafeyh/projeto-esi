@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export interface Prato {
 	id: number;
 	nome: string;
@@ -18,3 +20,11 @@ export interface Ingredient {
     nome: string;
     quantidade: string;
 }
+
+
+export const ingredientSchema = z.object({
+  nome: z.string().min(1, 'Nome é obrigatório'),
+  quantidade: z.string().min(1, 'Quantidade é obrigatória'),
+});
+
+export type IngredientFormInputs = z.infer<typeof ingredientSchema>;

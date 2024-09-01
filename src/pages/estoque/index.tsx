@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
 import useIngredients from '../../hooks/use-ingredients';
@@ -8,24 +9,29 @@ import { IconSearch, TextField } from '../../components/cardapio-filter/styles';
 import { TableRowBody } from '../../components/table/styles';
 import { TableCell } from '../../components/table-cell';
 import { ActionBox, Box, DeleteIcon, EditIcon } from './styles';
+import { IngredientFormInputs } from '../../types/dishes';
 
 const Estoque: FC = () => {
     const { ingredients, searchTerm, setSearchTerm, updateIngredient, deleteIngredient } = useIngredients();
     const [editIngredient, setEditIngredient] = useState<string | null>(null);
-    const [newQuantity, setNewQuantity] = useState<string>('');
-    const [ingredientName, setIngredientName] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
+
+    const { handleSubmit, control, reset } = useForm<IngredientFormInputs>({
+        defaultValues: {
+            nome: '',
+            quantidade: '',
+        },
+    });
 
     const handleEditClick = (id: string, name: string, quantity: string) => {
         setEditIngredient(id);
-        setIngredientName(name);
-        setNewQuantity(quantity); 
+        reset({ nome: name, quantidade: quantity });
         setOpen(true);
     };
 
-    const handleSaveClick = () => {
+    const onSubmit = (data: IngredientFormInputs) => {
         if (editIngredient) {
-            updateIngredient({ id: editIngredient, updatedData: { nome: ingredientName, quantidade: newQuantity } });
+            updateIngredient({ id: editIngredient, updatedData: data });
             setOpen(false);
             setEditIngredient(null);
         }
@@ -90,34 +96,46 @@ const Estoque: FC = () => {
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>Editar Ingrediente</DialogTitle>
                 <DialogContent>
-                    <MuiTextField
-                        autoFocus
-                        margin="dense"
-                        label="Nome do Ingrediente"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={ingredientName}
-                        onChange={(e) => setIngredientName(e.target.value)}
-                    />
-                    <MuiTextField
-                        margin="dense"
-                        label="Quantidade"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={newQuantity}
-                        onChange={(e) => setNewQuantity(e.target.value)}
-                    />
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Controller
+                            name="nome"
+                            control={control}
+                            render={({ field }) => (
+                                <MuiTextField
+                                    {...field}
+                                    autoFocus
+                                    margin="dense"
+                                    label="Nome do Ingrediente"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="quantidade"
+                            control={control}
+                            render={({ field }) => (
+                                <MuiTextField
+                                    {...field}
+                                    margin="dense"
+                                    label="Quantidade"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                            )}
+                        />
+                        <DialogActions>
+                            <Button variant="outlined" onClick={() => setOpen(false)}>
+                                Cancelar
+                            </Button>
+                            <Button type="submit" variant="contained" sx={{ ml: 1 }}>
+                                Salvar
+                            </Button>
+                        </DialogActions>
+                    </form>
                 </DialogContent>
-                <DialogActions>
-                    <Button variant="outlined" onClick={() => setOpen(false)}>
-                        Cancelar
-                    </Button>
-                    <Button variant="contained" sx={{ ml: 1 }} onClick={handleSaveClick}>
-                        Salvar
-                    </Button>
-                </DialogActions>
             </Dialog>
         </PageLayout>
     );

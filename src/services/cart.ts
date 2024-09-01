@@ -14,24 +14,41 @@ class CartService {
   }
 
   async addItemToCart(newItem: CartItem): Promise<CartItem> {
-    if (newItem.id) {
-      const existingItem = await axios.get(`${this.apiUrl}/${newItem.id}`);
-      if (existingItem.data) {
-        return axios.put(`${this.apiUrl}/${newItem.id}`, newItem);
+    try {
+      const existingItemResponse = await axios.get(`${this.apiUrl}/${newItem.id}`);
+      if (existingItemResponse.status === 200) {
+        return this.updateCartItemQuantity(newItem.id, {
+          ...existingItemResponse.data,
+          quantidade: existingItemResponse.data.quantidade + newItem.quantidade,
+          valorTotal: existingItemResponse.data.valorTotal + newItem.valorTotal,
+        });
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        const response = await axios.post(this.apiUrl, newItem);
+        return response.data;
+      } else {
+        throw error;
       }
     }
-    return axios.post(this.apiUrl, newItem);
+    throw new Error('Unexpected error in addItemToCart');
   }
 
   async updateCartItemQuantity(id: number, quantity: number): Promise<CartItem> {
-    const updatedItem = await axios.get(`${this.apiUrl}/${id}`);
-    const newItem = {
-      ...updatedItem.data,
-      quantidade: quantity,
-      valorTotal: updatedItem.data.valorReais * quantity,
-    };
-    return axios.put(`${this.apiUrl}/${id}`, newItem);
+    const currentItem = await axios.get<CartItem>(`${this.apiUrl}/${id}`);
+    if (currentItem.data) {
+      const updatedItem: Partial<CartItem> = {
+        ...currentItem.data,
+        quantidade: quantity,
+        valorTotal: currentItem.data.valorReais * quantity, 
+      };
+      const response = await axios.put(`${this.apiUrl}/${id}`, updatedItem);
+      return response.data;
+    } else {
+      throw new Error('Item not found');
+    }
   }
+  
 
   async removeCartItem(id: number): Promise<void> {
     await axios.delete(`${this.apiUrl}/${id}`);

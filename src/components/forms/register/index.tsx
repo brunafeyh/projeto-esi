@@ -10,7 +10,7 @@ import { ButtonLoginForm } from '../login/styles';
 import { credentialsSchema, RegisterCredentials } from '../../../types/auth';
 
 const RegisterForm: React.FC = () => {
-  const { register } = useAuth(); 
+  const { register } = useAuth();
   const {
     register: formRegister,
     handleSubmit,

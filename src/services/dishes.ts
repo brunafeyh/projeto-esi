@@ -5,7 +5,7 @@ import { Prato } from '../types/dishes';
 class DishService {
   private apiUrl: string;
 
-  constructor(apiUrl: string = `${apiBaseUrl}/dishes`) {
+  constructor(apiUrl: string = `${apiBaseUrl}/pratos`) {
     this.apiUrl = apiUrl;
   }
 
