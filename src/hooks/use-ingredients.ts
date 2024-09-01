@@ -1,26 +1,18 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import IngredientService from '../services/ingredients';
+import { Ingredient } from '../types/dishes';
 
-interface Ingredient {
-    id: string;
-    nome: string;
-    quantidade: string;
-}
+const ingredientService = new IngredientService()
 
 const useIngredients = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const queryClient = useQueryClient();
 
-    const fetchIngredients = async (): Promise<Ingredient[]> => {
-        const response = await axios.get('http://localhost:3000/ingredientes');
-        return response.data;
-    };
-
     const { data: ingredients = [], isLoading, isError } = useQuery<Ingredient[]>({
         queryKey: ['ingredients'],
-        queryFn: fetchIngredients,
+        queryFn: () => ingredientService.fetchIngredients(),
         staleTime: 1000 * 60 * 5,
     });
 
@@ -28,10 +20,9 @@ const useIngredients = () => {
         (ingredient.nome || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const updateIngredient = useMutation({
-        mutationFn: async ({ id, updatedData }: { id: string; updatedData: Partial<Ingredient> }) => {
-            await axios.put(`http://localhost:3000/ingredientes/${id}`, updatedData);
-        },
+    const updateIngredientMutation = useMutation({
+        mutationFn: ({ id, updatedData }: { id: string; updatedData: Partial<Ingredient> }) =>
+            ingredientService.updateIngredient(id, updatedData),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['ingredients'] });
             toast.success('Ingrediente atualizado com sucesso!');
@@ -41,10 +32,8 @@ const useIngredients = () => {
         },
     });
 
-    const deleteIngredient = useMutation({
-        mutationFn: async (id: string) => {
-            await axios.delete(`http://localhost:3000/ingredientes/${id}`);
-        },
+    const deleteIngredientMutation = useMutation({
+        mutationFn: (id: string) => ingredientService.deleteIngredient(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['ingredients'] });
             toast.success('Ingrediente excluído com sucesso!');
@@ -58,8 +47,8 @@ const useIngredients = () => {
         ingredients: filteredIngredients,
         searchTerm,
         setSearchTerm,
-        updateIngredient: updateIngredient.mutate,
-        deleteIngredient: deleteIngredient.mutate,
+        updateIngredient: updateIngredientMutation.mutate,
+        deleteIngredient: deleteIngredientMutation.mutate,
         isLoading,
         isError,
     };

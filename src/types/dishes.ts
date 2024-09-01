@@ -12,20 +12,9 @@ export interface CartItem extends Prato {
 	quantidade: number;
 	valorTotal: number;
 }
-export interface Prato {
-    id: number;
-    nome: string;
-    quantidade: number;
-    valor: number;
-}
-export interface HistoricoPedido {
+
+export interface Ingredient {
     id: string;
-    numeroPedido: string;
-    descricao: string;
-    valorReais: number;
-    valorPontos: number;
-    data: string;
-    cpf: string; // CPF do cliente
-    nome: string; // Nome do cliente
-    pratos?: Prato[];
+    nome: string;
+    quantidade: string;
 }

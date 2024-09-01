@@ -1,16 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { apiBaseUrl } from '../shared/api';
+import ClientService from '../services/client';
 
-const fetchTotalClientes = async () => {
-  const response = await axios.get(`${apiBaseUrl}/clientes`);
-  return response.data.length;
-};
+const clientService = new ClientService()
 
 export const useAllClients = () => {
   const { data: allClients = 0, error, isLoading } = useQuery({
     queryKey: ['allClients'],
-    queryFn: fetchTotalClientes,
+    queryFn: () => clientService.fetchTotalClients(),
   });
 
   return { allClients, error, isLoading };
