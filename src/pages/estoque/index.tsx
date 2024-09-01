@@ -38,7 +38,7 @@ const Estoque: FC = () => {
     const columns: Column[] = [
         { field: 'nome', headerName: 'Nome' },
         { field: 'quantidade', headerName: 'Quantidade' },
-        { field: 'edit', headerName: 'Editar' },
+        { field: 'edit', headerName: '' },
     ];
 
     return (
