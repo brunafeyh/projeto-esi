@@ -1,27 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CartItem, Prato as Dish } from '../types/dishes';
+import CartService from '../services/cart';
+
+const cartService = new CartService();
 
 export const useCart = () => {
   const queryClient = useQueryClient();
 
   const { data: cartItems = [], isLoading, error } = useQuery<CartItem[]>({
     queryKey: ['cart'],
-    queryFn: async () => {
-      const response = await axios.get('http://localhost:3000/carrinho');
-      return response.data;
-    },
+    queryFn: () => cartService.fetchCartItems(),
   });
 
   const addToCartMutation = useMutation({
-    mutationFn: async (newItem: CartItem) => {
-      if (newItem.id && cartItems.some((item) => item.id === newItem.id)) {
-        return axios.put(`http://localhost:3000/carrinho/${newItem.id}`, newItem);
-      } else {
-        return axios.post('http://localhost:3000/carrinho', newItem);
-      }
-    },
+    mutationFn: (newItem: CartItem) => cartService.addItemToCart(newItem),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Prato adicionado ao carrinho com sucesso!');
@@ -51,17 +44,8 @@ export const useCart = () => {
   };
 
   const updateQuantityMutation = useMutation({
-    mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
-      const updatedItem = cartItems.find((item) => item.id === id);
-      if (updatedItem) {
-        const newItem = {
-          ...updatedItem,
-          quantidade: quantity,
-          valorTotal: updatedItem.valorReais * quantity,
-        };
-        return axios.put(`http://localhost:3000/carrinho/${id}`, newItem);
-      }
-    },
+    mutationFn: ({ id, quantity }: { id: number; quantity: number }) =>
+      cartService.updateCartItemQuantity(id, quantity),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Quantidade do item atualizada com sucesso!');
@@ -77,9 +61,7 @@ export const useCart = () => {
   };
 
   const removeItemMutation = useMutation({
-    mutationFn: async (id: number) => {
-      return axios.delete(`http://localhost:3000/carrinho/${id}`);
-    },
+    mutationFn: (id: number) => cartService.removeCartItem(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Item removido do carrinho com sucesso!');
@@ -95,12 +77,7 @@ export const useCart = () => {
   };
 
   const clearCartMutation = useMutation({
-    mutationFn: async () => {
-      const deletePromises = cartItems.map((item) =>
-        axios.delete(`http://localhost:3000/carrinho/${item.id}`)
-      );
-      return Promise.all(deletePromises);
-    },
+    mutationFn: () => cartService.clearCart(cartItems),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Carrinho limpo com sucesso!');
@@ -120,7 +97,7 @@ export const useCart = () => {
     addToCart,
     updateQuantity,
     removeItem,
-    clearCart, // Função para limpar o carrinho
+    clearCart,
     isLoading,
     error,
   };

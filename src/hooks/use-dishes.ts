@@ -1,31 +1,33 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Prato } from '../types/dishes';
-import { addPrato, deletePrato, fetchPratos, updatePrato } from '../services/dishes';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import DishService from '../services/dishes'
+import { Prato } from '../types/dishes'
+
+const dishService = new DishService()
 
 export const useDishes = () => {
   const queryClient = useQueryClient();
 
   const { data: dishes = [], error, isLoading } = useQuery<Prato[], Error>({
     queryKey: ['dishes'],
-    queryFn: fetchPratos,
+    queryFn: () => dishService.fetchDishes(),
   });
 
-  const addPratoMutation = useMutation({
-    mutationFn: addPrato,
+  const addDishMutation = useMutation({
+    mutationFn: (newDish: Prato) => dishService.addDish(newDish),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
     },
   });
 
-  const updatePratoMutation = useMutation({
-    mutationFn: updatePrato,
+  const updateDishMutation = useMutation({
+    mutationFn: (updatedDish: Prato) => dishService.updateDish(updatedDish),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
     },
   });
 
-  const deletePratoMutation = useMutation({
-    mutationFn: deletePrato,
+  const deleteDishMutation = useMutation({
+    mutationFn: (id: string) => dishService.deleteDish(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
     },
@@ -38,8 +40,8 @@ export const useDishes = () => {
     totalDishes,
     isLoading,
     error,
-    addPrato: addPratoMutation.mutate,
-    updatePrato: updatePratoMutation.mutate,
-    deletePrato: deletePratoMutation.mutate,
+    addDish: addDishMutation.mutate,
+    updateDish: updateDishMutation.mutate,
+    deleteDish: deleteDishMutation.mutate,
   };
 };
