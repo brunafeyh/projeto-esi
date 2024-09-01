@@ -7,6 +7,7 @@ export const FilterBox = styled(BoxMui)(({ theme }) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: theme.spacing(2),
+    gap: theme.spacing(2)
 }));
 
 export const ModalContainer = styled(BoxMui)(({ theme }) => ({

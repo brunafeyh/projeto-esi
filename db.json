@@ -361,6 +361,15 @@
           "valor": 9.99
         }
       ]
+    },
+    {
+      "id": "767b",
+      "numeroPedido": "qefqef",
+      "descricao": "134R",
+      "valorTotal": "7",
+      "metodoPagamento": "1341R",
+      "data": "2024-09-01",
+      "pratos": []
     }
   ],
   "estatisticas": {
@@ -468,11 +477,6 @@
       "id": "7",
       "nome": "Cebola",
       "quantidade": "30 kg"
-    },
-    {
-      "id": "8",
-      "nome": "Carne Bovina",
-      "quantidade": "80 kg"
     },
     {
       "id": "9",

@@ -1,39 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Table, { Column } from '../../../components/table';
 import { TableCell } from '../../../components/table-cell';
 import { Modal, useModal } from '../../../components/modal';
-import { useCustomerOrder } from '../../../hooks/use-custumer-order';
-import { HistoricoPedido } from '../../../types/dishes';
+import { Pedido, useOrders } from '../../../hooks/use-orders';
+import { useAuth } from '../../../hooks/use-auth';
 import { apiBaseUrl } from '../../../shared/api';
 import axios from 'axios';
 import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style';
 import { TableRowBody } from '../../table/styles';
 import { TextField } from '../../forms/login/styles';
 import { formatDateString } from '../../../utils/graph';
+import { useOrderFilter } from '../../../hooks/use-order-filters';
 
 const CustomerOrder: React.FC = () => {
-    const modalRef = useModal(); 
-    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
-
-    const customerOrder = useCustomerOrder();
-
-    if (!customerOrder) {
-        return <Typography variant="body1">Erro ao carregar os pedidos do cliente.</Typography>;
-    }
+    const modalRef = useModal();
+    const { user } = useAuth();
+    const { orders, isLoading, error } = useOrders();
+    const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
 
     const {
-        filteredPedidos = [],
-        filterStartDate = '',
-        filterEndDate = '',
+        filteredPedidos,
+        filterStartDate,
+        filterEndDate,
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,
-    } = customerOrder;
+    } = useOrderFilter(orders || []);
+
+    useEffect(() => {
+        if (orders && user) {
+            handleSearch(); 
+        }
+    }, [orders, user, handleSearch]);
 
     const handleRowClick = async (id: string) => {
         try {
-            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
+            const response = await axios.get(`${apiBaseUrl}/pedidos/${id}`);
             setSelectedOrder(response.data);
             modalRef.current?.openModal();
         } catch (error) {
@@ -50,9 +53,17 @@ const CustomerOrder: React.FC = () => {
         { field: 'numeroPedido', headerName: 'Nº Pedido' },
         { field: 'data', headerName: 'Data' },
         { field: 'descricao', headerName: 'Descrição' },
-        { field: 'valorReais', headerName: 'Valor (R$)' },
-        { field: 'valorPontos', headerName: 'Valor (Pontos)' },
+        { field: 'valorTotal', headerName: 'Valor (R$)' },
+        { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
     ];
+
+    if (isLoading) {
+        return <Typography variant="body1">Carregando pedidos...</Typography>;
+    }
+
+    if (error) {
+        return <Typography variant="body1">Erro ao carregar os pedidos do cliente.</Typography>;
+    }
 
     return (
         <Box>
@@ -90,11 +101,12 @@ const CustomerOrder: React.FC = () => {
                         <TableCell>{row.numeroPedido}</TableCell>
                         <TableCell>{formatDateString(row.data)}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
-                        <TableCell>{row.valorReais}</TableCell>
-                        <TableCell>{row.valorPontos}</TableCell>
+                        <TableCell>{row.valorTotal}</TableCell>
+                        <TableCell>{row.metodoPagamento}</TableCell>
                     </TableRowBody>
                 )}
             />
+
             <Modal ref={modalRef} title="Detalhes do Pedido">
                 <ModalContainer>
                     {selectedOrder ? (
@@ -102,8 +114,8 @@ const CustomerOrder: React.FC = () => {
                             <ModalTitle variant="h6">Pedido: {selectedOrder.numeroPedido}</ModalTitle>
                             <ModalText>Data: {formatDateString(selectedOrder.data)}</ModalText>
                             <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
-                            <ModalText>Valor (R$): {selectedOrder.valorReais}</ModalText>
-                            <ModalText>Valor (Pontos): {selectedOrder.valorPontos}</ModalText>
+                            <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
+                            <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
                             <ModalText>Pratos: </ModalText>
                             <Box>
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (

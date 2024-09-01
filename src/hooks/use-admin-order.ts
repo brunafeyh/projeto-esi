@@ -1,55 +1,35 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { apiBaseUrl } from '../shared/api';
-import { HistoricoPedido } from '../types/dishes';
+import { Pedido, useOrders } from './use-orders';
 
 export const useAdminOrder = () => {
-    const [historicoPedidos, setHistoricoPedidos] = useState<HistoricoPedido[]>([]);
-    const [filteredPedidos, setFilteredPedidos] = useState<HistoricoPedido[]>([]);
+    const { orders, isLoading, error, addOrder, updateOrder, removeOrder } = useOrders();
+    const [filteredPedidos, setFilteredPedidos] = useState<Pedido[]>([]);
     const [filterStartDate, setFilterStartDate] = useState<string>('');
     const [filterEndDate, setFilterEndDate] = useState<string>('');
-    const [newOrder, setNewOrder] = useState<Partial<HistoricoPedido>>({
+    const [newOrder, setNewOrder] = useState<Partial<Pedido>>({
         numeroPedido: '',
         descricao: '',
-        valorReais: 0,
-        valorPontos: 0,
+        valorTotal: 0,
+        metodoPagamento: '',
         data: '',
         pratos: [],
     });
 
-    useEffect(() => {
-        const fetchHistoricoPedidos = async () => {
-            try {
-                const response = await axios.get(`${apiBaseUrl}/historicoPedidos`);
-                const sortedData = response.data.sort((a: HistoricoPedido, b: HistoricoPedido) =>
-                    new Date(a.data).getTime() - new Date(b.data).getTime()
-                );
-                setHistoricoPedidos(sortedData);
-                setFilteredPedidos(sortedData);
-            } catch (error) {
-                console.error('Erro ao buscar histórico de pedidos:', error);
-                toast.error('Erro ao buscar histórico de pedidos.');
-            }
-        };
-
-        fetchHistoricoPedidos();
-    }, []);
-
     const handleSearch = () => {
-        let filtered = historicoPedidos;
+        let filtered = orders;
 
         if (filterStartDate && filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) =>
+            filtered = orders.filter((pedido) =>
                 new Date(pedido.data) >= new Date(filterStartDate) &&
                 new Date(pedido.data) <= new Date(filterEndDate)
             );
         } else if (filterStartDate) {
-            filtered = historicoPedidos.filter((pedido) =>
+            filtered = orders.filter((pedido) =>
                 new Date(pedido.data) >= new Date(filterStartDate)
             );
         } else if (filterEndDate) {
-            filtered = historicoPedidos.filter((pedido) =>
+            filtered = orders.filter((pedido) =>
                 new Date(pedido.data) <= new Date(filterEndDate)
             );
         }
@@ -59,8 +39,13 @@ export const useAdminOrder = () => {
 
     const handleRowClick = async (id: string) => {
         try {
-            const response = await axios.get(`${apiBaseUrl}/historicoPedidos/${id}`);
-            return response.data;
+            const pedido = orders.find(order => order.id === id);
+            if (pedido) {
+                return pedido;
+            } else {
+                toast.error('Pedido não encontrado.');
+                return null;
+            }
         } catch (error) {
             console.error('Erro ao buscar detalhes do pedido:', error);
             toast.error('Erro ao buscar detalhes do pedido.');
@@ -78,10 +63,7 @@ export const useAdminOrder = () => {
 
     const handleAddOrder = async () => {
         try {
-            const response = await axios.post(`${apiBaseUrl}/historicoPedidos`, newOrder);
-            const updatedPedidos = [...historicoPedidos, response.data];
-            setHistoricoPedidos(updatedPedidos);
-            setFilteredPedidos(updatedPedidos);
+            await addOrder(newOrder as Pedido);
             toast.success('Pedido adicionado com sucesso!');
         } catch (error) {
             console.error('Erro ao adicionar pedido:', error);
@@ -89,19 +71,50 @@ export const useAdminOrder = () => {
         }
     };
 
+    const handleUpdateOrder = async (id: string, updatedData: Partial<Pedido>) => {
+        try {
+            const existingOrder = orders.find(order => order.id === id);
+            if (!existingOrder) {
+                toast.error('Pedido não encontrado.');
+                return;
+            }
+
+            const updatedOrder: Pedido = {
+                ...existingOrder,
+                ...updatedData
+            };
+
+            await updateOrder(updatedOrder);
+            toast.success('Pedido atualizado com sucesso!');
+        } catch (error) {
+            console.error('Erro ao atualizar pedido:', error);
+            toast.error('Erro ao atualizar pedido.');
+        }
+    };
+
+    const handleRemoveOrder = async (id: string) => {
+        try {
+            await removeOrder(id);
+            toast.success('Pedido removido com sucesso!');
+        } catch (error) {
+            console.error('Erro ao remover pedido:', error);
+            toast.error('Erro ao remover pedido.');
+        }
+    };
+
     const resetNewOrder = () => {
         setNewOrder({
             numeroPedido: '',
             descricao: '',
-            valorReais: 0,
-            valorPontos: 0,
+            valorTotal: 0,
+            metodoPagamento: '',
             data: '',
             pratos: [],
         });
     };
 
     return {
-        historicoPedidos,
+        orders,
         filteredPedidos,
         filterStartDate,
         filterEndDate,
@@ -112,6 +125,10 @@ export const useAdminOrder = () => {
         handleRowClick,
         handleInputChange,
         handleAddOrder,
+        handleUpdateOrder,
+        handleRemoveOrder,
         resetNewOrder,
+        isLoading,
+        error,
     };
 };

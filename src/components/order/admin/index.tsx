@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Table, { Column } from '../../table';
 import { TableRowBody } from '../../table/styles';
@@ -6,29 +6,58 @@ import { TableCell } from '../../table-cell';
 import { Modal, useModal } from '../../modal';
 import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
 import { TextField } from '../../forms/login/styles';
-import { useAdminOrder } from '../../../hooks/use-admin-order';
-import { FC } from 'react';
-import { HistoricoPedido } from '../../../types/dishes';
+import { Pedido, useOrders } from '../../../hooks/use-orders';
+import { useOrderFilter } from '../../../hooks/use-order-filters';
 
 const AdminOrder: FC = () => {
+    const { orders, addOrder } = useOrders();
     const {
         filteredPedidos,
         filterStartDate,
         filterEndDate,
-        newOrder,
         setFilterStartDate,
         setFilterEndDate,
         handleSearch,
-        handleRowClick,
-        handleInputChange,
-        handleAddOrder,
-        resetNewOrder,
-    } = useAdminOrder();
-
-    const [selectedOrder, setSelectedOrder] = useState<HistoricoPedido | null>(null);
-
+        setFilteredPedidos
+    } = useOrderFilter(orders); 
+    const [newOrder, setNewOrder] = useState<Partial<Pedido>>({});
+    const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
     const addOrderModalRef = useModal();
     const detailsModalRef = useModal();
+
+    const handleRowClick = (id: string) => {
+        const order = orders.find((pedido) => pedido.id === id);
+        return order || null;
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setNewOrder((prevOrder) => ({
+            ...prevOrder,
+            [name]: value,
+        }));
+    };
+
+    const handleAddOrder = async () => {
+        try {
+            await addOrder(newOrder as Pedido);
+            setFilteredPedidos([...orders, newOrder as Pedido]);
+            addOrderModalRef.current?.closeModal();
+        } catch (error) {
+            console.error('Erro ao adicionar pedido:', error);
+        }
+    };
+
+    const resetNewOrder = () => {
+        setNewOrder({
+            numeroPedido: '',
+            descricao: '',
+            valorTotal: 0,
+            metodoPagamento: '',
+            data: '',
+            pratos: [],
+        });
+    };
 
     const handleOpenAddOrderModal = () => {
         resetNewOrder();
@@ -40,7 +69,7 @@ const AdminOrder: FC = () => {
     };
 
     const handleOpenDetailsModal = async (id: string) => {
-        const order = await handleRowClick(id);
+        const order = handleRowClick(id);
         if (order) {
             setSelectedOrder(order);
             detailsModalRef.current?.openModal();
@@ -56,8 +85,8 @@ const AdminOrder: FC = () => {
         { field: 'numeroPedido', headerName: 'Nº Pedido' },
         { field: 'data', headerName: 'Data' },
         { field: 'descricao', headerName: 'Descrição' },
-        { field: 'valorReais', headerName: 'Valor (R$)' },
-        { field: 'valorPontos', headerName: 'Valor (Pontos)' },
+        { field: 'valorTotal', headerName: 'Valor (R$)' },
+        { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
     ];
 
     return (
@@ -103,8 +132,8 @@ const AdminOrder: FC = () => {
                         <TableCell>{row.numeroPedido}</TableCell>
                         <TableCell>{row.data}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
-                        <TableCell>{row.valorReais}</TableCell>
-                        <TableCell>{row.valorPontos}</TableCell>
+                        <TableCell>{row.valorTotal}</TableCell>
+                        <TableCell>{row.metodoPagamento}</TableCell>
                     </TableRowBody>
                 )}
             />
@@ -120,7 +149,7 @@ const AdminOrder: FC = () => {
                         fullWidth
                         variant="filled"
                         name="numeroPedido"
-                        value={newOrder.numeroPedido}
+                        value={newOrder.numeroPedido || ''}
                         onChange={handleInputChange}
                     />
                     <TextField
@@ -130,7 +159,7 @@ const AdminOrder: FC = () => {
                         fullWidth
                         variant="filled"
                         name="descricao"
-                        value={newOrder.descricao}
+                        value={newOrder.descricao || ''}
                         onChange={handleInputChange}
                     />
                     <TextField
@@ -139,18 +168,18 @@ const AdminOrder: FC = () => {
                         type="number"
                         fullWidth
                         variant="filled"
-                        name="valorReais"
-                        value={newOrder.valorReais}
+                        name="valorTotal"
+                        value={newOrder.valorTotal || 0}
                         onChange={handleInputChange}
                     />
                     <TextField
                         margin="dense"
-                        label="Valor (Pontos)"
-                        type="number"
+                        label="Método de Pagamento"
+                        type="text"
                         fullWidth
                         variant="filled"
-                        name="valorPontos"
-                        value={newOrder.valorPontos}
+                        name="metodoPagamento"
+                        value={newOrder.metodoPagamento || ''}
                         onChange={handleInputChange}
                     />
                     <TextField
@@ -160,7 +189,7 @@ const AdminOrder: FC = () => {
                         fullWidth
                         variant="filled"
                         name="data"
-                        value={newOrder.data}
+                        value={newOrder.data || ''}
                         onChange={handleInputChange}
                         InputLabelProps={{
                             shrink: true,
@@ -185,8 +214,8 @@ const AdminOrder: FC = () => {
                             <ModalTitle>Pedido: {selectedOrder.numeroPedido}</ModalTitle>
                             <ModalText>Data: {selectedOrder.data}</ModalText>
                             <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
-                            <ModalText>Valor (R$): {selectedOrder.valorReais}</ModalText>
-                            <ModalText>Valor (Pontos): {selectedOrder.valorPontos}</ModalText>
+                            <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
+                            <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
                             <ModalText>Pratos: </ModalText>
                             <Box>
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
