@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { TextField, Box, Button, Typography, Card, CardContent, Avatar } from '@mui/material';
 import axios from 'axios';
 import StarIcon from '@mui/icons-material/Star';
@@ -6,7 +6,7 @@ import { yellow } from '@mui/material/colors';
 import { apiBaseUrl } from '../../../shared/api';
 import { ContainerPontuation } from './styles';
 
-const AdminScore: React.FC = () => {
+const AdminScore: FC = () => {
     const [cpf, setCpf] = useState('');
     const [pontos, setPontos] = useState<number | null>(null);
     const [erro, setErro] = useState('');

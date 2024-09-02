@@ -21,7 +21,6 @@ export interface Ingredient {
     quantidade: string;
 }
 
-
 export const ingredientSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   quantidade: z.string().min(1, 'Quantidade é obrigatória'),

@@ -597,6 +597,72 @@
           "valor": 5.99
         }
       ]
+    },
+    {
+      "id": "1725280700025",
+      "numeroPedido": "Pedido-1725280700025",
+      "cpf": "13037025921",
+      "descricao": "Polenta Frita, Espetinho",
+      "observacoes": "",
+      "data": "2024-09-02",
+      "valorTotal": 27.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        },
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        }
+      ]
+    },
+    {
+      "id": "1725281641004",
+      "numeroPedido": "Pedido-1725281641004",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-02",
+      "valorTotal": 9.99,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725285304202",
+      "numeroPedido": "Pedido-1725285304202",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca, Polenta Frita",
+      "observacoes": "",
+      "data": "2024-09-02",
+      "valorTotal": 22.98,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        }
+      ]
     }
   ],
   "estatisticas": {

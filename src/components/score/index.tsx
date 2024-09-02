@@ -11,7 +11,7 @@ const Score: React.FC = () => {
     if (user?.role === 'ROLE_ADMINISTRATOR' || user?.role === 'ROLE_ATTENDANT') {
         return <AdminScore />;
     } else if (user?.role === 'ROLE_CUSTOMER') {
-        return <CustomerScore />;
+        return <CustomerScore cpf={user.cpf} />;
     } else {
         return <ContainerPontuation><Box>Para ver a sua pontuação por favor faça login</Box></ContainerPontuation>;
     }

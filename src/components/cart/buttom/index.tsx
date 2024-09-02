@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, FC } from 'react';
 import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
@@ -7,8 +7,9 @@ import MasterCardIcon from '@mui/icons-material/LocalAtm';
 import { useCart } from '../../../hooks/use-cart';
 import { useOrders } from '../../../hooks/use-orders';
 import { useAuth } from '../../../hooks/use-auth';
+import { getFinalValue } from '../../../utils/get-final-value';
 
-const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
+const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');
@@ -33,6 +34,16 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) 
     setIsModalOpen(false);
   };
 
+  const totalAmount = useMemo(() => {
+    return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
+  }, [cartItems]);
+  
+  const totalPontuation = useMemo(() => {
+    return cartItems.reduce((total, item) => total + (item.valorPontos || 0), 0).toFixed(2)
+  }, [cartItems]);
+
+  const finalValue = getFinalValue( parseFloat(totalAmount), parseFloat(totalPontuation))
+
   const handleFinalizeOrder = async () => {
     if (!user || !user.cpf) {
       console.error('Usuário não autenticado ou CPF não encontrado.');
@@ -46,7 +57,7 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) 
       descricao: cartItems.map(item => item.nome).join(', '),
       observacoes: '',
       data: new Date().toISOString().split('T')[0],
-      valorTotal: parseFloat(totalAmount),
+      valorTotal: finalValue,
       metodoPagamento: paymentMethod,
       pratos: cartItems.map(item => ({
         id: item.id.toString(),
@@ -64,11 +75,6 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) 
       console.error('Erro ao finalizar o pedido:', error);
     }
   };
-
-  const totalAmount = useMemo(() => {
-    return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
-  }, [cartItems]);
-
 
   const open = Boolean(anchorEl);
   const id = open ? 'cart-popover' : undefined;
@@ -112,7 +118,7 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) 
           mt={10}
           width={400}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6">
             Detalhes da Compra
           </Typography>
           {cartItems.map((item) => (
@@ -121,11 +127,14 @@ const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) 
             </Typography>
           ))}
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6">
             Total: R$ {totalAmount}
           </Typography>
+          <Typography variant="h6">
+            Total com Desconto: R$ {finalValue}
+          </Typography>
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6">
             Método de Pagamento
           </Typography>
           <RadioGroup
