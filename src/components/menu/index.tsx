@@ -30,10 +30,10 @@ const Menu: React.FC = () => {
   };
 
   const handleLoginRedirect = () => {
-    navigate('/login'); // Redireciona para a página de login
+    navigate('/login');
   };
 
-  const handleUpdateQuantity = (id: number, quantity: number) => {
+  const handleUpdateQuantity = (id: string, quantity: number) => {
     try {
       updateQuantity(id, quantity);
       toast.success('Quantidade do item atualizada com sucesso!');
@@ -43,7 +43,7 @@ const Menu: React.FC = () => {
     }
   };
 
-  const handleRemoveItem = (id: number) => {
+  const handleRemoveItem = (id: string) => {
     try {
       removeItem(id);
       toast.success('Item removido do carrinho com sucesso!');

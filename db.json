@@ -165,16 +165,6 @@
       "valorPontos": 350,
       "categoria": "Carnes",
       "status": "Disponível"
-    },
-    {
-      "id": "15",
-      "img": "https://http2.mlstatic.com/D_NQ_NP_732540-MLB29479339572_022019-O.webp",
-      "nome": "Pastel de Carne",
-      "descricao": "Pastel recheado com carne moída e temperos.",
-      "valorReais": 5.99,
-      "valorPontos": 60,
-      "categoria": "Massas",
-      "status": "Disponível"
     }
   ],
   "pedidos": [
@@ -563,6 +553,48 @@
           "nome": "Macarrão",
           "quantidade": 2,
           "valor": 25.99
+        }
+      ]
+    },
+    {
+      "id": "1725231320057",
+      "numeroPedido": "Pedido-1725231320057",
+      "cpf": "13037025921",
+      "descricao": "Pastel de Carne, Strogonoffe de Frango",
+      "observacoes": "",
+      "data": "2024-09-01",
+      "valorTotal": 77.97,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "15",
+          "nome": "Pastel de Carne",
+          "quantidade": 1,
+          "valor": 5.99
+        },
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 2,
+          "valor": 35.99
+        }
+      ]
+    },
+    {
+      "id": "1725274119079",
+      "numeroPedido": "Pedido-1725274119079",
+      "cpf": "13037025921",
+      "descricao": "Pastel de Carne",
+      "observacoes": "",
+      "data": "2024-09-02",
+      "valorTotal": 17.97,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "15",
+          "nome": "Pastel de Carne",
+          "quantidade": 3,
+          "valor": 5.99
         }
       ]
     }

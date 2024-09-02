@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export interface Prato {
-	id: number;
+	id: string;
 	nome: string;
 	descricao: string;
 	valorReais: number;

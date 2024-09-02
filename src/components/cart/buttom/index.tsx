@@ -8,7 +8,7 @@ import { useCart } from '../../../hooks/use-cart';
 import { useOrders } from '../../../hooks/use-orders';
 import { useAuth } from '../../../hooks/use-auth';
 
-const CartButton: React.FC<{ onUpdateQuantity: (id: number, quantidade: number) => void, onRemoveItem: (id: number) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
+const CartButton: React.FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');

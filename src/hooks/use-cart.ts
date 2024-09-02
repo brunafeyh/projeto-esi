@@ -44,7 +44,7 @@ export const useCart = () => {
   };
 
   const updateQuantityMutation = useMutation({
-    mutationFn: ({ id, quantity }: { id: number; quantity: number }) =>
+    mutationFn: ({ id, quantity }: { id: string; quantity: number }) =>
       cartService.updateCartItemQuantity(id, quantity),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
@@ -56,12 +56,12 @@ export const useCart = () => {
     },
   });
   
-  const updateQuantity = (id: number, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number) => {
     updateQuantityMutation.mutate({ id, quantity });
   };
   
   const removeItemMutation = useMutation({
-    mutationFn: (id: number) => cartService.removeCartItem(id),
+    mutationFn: (id: string) => cartService.removeCartItem(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast.success('Item removido do carrinho com sucesso!');
@@ -72,7 +72,7 @@ export const useCart = () => {
     },
   });
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     removeItemMutation.mutate(id);
   };
 

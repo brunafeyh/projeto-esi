@@ -34,7 +34,7 @@ class CartService {
     throw new Error('Unexpected error in addItemToCart');
   }
 
-  async updateCartItemQuantity(id: number, quantity: number): Promise<CartItem> {
+  async updateCartItemQuantity(id: string, quantity: number): Promise<CartItem> {
     const currentItem = await axios.get<CartItem>(`${this.apiUrl}/${id}`);
     if (currentItem.data) {
       const updatedItem: Partial<CartItem> = {
@@ -50,7 +50,7 @@ class CartService {
   }
   
 
-  async removeCartItem(id: number): Promise<void> {
+  async removeCartItem(id: string): Promise<void> {
     await axios.delete(`${this.apiUrl}/${id}`);
   }
 

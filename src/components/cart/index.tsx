@@ -6,8 +6,8 @@ import { IconButton, TextField } from './styles';
 
 interface CartProps {
   items: CartItem[]
-  onUpdateQuantity: (id: number, quantidade: number) => void
-  onRemoveItem: (id: number) => void
+  onUpdateQuantity: (id: string, quantidade: number) => void
+  onRemoveItem: (id: string) => void
 }
 
 const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) => {
