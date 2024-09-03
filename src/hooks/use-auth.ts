@@ -10,7 +10,7 @@ import { AuthCredentials } from '../schemas/form-types';
 import { AuthorizationRole, RegisterCredentials } from '../types/auth';
 import { usePontuation } from './use-pontuation';
 
-const API_BASE_URL = 'https://menu-master-production.up.railway.app';
+const API_BASE_URL = 'https://authentication-api-production-85ae.up.railway.app';
 
 export const useAuth = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
