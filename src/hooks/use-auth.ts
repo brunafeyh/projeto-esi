@@ -8,6 +8,7 @@ import { accessTokenAtom, refreshTokenAtom } from '../contexts/auth';
 import { getExpirationTime, getUserFromToken } from '../utils/auth';
 import { AuthCredentials } from '../schemas/form-types';
 import { AuthorizationRole, RegisterCredentials } from '../types/auth';
+import { usePontuation } from './use-pontuation';
 
 const API_BASE_URL = 'https://menu-master-production.up.railway.app';
 
@@ -16,6 +17,7 @@ export const useAuth = () => {
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
   const expirationTime = getExpirationTime(accessToken);
   const navigate = useNavigate();
+  const { setNewPontuation } = usePontuation(); // Desestruturando a função setNewPontuation do hook usePontuation
 
   const user = useMemo(() => getUserFromToken(accessToken), [accessToken]);
 
@@ -44,7 +46,6 @@ export const useAuth = () => {
       const { email, password, cpf, name } = credentials;
       const role = 'ROLE_CUSTOMER';
 
-      // Registrar usuário na API de autenticação
       await axios.post(`${API_BASE_URL}/authentication/create-user`, {
         email,
         password,
@@ -53,13 +54,13 @@ export const useAuth = () => {
         role,
       });
 
-      // Após o registro bem-sucedido, adicionar o cliente à API local (json-server)
-      await axios.post(`localhost:3000/clientes`, {
-        cpf,
-        pontos: 0, // Novo cliente começa com 0 pontos
+      // Criando uma nova pontuação para o cliente registrado
+      await setNewPontuation({
+        id: cpf, // Usando o CPF como ID, ajuste conforme necessário
+        pontosAcumulados: 0,
+        nome: name,
+        cpf: cpf,
       });
-
-      console.log('registrado com sucesso')
 
       toast.success('Registration successful!');
       return true;
@@ -68,7 +69,7 @@ export const useAuth = () => {
       console.error('Error registering user:', error);
       return false;
     }
-  }, []);
+  }, [setNewPontuation]);
 
   const logout = useCallback(async () => {
     try {

@@ -23,6 +23,12 @@
       "nome": "Maria Oliveira",
       "pontosAcumulados": 2250,
       "id": "d4a3"
+    },
+    {
+      "id": "99999999999",
+      "pontosAcumulados": 0,
+      "nome": "VINICIUS JIMENES",
+      "cpf": "99999999999"
     }
   ],
   "pratos": [
@@ -104,7 +110,8 @@
       "valorReais": 9.99,
       "valorPontos": 100,
       "categoria": "Vegano",
-      "status": "Disponível"
+      "status": "Disponível",
+      "description": "Coxinha vegana recheada com carne de jaca"
     },
     {
       "id": "9",
