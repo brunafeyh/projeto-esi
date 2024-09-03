@@ -16,7 +16,7 @@ import { useOrderFilter } from '../../../hooks/use-order-filters';
 const CustomerOrder: React.FC = () => {
     const modalRef = useModal();
     const { user } = useAuth();
-    const { orders, isLoading, error } = useOrders();
+    const { orders } = useOrders();
     const [customerOrders, setCustomerOrders] = useState<Pedido[]>([]);
     const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
 
@@ -33,7 +33,7 @@ const CustomerOrder: React.FC = () => {
         if (orders && user) {
             const userOrders = orders.filter(order => order.cpf === user.cpf);
             setCustomerOrders(userOrders);
-            handleSearch(); 
+            handleSearch();
         }
     }, [orders, user, handleSearch]);
 
@@ -59,15 +59,6 @@ const CustomerOrder: React.FC = () => {
         { field: 'valorTotal', headerName: 'Valor (R$)' },
         { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
     ];
-
-    if (isLoading) {
-        return <Typography variant="body1">Carregando pedidos...</Typography>;
-    }
-
-    if (error) {
-        return <Typography variant="body1">Erro ao carregar os pedidos do cliente.</Typography>;
-    }
-
     return (
         <Box>
             <FilterBox>
@@ -100,7 +91,7 @@ const CustomerOrder: React.FC = () => {
                 columns={columns}
                 data={filteredPedidos}
                 renderData={(row) => (
-                    <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)}>
+                    <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} sx={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
                         <TableCell>{formatDateString(row.data)}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
@@ -124,7 +115,7 @@ const CustomerOrder: React.FC = () => {
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
                                     selectedOrder.pratos.map((prato, index) => (
                                         <ModalText key={index}>
-                                            {prato.quantidade}x {prato.nome} - R$ {prato.valor.toFixed(2)}
+                                            {prato.quantidade}x {prato.nome} - R$ {prato.valor ? prato.valor.toFixed(2) : '0.00'}
                                         </ModalText>
                                     ))
                                 ) : (
@@ -141,6 +132,7 @@ const CustomerOrder: React.FC = () => {
                         </CloseButton>
                     </Box>
                 </ModalContainer>
+
             </Modal>
         </Box>
     );

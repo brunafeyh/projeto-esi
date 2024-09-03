@@ -25,8 +25,13 @@ export const useOrders = () => {
   const { data: orders = [], isLoading, error } = useQuery<Pedido[]>({
     queryKey: ['orders'],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:3000/pedidos');
-      return response.data;
+      try {
+        const response = await axios.get('http://localhost:3000/pedidos');
+        return response.data;
+      } catch (error) {
+        toast.error('Erro ao carregar os pedidos: ' + error);
+        throw error; 
+      }
     },
   });
 
