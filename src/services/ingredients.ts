@@ -5,7 +5,7 @@ import { apiBaseUrl } from '../shared/api';
 class IngredientService {
   private apiUrl: string;
 
-  constructor(apiUrl: string =  `${apiBaseUrl}/ingredientes`) {
+  constructor(apiUrl: string = `${apiBaseUrl}/ingredientes`) {
     this.apiUrl = apiUrl;
   }
 
@@ -14,6 +14,10 @@ class IngredientService {
     return response.data;
   }
 
+  async addIngredient(newIngredient: Partial<Ingredient>): Promise<Ingredient> {
+    const response = await axios.post(this.apiUrl, newIngredient);
+    return response.data;
+  }
   async updateIngredient(id: string, updatedData: Partial<Ingredient>): Promise<void> {
     await axios.put(`${this.apiUrl}/${id}`, updatedData);
   }

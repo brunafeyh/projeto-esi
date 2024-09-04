@@ -15,7 +15,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 48210,
+      "pontosAcumulados": 330,
       "id": "d0cb"
     },
     {
@@ -754,6 +754,122 @@
           "valor": 19.99
         }
       ]
+    },
+    {
+      "id": "1725409376592",
+      "numeroPedido": "Pedido-1725409376592",
+      "cpf": "13037025921",
+      "descricao": "",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 0,
+      "metodoPagamento": "dinheiro",
+      "pratos": []
+    },
+    {
+      "id": "1725409491141",
+      "numeroPedido": "Pedido-1725409491141",
+      "cpf": "13037025921",
+      "descricao": "Polenta Frita, Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 22.35,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725409566501",
+      "numeroPedido": "Pedido-1725409566501",
+      "cpf": "13037025921",
+      "descricao": "",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 0,
+      "metodoPagamento": "dinheiro",
+      "pratos": []
+    },
+    {
+      "id": "1725409631624",
+      "numeroPedido": "Pedido-1725409631624",
+      "cpf": "13037025921",
+      "descricao": "",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 0,
+      "metodoPagamento": "dinheiro",
+      "pratos": []
+    },
+    {
+      "id": "1725409651730",
+      "numeroPedido": "Pedido-1725409651730",
+      "cpf": "13037025921",
+      "descricao": "Polenta Frita, Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 22.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725409672126",
+      "numeroPedido": "Pedido-1725409672126",
+      "cpf": "13037025921",
+      "descricao": "",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 0,
+      "metodoPagamento": "cartao",
+      "pratos": []
+    },
+    {
+      "id": "1725409780438",
+      "numeroPedido": "Pedido-1725409780438",
+      "cpf": "13037025921",
+      "descricao": "Polenta Frita, Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 22.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        },
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
     }
   ],
   "estatisticas": {
@@ -881,6 +997,11 @@
       "id": "12",
       "nome": "Farofa",
       "quantidade": "25 kg"
+    },
+    {
+      "id": "8e63",
+      "nome": "José Francisco ",
+      "quantidade": "4"
     }
   ],
   "categorias": [

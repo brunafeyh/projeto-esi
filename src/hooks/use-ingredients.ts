@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import IngredientService from '../services/ingredients';
 import { Ingredient } from '../types/dishes';
 
-const ingredientService = new IngredientService()
+const ingredientService = new IngredientService();
 
 const useIngredients = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -19,6 +19,18 @@ const useIngredients = () => {
     const filteredIngredients = ingredients.filter(ingredient =>
         (ingredient.nome || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const addIngredientMutation = useMutation({
+        mutationFn: (newIngredient: Partial<Ingredient>) =>
+            ingredientService.addIngredient(newIngredient), // Chama o serviço para adicionar o ingrediente
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['ingredients'] }); // Invalida a query para atualizar os ingredientes
+            toast.success('Ingrediente adicionado com sucesso!');
+        },
+        onError: () => {
+            toast.error('Erro ao adicionar o ingrediente.');
+        },
+    });
 
     const updateIngredientMutation = useMutation({
         mutationFn: ({ id, updatedData }: { id: string; updatedData: Partial<Ingredient> }) =>
@@ -47,6 +59,7 @@ const useIngredients = () => {
         ingredients: filteredIngredients,
         searchTerm,
         setSearchTerm,
+        addIngredient: addIngredientMutation.mutate,
         updateIngredient: updateIngredientMutation.mutate,
         deleteIngredient: deleteIngredientMutation.mutate,
         isLoading,

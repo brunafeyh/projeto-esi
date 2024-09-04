@@ -26,7 +26,7 @@ export const usePontuation = () => {
       setLoading(true);
       setError(null);
       try {
-        const updatedPontuation = await pontuationService.updatePontuation(pontuation.id, pontuation.pontosAcumulados + pointsToAdd);
+        const updatedPontuation = await pontuationService.updatePontuation(pontuation.id, pointsToAdd);
         setPontuationState(updatedPontuation);
       } catch (err) {
         setError('Erro ao atualizar a pontuação');

@@ -8,13 +8,15 @@ import { InputAdornment, IconButton, Dialog, DialogActions, DialogContent, Dialo
 import { IconSearch, TextField } from '../../components/cardapio-filter/styles';
 import { TableRowBody } from '../../components/table/styles';
 import { TableCell } from '../../components/table-cell';
-import { ActionBox, Box, DeleteIcon, EditIcon } from './styles';
+import { ActionBox, Box, DeleteIcon, EditIcon } from './styles'; 
 import { IngredientFormInputs } from '../../types/dishes';
+import AddIcon from '@mui/icons-material/Add';
 
 const Estoque: FC = () => {
-    const { ingredients, searchTerm, setSearchTerm, updateIngredient, deleteIngredient } = useIngredients();
+    const { ingredients, searchTerm, setSearchTerm, updateIngredient, deleteIngredient, addIngredient } = useIngredients(); 
     const [editIngredient, setEditIngredient] = useState<string | null>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const { handleSubmit, control, reset } = useForm<IngredientFormInputs>({
         defaultValues: {
@@ -26,15 +28,25 @@ const Estoque: FC = () => {
     const handleEditClick = (id: string, name: string, quantity: string) => {
         setEditIngredient(id);
         reset({ nome: name, quantidade: quantity });
+        setIsEditing(true);
+        setOpen(true);
+    };
+
+    const handleAddClick = () => {
+        setEditIngredient(null); 
+        reset({ nome: '', quantidade: '' });
+        setIsEditing(false); 
         setOpen(true);
     };
 
     const onSubmit = (data: IngredientFormInputs) => {
         if (editIngredient) {
             updateIngredient({ id: editIngredient, updatedData: data });
-            setOpen(false);
-            setEditIngredient(null);
+        } else {
+            addIngredient(data); // Adiciona novo ingrediente
         }
+        setOpen(false);
+        setEditIngredient(null);
     };
 
     const handleDeleteClick = (id: string) => {
@@ -66,6 +78,14 @@ const Estoque: FC = () => {
                         disableUnderline: false,
                     }}
                 />
+                <Button
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                    onClick={handleAddClick} 
+                    sx={{ ml: 2 }}
+                >
+                    Adicionar Ingrediente
+                </Button>
             </Box>
 
             <Table
@@ -94,7 +114,7 @@ const Estoque: FC = () => {
             />
 
             <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Editar Ingrediente</DialogTitle>
+                <DialogTitle>{isEditing ? 'Editar Ingrediente' : 'Adicionar Ingrediente'}</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Controller
@@ -131,7 +151,7 @@ const Estoque: FC = () => {
                                 Cancelar
                             </Button>
                             <Button type="submit" variant="contained" sx={{ ml: 1 }}>
-                                Salvar
+                                {isEditing ? 'Salvar Alterações' : 'Adicionar Ingrediente'}
                             </Button>
                         </DialogActions>
                     </form>
