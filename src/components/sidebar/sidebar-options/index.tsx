@@ -3,6 +3,7 @@ import { SidebarContainerOptions } from '../style'
 import { CollapsedOptionsCliente, ExpandedOptionsCliente } from '../sidebar-containers/cliente'
 import { useAuth } from '../../../hooks/use-auth'
 import { CollapsedOptionsAdmin, ExpandedOptionsAdmin } from '../sidebar-containers/admin'
+import { CollapsedOptionsAttendant, ExpandedOptionsAttendant } from '../sidebar-containers/attendant'
 
 interface SidebarOptionsProps {
 	isCollapsed: boolean
@@ -27,7 +28,15 @@ const SidebarOptions: React.FC<SidebarOptionsProps> = ({ isCollapsed }) => {
 		  ) : (
 			<ExpandedOptionsAdmin onChange={handleChange} />
 		  );
-		} else {
+		}
+		else if (user?.role === 'ROLE_ATTENDANT'){
+			return isCollapsed ? (
+				<CollapsedOptionsAttendant onChange={handleChange} />
+			  ) : (
+				<ExpandedOptionsAttendant onChange={handleChange} />
+			  );
+		}
+		 else {
 		  return isCollapsed ? (
 			<CollapsedOptionsCliente onChange={handleChange} />
 		  ) : (
