@@ -55,7 +55,6 @@ const Cardapio: FC = () => {
 		});
 	};
 
-	// Handle dish addition
 	const handleAddDish = async () => {
 		try {
 			await addDish(newDish as Prato);

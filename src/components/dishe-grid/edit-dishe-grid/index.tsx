@@ -35,14 +35,17 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
             deleteModalRef.current?.closeModal();
         }
     };
+
     const handleCancel = () => {
         deleteModalRef.current?.closeModal();
     };
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
         if (formState) {
             setFormState({
                 ...formState,
-                [event.target.name]: event.target.value,
+                [name]: name === 'valorReais' || name === 'valorPontos' ? parseFloat(value) || 0 : value,
             });
         }
     };
@@ -77,7 +80,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                         <TextField
                             fullWidth
                             label="Nome"
-                            name="name"
+                            name="nome"
                             variant='filled'
                             value={formState?.nome || ''}
                             onChange={handleChange}
@@ -86,7 +89,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                         <TextField
                             fullWidth
                             label="Descrição"
-                            name="description"
+                            name="descricao"
                             variant='filled'
                             value={formState?.descricao || ''}
                             onChange={handleChange}
@@ -95,7 +98,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                         <TextField
                             fullWidth
                             label="Preço"
-                            name="price"
+                            name="valorReais"
                             type="number"
                             variant='filled'
                             value={formState?.valorReais || ''}
@@ -105,7 +108,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                         <TextField
                             fullWidth
                             label="Pontos"
-                            name="pontos"
+                            name="valorPontos"
                             type="number"
                             variant='filled'
                             value={formState?.valorPontos || ''}
@@ -123,7 +126,6 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                     </Box>
                 </EditBox>
             </Modal>
-
 
             <Modal ref={deleteModalRef} >
                 <EditBox>
