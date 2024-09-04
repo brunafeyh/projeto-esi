@@ -28,7 +28,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
-				<TitleCard>R$ {dishe.valorReais.toFixed(2)}</TitleCard>
+				<TitleCard>R$ {dishe.valorReais}</TitleCard>
 				<TitleCard>{dishe.valorPontos} pontos</TitleCard>
 				<Chip label={dishe.categoria} />
 				<IconButton color="secondary" aria-label="edit" onClick={() => onEdit(dishe)}>

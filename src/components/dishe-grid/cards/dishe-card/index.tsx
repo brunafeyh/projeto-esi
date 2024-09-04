@@ -29,7 +29,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart(dishe)}>
 					<ShoppingCartIcon />
 				</IconButton>
-				<TitleCard>R$ {dishe.valorReais.toFixed(2)}</TitleCard>
+				<TitleCard>R$ {dishe.valorReais}</TitleCard>
 				<TitleCard>{dishe.valorPontos} pontos</TitleCard>
 				<Chip label={dishe.categoria} />
 			</CardActions>

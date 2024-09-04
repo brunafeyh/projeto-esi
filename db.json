@@ -172,6 +172,15 @@
       "valorPontos": 350,
       "categoria": "Carnes",
       "status": "Disponível"
+    },
+    {
+      "id": "4c5e",
+      "nome": "Bruna Carolina da Silva Feyh",
+      "descricao": "e2x33c3c34",
+      "valorReais": "4",
+      "valorPontos": "4",
+      "categoria": "34c43c",
+      "img": ""
     }
   ],
   "pedidos": [
