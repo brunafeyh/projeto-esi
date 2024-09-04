@@ -27,3 +27,8 @@ export const ingredientSchema = z.object({
 });
 
 export type IngredientFormInputs = z.infer<typeof ingredientSchema>;
+
+export interface IngredientesPrato {
+    idPrato: string;
+    ingredientes: Ingredient[];
+}

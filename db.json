@@ -11,11 +11,65 @@
       "pontos": 1500
     }
   ],
+  "ingredientesPrato": [
+    {
+      "idPrato": "1",
+      "ingredientes": [
+        {
+          "id": "1",
+          "nome": "Farinha",
+          "quantidade": "100g"
+        },
+        {
+          "id": "2",
+          "nome": "Calabresa",
+          "quantidade": "200g"
+        }
+      ]
+    },
+    {
+      "idPrato": "2",
+      "ingredientes": [
+        {
+          "id": "3",
+          "nome": "Carne Moída",
+          "quantidade": "300g"
+        },
+        {
+          "id": "4",
+          "nome": "Molho de Tomate",
+          "quantidade": "150g"
+        }
+      ]
+    }
+  ],
+  "ingredientes": [
+    {
+      "id": "1",
+      "nome": "Farinha",
+      "quantidade": "1kg"
+    },
+    {
+      "id": "2",
+      "nome": "Calabresa",
+      "quantidade": "500g"
+    },
+    {
+      "id": "3",
+      "nome": "Carne Moída",
+      "quantidade": "1kg"
+    },
+    {
+      "id": "4",
+      "nome": "Molho de Tomate",
+      "quantidade": "500ml"
+    }
+  ],
   "pontuacaoClientes": [
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 560,
+      "pontosAcumulados": 1387,
       "id": "d0cb"
     },
     {
@@ -870,6 +924,54 @@
           "valor": 9.99
         }
       ]
+    },
+    {
+      "id": "1725452151886",
+      "numeroPedido": "Pedido-1725452151886",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca, Polenta Frita",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 32.94,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 2,
+          "valor": 9.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1725452648742",
+      "numeroPedido": "Pedido-1725452648742",
+      "cpf": "13037025921",
+      "descricao": "Macarrão, Strogonoffe de Frango",
+      "observacoes": "",
+      "data": "2024-09-04",
+      "valorTotal": 165.94,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "2",
+          "nome": "Macarrão",
+          "quantidade": 5,
+          "valor": 25.99
+        },
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 1,
+          "valor": 35.99
+        }
+      ]
     }
   ],
   "estatisticas": {
@@ -957,43 +1059,6 @@
     ],
     "lucroTotal": 32540.75
   },
-  "ingredientes": [
-    {
-      "id": "6",
-      "nome": "Calabresa",
-      "quantidade": "25 kg"
-    },
-    {
-      "id": "7",
-      "nome": "Cebola",
-      "quantidade": "30 kg"
-    },
-    {
-      "id": "9",
-      "nome": "Farinha de Trigo",
-      "quantidade": "60 kg"
-    },
-    {
-      "id": "10",
-      "nome": "Jaca",
-      "quantidade": "15 kg"
-    },
-    {
-      "id": "11",
-      "nome": "Chocolate Belga",
-      "quantidade": "10 kg"
-    },
-    {
-      "id": "12",
-      "nome": "Farofa",
-      "quantidade": "25 kg"
-    },
-    {
-      "id": "8e63",
-      "nome": "José Francisco ",
-      "quantidade": "4"
-    }
-  ],
   "categorias": [
     {
       "id": "1",
@@ -1066,31 +1131,5 @@
       ]
     }
   ],
-  "carrinho": [
-    {
-      "id": "8",
-      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
-      "nome": "Coxinha de Jaca",
-      "descricao": "Coxinha vegana recheada com carne de jaca.",
-      "valorReais": 9.99,
-      "valorPontos": 100,
-      "categoria": "Vegano",
-      "status": "Disponível",
-      "description": "Coxinha vegana recheada com carne de jaca",
-      "quantidade": 1,
-      "valorTotal": 9.99
-    },
-    {
-      "id": "7",
-      "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
-      "nome": "Polenta Frita",
-      "descricao": "Polenta frita crocante",
-      "valorReais": 12.99,
-      "valorPontos": 130,
-      "categoria": "Brasil",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 12.99
-    }
-  ]
+  "carrinho": []
 }
