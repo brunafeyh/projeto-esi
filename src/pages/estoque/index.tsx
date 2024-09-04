@@ -4,7 +4,7 @@ import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
 import useIngredients from '../../hooks/use-ingredients';
 import Table, { Column } from '../../components/table';
-import { InputAdornment, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField as MuiTextField } from '@mui/material';
+import { InputAdornment, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField as MuiTextField, Typography } from '@mui/material';
 import { IconSearch, TextField } from '../../components/cardapio-filter/styles';
 import { TableRowBody } from '../../components/table/styles';
 import { TableCell } from '../../components/table-cell';
@@ -17,6 +17,8 @@ const Estoque: FC = () => {
     const [editIngredient, setEditIngredient] = useState<string | null>(null);
     const [open, setOpen] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+    const [ingredientToDelete, setIngredientToDelete] = useState<string | null>(null);
 
     const { handleSubmit, control, reset } = useForm<IngredientFormInputs>({
         defaultValues: {
@@ -43,14 +45,23 @@ const Estoque: FC = () => {
         if (editIngredient) {
             updateIngredient({ id: editIngredient, updatedData: data });
         } else {
-            addIngredient(data); // Adiciona novo ingrediente
+            addIngredient(data);
         }
         setOpen(false);
         setEditIngredient(null);
     };
 
     const handleDeleteClick = (id: string) => {
-        deleteIngredient(id);
+        setIngredientToDelete(id);
+        setDeleteDialogOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (ingredientToDelete) {
+            deleteIngredient(ingredientToDelete);
+        }
+        setDeleteDialogOpen(false);
+        setIngredientToDelete(null);
     };
 
     const columns: Column[] = [
@@ -112,7 +123,6 @@ const Estoque: FC = () => {
                     </TableRowBody>
                 )}
             />
-
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>{isEditing ? 'Editar Ingrediente' : 'Adicionar Ingrediente'}</DialogTitle>
                 <DialogContent>
@@ -156,6 +166,24 @@ const Estoque: FC = () => {
                         </DialogActions>
                     </form>
                 </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}
+            >
+                <DialogTitle>Confirmar Exclusão</DialogTitle>
+                <DialogContent>
+                    <Typography>Tem certeza que deseja excluir este ingrediente?</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setDeleteDialogOpen(false)} variant="outlined">
+                        Cancelar
+                    </Button>
+                    <Button onClick={confirmDelete} variant="contained" color="error">
+                        Excluir
+                    </Button>
+                </DialogActions>
             </Dialog>
         </PageLayout>
     );
