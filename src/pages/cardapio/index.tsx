@@ -7,8 +7,9 @@ import EditDisheGrid from '../../components/dishe-grid/edit-dishe-grid';
 import { useAuth } from '../../hooks/use-auth';
 import DisheGrid from '../../components/dishe-grid';
 import { useDishes } from '../../hooks/use-dishes';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { Prato } from '../../types/dishes';
+import { TextField } from '../../components/forms/login/styles';
 
 const Cardapio: FC = () => {
 	const {
@@ -94,7 +95,7 @@ const Cardapio: FC = () => {
 						label="Nome"
 						type="text"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="nome"
 						value={newDish.nome}
 						onChange={handleInputChange}
@@ -105,7 +106,7 @@ const Cardapio: FC = () => {
 						label="Descrição"
 						type="text"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="descricao"
 						value={newDish.descricao}
 						onChange={handleInputChange}
@@ -116,7 +117,7 @@ const Cardapio: FC = () => {
 						label="Valor (R$)"
 						type="number"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="valorReais"
 						value={newDish.valorReais}
 						onChange={handleInputChange}
@@ -127,7 +128,7 @@ const Cardapio: FC = () => {
 						label="Valor em Pontos"
 						type="number"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="valorPontos"
 						value={newDish.valorPontos}
 						onChange={handleInputChange}
@@ -138,7 +139,7 @@ const Cardapio: FC = () => {
 						label="Categoria"
 						type="text"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="categoria"
 						value={newDish.categoria}
 						onChange={handleInputChange}
@@ -149,7 +150,7 @@ const Cardapio: FC = () => {
 						label="URL da Imagem"
 						type="text"
 						fullWidth
-						variant="outlined"
+						variant="filled"
 						name="img"
 						value={newDish.img}
 						onChange={handleInputChange}
