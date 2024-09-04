@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Table, { Column } from '../../../components/table';
+import { TableRowBody } from '../../table/styles';
 import { TableCell } from '../../../components/table-cell';
 import { Modal, useModal } from '../../../components/modal';
 import { Pedido, useOrders } from '../../../hooks/use-orders';
@@ -8,12 +9,10 @@ import { useAuth } from '../../../hooks/use-auth';
 import { apiBaseUrl } from '../../../shared/api';
 import axios from 'axios';
 import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style';
-import { TableRowBody } from '../../table/styles';
 import { TextField } from '../../forms/login/styles';
-import { formatDateString } from '../../../utils/graph';
 import { useOrderFilter } from '../../../hooks/use-order-filters';
 
-const CustomerOrder: React.FC = () => {
+const CustomerOrder: FC = () => {
     const modalRef = useModal();
     const { user } = useAuth();
     const { orders } = useOrders();
@@ -33,9 +32,9 @@ const CustomerOrder: React.FC = () => {
         if (orders && user) {
             const userOrders = orders.filter(order => order.cpf === user.cpf);
             setCustomerOrders(userOrders);
-            handleSearch();
+            handleSearch(); 
         }
-    }, [orders, user, handleSearch]);
+    }, [orders, user]); 
 
     const handleRowClick = async (id: string) => {
         try {
@@ -59,6 +58,7 @@ const CustomerOrder: React.FC = () => {
         { field: 'valorTotal', headerName: 'Valor (R$)' },
         { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
     ];
+
     return (
         <Box>
             <FilterBox>
@@ -93,7 +93,7 @@ const CustomerOrder: React.FC = () => {
                 renderData={(row) => (
                     <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} sx={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
-                        <TableCell>{formatDateString(row.data)}</TableCell>
+                        <TableCell>{row.data}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
@@ -106,7 +106,7 @@ const CustomerOrder: React.FC = () => {
                     {selectedOrder ? (
                         <>
                             <ModalTitle variant="h6">Pedido: {selectedOrder.numeroPedido}</ModalTitle>
-                            <ModalText>Data: {formatDateString(selectedOrder.data)}</ModalText>
+                            <ModalText>Data: {selectedOrder.data}</ModalText>
                             <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
                             <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
                             <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
@@ -132,7 +132,6 @@ const CustomerOrder: React.FC = () => {
                         </CloseButton>
                     </Box>
                 </ModalContainer>
-
             </Modal>
         </Box>
     );

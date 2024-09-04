@@ -15,7 +15,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 1460,
+      "pontosAcumulados": 48210,
       "id": "d0cb"
     },
     {
@@ -668,6 +668,90 @@
           "nome": "Polenta Frita",
           "quantidade": 1,
           "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1725407336293",
+      "numeroPedido": "Pedido-1725407336293",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca",
+      "observacoes": "",
+      "data": "2024-09-03",
+      "valorTotal": 8.69,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        }
+      ]
+    },
+    {
+      "id": "1725407583857",
+      "numeroPedido": "Pedido-1725407583857",
+      "cpf": "13037025921",
+      "descricao": "Polenta Frita",
+      "observacoes": "",
+      "data": "2024-09-03",
+      "valorTotal": 11.69,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1725407874617",
+      "numeroPedido": "Pedido-1725407874617",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca, Macarrão",
+      "observacoes": "",
+      "data": "2024-09-03",
+      "valorTotal": 35.98,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        },
+        {
+          "id": "2",
+          "nome": "Macarrão",
+          "quantidade": 1,
+          "valor": 25.99
+        }
+      ]
+    },
+    {
+      "id": "1725407926764",
+      "numeroPedido": "Pedido-1725407926764",
+      "cpf": "13037025921",
+      "descricao": "Espetinho, Prato Feito",
+      "observacoes": "",
+      "data": "2024-09-03",
+      "valorTotal": 4.979999999999997,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        },
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
         }
       ]
     }

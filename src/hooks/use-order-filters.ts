@@ -14,10 +14,18 @@ interface UseOrderFilterReturn {
 
 export const useOrderFilter = (orders: Pedido[]): UseOrderFilterReturn => {
     const { getQueryParam, setQueryParam } = useQueryParams();
-    
+
     const [filteredPedidos, setFilteredPedidos] = useState<Pedido[]>(orders || []);
     const [filterStartDate, setFilterStartDate] = useState<string>(getQueryParam('startDate', ''));
     const [filterEndDate, setFilterEndDate] = useState<string>(getQueryParam('endDate', ''));
+
+    const handleSetFilterStartDate = useCallback((date: string) => {
+        setFilterStartDate(date);
+    }, []);
+
+    const handleSetFilterEndDate = useCallback((date: string) => {
+        setFilterEndDate(date);
+    }, []);
 
     const handleSearch = useCallback(() => {
         let filtered = orders;
@@ -50,8 +58,8 @@ export const useOrderFilter = (orders: Pedido[]): UseOrderFilterReturn => {
         filteredPedidos,
         filterStartDate,
         filterEndDate,
-        setFilterStartDate,
-        setFilterEndDate,
+        setFilterStartDate: handleSetFilterStartDate, 
+        setFilterEndDate: handleSetFilterEndDate,     
         setFilteredPedidos,
         handleSearch,
     };

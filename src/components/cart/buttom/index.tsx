@@ -1,5 +1,5 @@
-import { useState, useMemo, FC } from 'react';
-import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup, FormControlLabel, Radio, Divider } from '@mui/material';
+import React, { useState, useMemo, FC, useEffect } from 'react';
+import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup, FormControlLabel, Radio, Divider, TextField } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
@@ -7,15 +7,30 @@ import MasterCardIcon from '@mui/icons-material/LocalAtm';
 import { useCart } from '../../../hooks/use-cart';
 import { useOrders } from '../../../hooks/use-orders';
 import { useAuth } from '../../../hooks/use-auth';
-import { getFinalValue } from '../../../utils/get-final-value';
+import { usePontuation } from '../../../hooks/use-pontuation';
 
 const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');
+  const [pointsToUse, setPointsToUse] = useState(0); 
   const { cartItems, clearCart } = useCart();
   const { addOrder } = useOrders();
   const { user } = useAuth();
+  
+  const { pontuation, fetchPontuation, updatePoints, loading, error } = usePontuation();
+
+  useEffect(() => {
+    if (user?.cpf) {
+      fetchPontuation(user.cpf);
+    }
+  }, [user?.cpf, fetchPontuation]);
+
+  useEffect(() => {
+    if (pontuation && pontuation.pontosAcumulados < pointsToUse) {
+      setPointsToUse(pontuation.pontosAcumulados);
+    }
+  }, [pontuation, pointsToUse]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,11 +53,15 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
     return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
   }, [cartItems]);
   
-  const totalPontuation = useMemo(() => {
-    return cartItems.reduce((total, item) => total + (item.valorPontos || 0), 0).toFixed(2)
-  }, [cartItems]);
+  const discountValue = useMemo(() => {
+    return pointsToUse * 0.01; 
+  }, [pointsToUse]);
 
-  const finalValue = getFinalValue( parseFloat(totalAmount), parseFloat(totalPontuation))
+  const finalValue = parseFloat(totalAmount) - discountValue;
+
+  const pointsEarned = useMemo(() => {
+    return cartItems.reduce((total, item) => total + (item.valorPontos || 0), 0);
+  }, [cartItems]);
 
   const handleFinalizeOrder = async () => {
     if (!user || !user.cpf) {
@@ -71,6 +90,10 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
       addOrder(order);
       clearCart();
       setIsModalOpen(false);
+      if (pontuation) {
+        const updatedPoints = pontuation.pontosAcumulados - pointsToUse + pointsEarned;
+        await updatePoints(updatedPoints);
+      }
     } catch (error) {
       console.error('Erro ao finalizar o pedido:', error);
     }
@@ -131,8 +154,26 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
             Total: R$ {totalAmount}
           </Typography>
           <Typography variant="h6">
+            Desconto Aplicado: R$ {discountValue}
+          </Typography>
+          <Typography variant="h6">
             Total com Desconto: R$ {finalValue}
           </Typography>
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="h6">
+            Pontos Disponíveis: {pontuation?.pontosAcumulados || 0}
+          </Typography>
+          <TextField
+            label="Pontos a Utilizar"
+            type="number"
+            variant="filled"
+            value={pointsToUse}
+            onChange={(e) => setPointsToUse(Math.min(Number(e.target.value), pontuation?.pontosAcumulados || 0))}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            fullWidth
+          />
           <Divider sx={{ my: 2 }} />
           <Typography variant="h6">
             Método de Pagamento
@@ -152,10 +193,11 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
             </Box>
           )}
           <Box mt={2}>
-            <Button fullWidth variant="contained" color="primary" onClick={handleFinalizeOrder}>
+            <Button fullWidth variant="contained" color="primary" onClick={handleFinalizeOrder} disabled={loading}>
               Finalizar Pedido
             </Button>
           </Box>
+          {error && <Typography color="error">{error}</Typography>}
         </Box>
       </Modal>
     </>

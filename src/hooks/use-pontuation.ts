@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PontuationService, { PontuationCliente } from '../services/pontuation';
 
 const pontuationService = new PontuationService();
@@ -8,7 +8,7 @@ export const usePontuation = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPontuation = async (cpf: string) => {
+  const fetchPontuation = useCallback(async (cpf: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -19,9 +19,9 @@ export const usePontuation = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const updatePoints = async (pointsToAdd: number) => {
+  const updatePoints = useCallback(async (pointsToAdd: number) => {
     if (pontuation && pontuation.id) {
       setLoading(true);
       setError(null);
@@ -34,9 +34,9 @@ export const usePontuation = () => {
         setLoading(false);
       }
     }
-  };
+  }, [pontuation]);
 
-  const setNewPontuation = async (newClientPontuation: PontuationCliente) => {
+  const setNewPontuation = useCallback(async (newClientPontuation: PontuationCliente) => {
     setLoading(true);
     setError(null);
     try {
@@ -47,7 +47,7 @@ export const usePontuation = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return {
     pontuation,
