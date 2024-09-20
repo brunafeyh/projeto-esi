@@ -9,15 +9,14 @@ import { getExpirationTime, getUserFromToken } from '../utils/auth';
 import { AuthCredentials } from '../schemas/form-types';
 import { AuthorizationRole, RegisterCredentials } from '../types/auth';
 import { usePontuation } from './use-pontuation';
-
-const API_BASE_URL = 'https://authentication-api-production-85ae.up.railway.app';
+import { API_BASE_URL } from '../shared/api';
 
 export const useAuth = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
   const expirationTime = getExpirationTime(accessToken);
   const navigate = useNavigate();
-  const { setNewPontuation } = usePontuation(); // Desestruturando a função setNewPontuation do hook usePontuation
+  const { setNewPontuation } = usePontuation(); 
 
   const user = useMemo(() => getUserFromToken(accessToken), [accessToken]);
 
@@ -54,9 +53,8 @@ export const useAuth = () => {
         role,
       });
 
-      // Criando uma nova pontuação para o cliente registrado
       await setNewPontuation({
-        id: cpf, // Usando o CPF como ID, ajuste conforme necessário
+        id: cpf, 
         pontosAcumulados: 0,
         nome: name,
         cpf: cpf,
@@ -113,7 +111,6 @@ export const useAuth = () => {
   }, [expirationTime]);
 
   const isRefreshTokenExpired = useCallback(() => {
-    // Assuming refreshToken expiration is the same as accessToken for simplicity
     return Date.now() > expirationTime;
   }, [expirationTime]);
 
@@ -121,14 +118,18 @@ export const useAuth = () => {
     const currentTime = Date.now();
     return !isAccessTokenExpired() && currentTime > expirationTime - 30000;
   }, [expirationTime, isAccessTokenExpired]);
-
+  const isClient = () => {
+    const {user} = useAuth()
+      return !(user?.role === 'ROLE_ATTENDANT' || user?.role === 'ROLE_ADMINISTRATOR')
+  }
   return {
     token: accessToken,
     accessToken,
     refreshToken,
+    isClient,
     user,
     login,
-    register, // Include register in the return object
+    register,
     logout,
     isAuthenticated,
     isRefreshTokenExpired,

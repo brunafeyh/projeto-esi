@@ -16,11 +16,12 @@ import { useAuth } from '../../hooks/use-auth';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../hooks/use-cart';
 import { toast } from 'react-toastify';
+import ChatBox from '../chat-box';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
   const { updateQuantity, removeItem } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isClient } = useAuth();
   const navigate = useNavigate();
 
   const popoverRef = usePopover();
@@ -71,10 +72,11 @@ const Menu: React.FC = () => {
           <Stack direction="row" alignItems="center" flexGrow={1}>
             <Logo />
             {isAuthenticated() && <Pontuation />}
-            <CartButton
+            {isClient() && (<CartButton
               onUpdateQuantity={handleUpdateQuantity}
               onRemoveItem={handleRemoveItem}
-            />
+            />)}
+            <ChatBox />
             {isAuthenticated() ? (
               <IconButton onClick={openPopover(popoverRef)}>
                 <AvatarProfile />

@@ -13,11 +13,11 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cartao');
-  const [pointsToUse, setPointsToUse] = useState(0); 
+  const [pointsToUse, setPointsToUse] = useState(0);
   const { cartItems, clearCart } = useCart();
   const { addOrder } = useOrders();
   const { user } = useAuth();
-  
+
   const { pontuation, fetchPontuation, updatePoints, loading, error } = usePontuation();
 
   useEffect(() => {
@@ -52,9 +52,9 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   const totalAmount = useMemo(() => {
     return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
   }, [cartItems]);
-  
+
   const discountValue = useMemo(() => {
-    return pointsToUse * 0.01; 
+    return pointsToUse * 0.01;
   }, [pointsToUse]);
 
   const finalValue = parseFloat(totalAmount) - discountValue;
@@ -124,10 +124,14 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
         }}
       >
         <Box p={2} width={300}>
-          <Cart items={cartItems} onUpdateQuantity={onUpdateQuantity} onRemoveItem={onRemoveItem} />
-          <Button fullWidth variant="contained" color="primary" onClick={handleOpenModal}>
-            Finalizar Compra
-          </Button>
+          {user ? (
+            <>
+              <Cart items={cartItems} onUpdateQuantity={onUpdateQuantity} onRemoveItem={onRemoveItem} />
+              <Button fullWidth variant="contained" color="primary" onClick={handleOpenModal}>
+                Finalizar Compra
+              </Button>
+            </>
+          ) : <Typography>Para fazer uma compra por favor faça login</Typography>}
         </Box>
       </Popover>
 

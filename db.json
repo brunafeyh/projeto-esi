@@ -25,7 +25,8 @@
           "nome": "Calabresa",
           "quantidade": "200g"
         }
-      ]
+      ],
+      "id": "0972"
     },
     {
       "idPrato": "2",
@@ -40,15 +41,11 @@
           "nome": "Molho de Tomate",
           "quantidade": "150g"
         }
-      ]
+      ],
+      "id": "f85a"
     }
   ],
   "ingredientes": [
-    {
-      "id": "1",
-      "nome": "Farinha",
-      "quantidade": "1kg"
-    },
     {
       "id": "2",
       "nome": "Calabresa",
@@ -69,7 +66,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 1387,
+      "pontosAcumulados": 1617,
       "id": "d0cb"
     },
     {
@@ -157,17 +154,6 @@
       "status": "Disponível"
     },
     {
-      "id": "8",
-      "img": "https://www.deline.com.br/assets/images/recipes/coxinha-de-jaca/mobile/thumb-video.jpg?v3",
-      "nome": "Coxinha de Jaca",
-      "descricao": "Coxinha vegana recheada com carne de jaca.",
-      "valorReais": 9.99,
-      "valorPontos": 100,
-      "categoria": "Vegano",
-      "status": "Disponível",
-      "description": "Coxinha vegana recheada com carne de jaca"
-    },
-    {
       "id": "9",
       "img": "https://wallpaper.forfun.com/fetch/68/688a328a838881302e19874992e60345.jpeg",
       "nome": "Lasanha",
@@ -226,6 +212,15 @@
       "valorPontos": 350,
       "categoria": "Carnes",
       "status": "Disponível"
+    },
+    {
+      "id": "bc73",
+      "nome": "",
+      "descricao": "",
+      "valorReais": 0,
+      "valorPontos": 0,
+      "categoria": "",
+      "img": ""
     }
   ],
   "pedidos": [
@@ -970,6 +965,30 @@
           "nome": "Strogonoffe de Frango",
           "quantidade": 1,
           "valor": 35.99
+        }
+      ]
+    },
+    {
+      "id": "1725621118834",
+      "numeroPedido": "Pedido-1725621118834",
+      "cpf": "13037025921",
+      "descricao": "Coxinha de Jaca, Polenta Frita",
+      "observacoes": "",
+      "data": "2024-09-06",
+      "valorTotal": 35.97,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "8",
+          "nome": "Coxinha de Jaca",
+          "quantidade": 1,
+          "valor": 9.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 2,
+          "valor": 12.99
         }
       ]
     }
