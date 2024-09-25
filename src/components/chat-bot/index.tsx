@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
 import { Box, Typography, IconButton, Dialog } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
-import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
-import { ChatContainer, ControlsContainer, MessageBox, MessagesContainer, StyledButton, StyledTextField } from './styles';
+import { Button, ChatContainer, ControlsContainer, Icon, MessageBox, MessagesContainer, TextField } from './styles';
 import { useChatBot } from '../../hooks/use-chat-bot';
 import { useVoiceRecognition } from '../../hooks/use-voice-recognition';
 import ChatIcon from '@mui/icons-material/Chat'
@@ -57,7 +56,7 @@ const ChatBot: FC = () => {
                     )}
 
                     <ControlsContainer>
-                        <StyledTextField
+                        <TextField
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
                             placeholder="Digite ou use a voz..."
@@ -75,9 +74,9 @@ const ChatBot: FC = () => {
                                 ),
                             }}
                         />
-                        <StyledButton variant="contained" color="primary" onClick={handleSendClick}>
-                            <SendIcon />
-                        </StyledButton>
+                        <Button variant="contained" color="primary" onClick={handleSendClick}>
+                            <Icon />
+                        </Button>
                     </ControlsContainer>
                 </ChatContainer>
             </Dialog>

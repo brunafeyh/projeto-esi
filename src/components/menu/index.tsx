@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton, Stack, Tooltip } from '@mui/material';
 import { useAtom } from 'jotai';
@@ -18,7 +18,7 @@ import { useCart } from '../../hooks/use-cart';
 import { toast } from 'react-toastify';
 import ChatBot from '../chat-bot';
 
-const Menu: React.FC = () => {
+const Menu: FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
   const { updateQuantity, removeItem } = useCart();
   const { isAuthenticated, isClient } = useAuth();

@@ -212,15 +212,6 @@
       "valorPontos": 350,
       "categoria": "Carnes",
       "status": "Disponível"
-    },
-    {
-      "id": "bc73",
-      "nome": "",
-      "descricao": "",
-      "valorReais": 0,
-      "valorPontos": 0,
-      "categoria": "",
-      "img": ""
     }
   ],
   "pedidos": [
