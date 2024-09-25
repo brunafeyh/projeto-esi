@@ -16,7 +16,7 @@ import { useAuth } from '../../hooks/use-auth';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../hooks/use-cart';
 import { toast } from 'react-toastify';
-import ChatBox from '../chat-box';
+import ChatBot from '../chat-bot';
 
 const Menu: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom);
@@ -76,7 +76,7 @@ const Menu: React.FC = () => {
               onUpdateQuantity={handleUpdateQuantity}
               onRemoveItem={handleRemoveItem}
             />)}
-            <ChatBox />
+            <ChatBot />
             {isAuthenticated() ? (
               <IconButton onClick={openPopover(popoverRef)}>
                 <AvatarProfile />
