@@ -11,13 +11,13 @@ export const useVoiceRecognition = (onTranscription: (transcript: string) => voi
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const mediaRecorder = new MediaRecorder(stream);
-            mediaRecorderRef.current = mediaRecorder;
+            mediaRecorderRef.current = mediaRecorder; 
 
             mediaRecorder.start();
             setIsRecording(true);
 
             mediaRecorder.ondataavailable = (event: BlobEvent) => {
-                const audioBlob = new Blob([event.data], { type: 'audio/wav' });
+                const audioBlob = new Blob([event.data], { type: 'audio/mp3' });
                 const url = URL.createObjectURL(audioBlob);
                 setAudioURL(url);
             };
