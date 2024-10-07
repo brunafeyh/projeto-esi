@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import DishService from '../services/dishes';
-import { Prato } from '../types/dishes';
+import DishService from '../../services/dishes';
+import { Prato } from '../../types/dishes';
 
 const dishService = new DishService();
 

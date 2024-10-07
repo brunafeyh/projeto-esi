@@ -1,13 +1,13 @@
-import { Grid } from '@mui/material';
-import { FC } from 'react';
-import DisheCard from '../dishe-grid/cards/dishe-card';
+import { Grid } from '@mui/material'
+import { FC } from 'react'
+import DisheCard from '../dishe-grid/cards/dishe-card'
 
-interface MaisVendidosProps {
-  dishes: any[];
-  onAddToCart: (prato: any) => void;
+interface MoreSelledProps {
+  dishes: any[]
+  onAddToCart: (prato: any) => void
 }
 
-const MoreSelled: FC<MaisVendidosProps> = ({ dishes, onAddToCart }) => {
+const MoreSelled: FC<MoreSelledProps> = ({ dishes, onAddToCart }) => {
   return (
     <Grid container spacing={2}>
       {dishes.map((dishe) => (
@@ -16,7 +16,7 @@ const MoreSelled: FC<MaisVendidosProps> = ({ dishes, onAddToCart }) => {
         </Grid>
       ))}
     </Grid>
-  );
-};
+  )
+}
 
-export default MoreSelled;
+export default MoreSelled

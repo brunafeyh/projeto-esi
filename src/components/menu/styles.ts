@@ -1,8 +1,8 @@
 import { Box, BoxProps, Button as ButtonMui, ButtonProps, IconButton, IconButtonProps, Stack, StackProps, styled } from '@mui/material'
 
-export const MenuIconButton = styled(IconButton)<IconButtonProps>(() => ({
+export const MenuIconButton = styled(IconButton)<IconButtonProps>(({theme}) => ({
 	'& svg': {
-		fill: '#FFF',
+		fill: theme.palette.unioeste.neutral.p10,
 		width: 40,
 		height: 40,
 	},
@@ -23,7 +23,7 @@ export const MenuContainerApresentation = styled(Stack)<StackProps>(({ theme }) 
 }))
 
 export const BoxMenuApresentation = styled(Box)<BoxProps>(({ theme }) => ({
-	backgroundColor: '#000',
+	backgroundColor: theme.palette.unioeste.neutral.p110,
 	color: theme.palette.unioeste.neutral.p10,
 	position: 'fixed',
 	top: theme.spacing(0),
@@ -32,7 +32,7 @@ export const BoxMenuApresentation = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 export const Button = styled(ButtonMui)<ButtonProps>(({ theme }) => ({
-	backgroundColor: '#000',
+	backgroundColor: theme.palette.unioeste.neutral.p110,
 	color: theme.palette.unioeste.neutral.p10,
 	'&:hover': {
 		backgroundColor: '#080807',

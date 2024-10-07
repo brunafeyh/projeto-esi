@@ -1,15 +1,15 @@
 import { FC, useState } from 'react';
 import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
-import { useFilteredDishes } from '../../hooks/use-filtered-dishes';
+import { useFilteredDishes } from '../../hooks/dishes/use-filtered-dishes';
 import CardapioFilter from '../../components/cardapio-filter';
 import EditDisheGrid from '../../components/dishe-grid/edit-dishe-grid';
 import { useAuth } from '../../hooks/use-auth';
 import DisheGrid from '../../components/dishe-grid';
-import { useDishes } from '../../hooks/use-dishes';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { Prato } from '../../types/dishes';
 import { TextField } from '../../components/forms/login/styles';
+import { useDishes } from '../../hooks/dishes/use-dishes';
 
 const Cardapio: FC = () => {
 	const {

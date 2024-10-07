@@ -2,7 +2,6 @@ import { PageLayout } from '../../layouts/page-layout';
 import { FC } from 'react';
 import { TitlePage } from '../home/styles';
 import { useAllClients } from '../../hooks/use-clients';
-import { useDishes } from '../../hooks/use-dishes';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 import { People, RestaurantMenu } from '@mui/icons-material';
 import DailyStatistics from '../../components/graphs/daily';
@@ -10,14 +9,11 @@ import SellYearGraph from '../../components/graphs/sellforyear';
 import PopularCategorys from '../../components/graphs/categorys';
 import SalesLeaders from '../../components/sales-grid';
 import { Container, GraphTypography, Stack } from './styles';
+import { useDishes } from '../../hooks/dishes/use-dishes';
 
 const Estatisticas: FC = () => {
-    const { allClients, isLoading: isLoadingClientes, error: errorClientes } = useAllClients();
-    const { totalDishes, isLoading: isLoadingDishes, error: errorDishes } = useDishes();
-
-    if (isLoadingClientes || isLoadingDishes) {
-        return <Typography>Carregando...</Typography>;
-    }
+    const { allClients, error: errorClientes } = useAllClients();
+    const { totalDishes, error: errorDishes } = useDishes();
 
     if (errorClientes || errorDishes) {
         return <Typography>Erro ao carregar as estatísticas.</Typography>;

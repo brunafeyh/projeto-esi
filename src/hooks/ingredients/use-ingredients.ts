@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import IngredientService from '../services/ingredients';
-import { Ingredient } from '../types/dishes';
+import IngredientService from '../../services/ingredients';
+import { Ingredient } from '../../types/dishes';
 
 const ingredientService = new IngredientService();
 
@@ -22,9 +22,9 @@ const useIngredients = () => {
 
     const addIngredientMutation = useMutation({
         mutationFn: (newIngredient: Partial<Ingredient>) =>
-            ingredientService.addIngredient(newIngredient), // Chama o serviço para adicionar o ingrediente
+            ingredientService.addIngredient(newIngredient),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['ingredients'] }); // Invalida a query para atualizar os ingredientes
+            queryClient.invalidateQueries({ queryKey: ['ingredients'] });
             toast.success('Ingrediente adicionado com sucesso!');
         },
         onError: () => {

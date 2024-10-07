@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useCart } from './use-cart';
+import { useCart } from '../use-cart';
+import { useQueryParams } from '../params/query-params';
 import { useDishes } from './use-dishes';
-import { useQueryParams } from './params/query-params';
 
 export const useFilteredDishes = () => {
 	const { dishes, isLoading, error } = useDishes();

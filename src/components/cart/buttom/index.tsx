@@ -5,7 +5,7 @@ import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
 import MasterCardIcon from '@mui/icons-material/LocalAtm';
 import { useCart } from '../../../hooks/use-cart';
-import { useOrders } from '../../../hooks/use-orders';
+import { useOrders } from '../../../hooks/order/use-orders';
 import { useAuth } from '../../../hooks/use-auth';
 import { usePontuation } from '../../../hooks/use-pontuation';
 

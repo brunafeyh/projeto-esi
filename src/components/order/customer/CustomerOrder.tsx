@@ -1,23 +1,22 @@
-import { useState, useEffect, FC } from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import Table, { Column } from '../../../components/table';
-import { TableRowBody } from '../../table/styles';
-import { TableCell } from '../../../components/table-cell';
-import { Modal, useModal } from '../../../components/modal';
-import { Pedido, useOrders } from '../../../hooks/use-orders';
-import { useAuth } from '../../../hooks/use-auth';
-import { apiBaseUrl } from '../../../shared/api';
-import axios from 'axios';
-import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style';
-import { TextField } from '../../forms/login/styles';
-import { useOrderFilter } from '../../../hooks/use-order-filters';
+import { useState, FC } from 'react'
+import { Box, Button, Typography } from '@mui/material'
+import Table from '../../../components/table'
+import { TableRowBody } from '../../table/styles'
+import { TableCell } from '../../../components/table-cell'
+import { Modal, useModal } from '../../../components/modal'
+import { apiBaseUrl } from '../../../shared/api'
+import axios from 'axios'
+import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style'
+import { TextField } from '../../forms/login/styles'
+import { useOrderFilter } from '../../../hooks/order/use-order-filters'
+import { ORDER_COLUMNS } from '../../../utils/constants/values'
+import { useCustomerOrders } from '../../../hooks/order/use-costumer-order'
+import { Pedido } from '../../../types/order'
 
 const CustomerOrder: FC = () => {
-    const modalRef = useModal();
-    const { user } = useAuth();
-    const { orders } = useOrders();
-    const [customerOrders, setCustomerOrders] = useState<Pedido[]>([]);
-    const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
+    const modalRef = useModal()
+    const { customerOrders } = useCustomerOrders()
+    const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null)
 
     const {
         filteredPedidos,
@@ -28,36 +27,20 @@ const CustomerOrder: FC = () => {
         handleSearch,
     } = useOrderFilter(customerOrders);
 
-    useEffect(() => {
-        if (orders && user) {
-            const userOrders = orders.filter(order => order.cpf === user.cpf);
-            setCustomerOrders(userOrders);
-            handleSearch(); 
-        }
-    }, [orders, user]); 
-
     const handleRowClick = async (id: string) => {
         try {
-            const response = await axios.get(`${apiBaseUrl}/pedidos/${id}`);
-            setSelectedOrder(response.data);
-            modalRef.current?.openModal();
+            const response = await axios.get(`${apiBaseUrl}/pedidos/${id}`)
+            setSelectedOrder(response.data)
+            modalRef.current?.openModal()
         } catch (error) {
-            console.error('Erro ao buscar detalhes do pedido:', error);
+            console.error('Erro ao buscar detalhes do pedido:', error)
         }
-    };
+    }
 
     const handleCloseModal = () => {
-        setSelectedOrder(null);
-        modalRef.current?.closeModal();
-    };
-
-    const columns: Column[] = [
-        { field: 'numeroPedido', headerName: 'Nº Pedido' },
-        { field: 'data', headerName: 'Data' },
-        { field: 'descricao', headerName: 'Descrição' },
-        { field: 'valorTotal', headerName: 'Valor (R$)' },
-        { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
-    ];
+        setSelectedOrder(null)
+        modalRef.current?.closeModal()
+    }
 
     return (
         <Box>
@@ -88,7 +71,7 @@ const CustomerOrder: FC = () => {
             </FilterBox>
 
             <Table
-                columns={columns}
+                columns={ORDER_COLUMNS}
                 data={filteredPedidos}
                 renderData={(row) => (
                     <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} sx={{ cursor: 'pointer' }}>

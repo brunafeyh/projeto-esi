@@ -35,6 +35,7 @@ export const UNIOESTE_COLORS = {
 		p80: '#505050',
 		p90: '#3C3C3C',
 		p100: '#282828',
+		p110: '#000'
 	},
 	success: {
 		p10: '#A5D1A8',

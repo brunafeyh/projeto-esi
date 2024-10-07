@@ -6,8 +6,8 @@ import TabPanel from '../../components/tab';
 import MoreSelled from '../../components/more-selled';
 import AboutUs from '../../components/about-us';
 import RecommendedDishes from '../../components/recomended-dishes';
-import { useDishes } from '../../hooks/use-dishes';
 import { Tabs } from './styles';
+import { useDishes } from '../../hooks/dishes/use-dishes';
 
 const HomePage: FC = () => {
   const { dishes } = useDishes();

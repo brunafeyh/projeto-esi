@@ -3,10 +3,10 @@ import { Ingredient } from '../types/dishes';
 import { apiBaseUrl } from '../shared/api';
 
 class IngredientService {
-  private apiUrl: string;
+  private apiUrl: string
 
   constructor(apiUrl: string = `${apiBaseUrl}/ingredientes`) {
-    this.apiUrl = apiUrl;
+    this.apiUrl = apiUrl
   }
 
   async fetchIngredients(): Promise<Ingredient[]> {
@@ -27,4 +27,4 @@ class IngredientService {
   }
 }
 
-export default IngredientService;
+export default IngredientService

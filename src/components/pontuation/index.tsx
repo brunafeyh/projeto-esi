@@ -9,10 +9,10 @@ const Pontuation: FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-    };
+    }
     const handleClose = () => {
         setAnchorEl(null);
-    };
+    }
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 

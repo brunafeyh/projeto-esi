@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Pedido } from './use-orders';
-import { useQueryParams } from './params/query-params';
+import { useQueryParams } from '../params/query-params';
+import { Pedido } from '../../types/order';
 
 interface UseOrderFilterReturn {
     filteredPedidos: Pedido[];

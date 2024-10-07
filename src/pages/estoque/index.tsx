@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { PageLayout } from '../../layouts/page-layout';
 import { TitlePage } from '../home/styles';
-import useIngredients from '../../hooks/use-ingredients';
+import useIngredients from '../../hooks/ingredients/use-ingredients';
 import Table, { Column } from '../../components/table';
 import { InputAdornment, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField as MuiTextField, Typography } from '@mui/material';
 import { IconSearch, TextField } from '../../components/cardapio-filter/styles';

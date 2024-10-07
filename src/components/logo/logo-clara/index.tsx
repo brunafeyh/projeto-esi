@@ -1,8 +1,8 @@
-import * as React from 'react'
 import { Stack } from '@mui/material'
 import { theme } from '../../../themes'
+import { FC } from 'react'
 
-const LogoClara: React.FC = () => {
+const LogoClara: FC = () => {
 	return (
 		<Stack direction="column" alignItems="flex-start" marginLeft="28px" flexGrow={1}>
 				<img
