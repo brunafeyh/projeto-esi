@@ -5,7 +5,7 @@ export const IBM_PLEX_SANS_FONT_FAMILY = 'IBM Plex Sans'
 export const REFRESH_TOKEN_KEY = 'refresh_token'
 
 export const SECTION_KEY = 'section'
-export const INICIAL_SECTION = 'house-recomendations'
+export const INICIAL_SECTION = 'recommendations'
 
 export const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
@@ -17,4 +17,4 @@ export const ORDER_COLUMNS: Column[] = [
     { field: 'descricao', headerName: 'Descrição' },
     { field: 'valorTotal', headerName: 'Valor (R$)' },
     { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
-];
+]
