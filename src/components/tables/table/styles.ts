@@ -11,7 +11,7 @@ import {
 	Typography,
 	TypographyProps,
 } from '@mui/material'
-import { FONT_WEIGHTS } from '../../themes/fonts'
+import { FONT_WEIGHTS } from '../../../themes/fonts'
 
 export const TableRowHead = styled(TableRow)<TableRowProps>(({ theme }) => ({
 	height: theme.spacing(6),

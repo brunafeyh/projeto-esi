@@ -1,5 +1,5 @@
 import { styled, TableCell } from '@mui/material'
-import { FONT_WEIGHTS } from '../../themes/fonts'
+import { FONT_WEIGHTS } from '../../../themes/fonts'
 
 export const StatusCell = styled(TableCell)(({ theme }) => ({
 	textAlign: 'center',

@@ -4,7 +4,7 @@ import { format, isDate } from 'date-fns'
 import { StatusCell } from './styles'
 import { TableCellBody } from '../table/styles'
 import StatusBox from './box-status'
-import { formatValue, isValidDate } from '../../utils/table'
+import { formatValue, isValidDate } from '../../../utils/table'
 
 interface Props extends TableCellProps {
 	children: ReactNode

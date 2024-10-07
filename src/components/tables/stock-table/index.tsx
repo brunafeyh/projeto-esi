@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import useIngredients from '../../hooks/ingredients/use-ingredients'
-import Table, { Column } from '../../components/table'
+import useIngredients from '../../../hooks/ingredients/use-ingredients'
+import Table, { Column } from '../table'
 import {
     InputAdornment,
     IconButton,
@@ -15,13 +15,13 @@ import {
     Stack,
     Box,
 } from '@mui/material'
-import { IconSearch, TextField } from '../../components/cardapio-filter/styles'
-import { TableRowBody } from '../../components/table/styles'
-import { TableCell } from '../../components/table-cell'
-import { IngredientFormInputs } from '../../types/dishes'
+import { IconSearch, TextField } from '../../cardapio-filter/styles'
+import { TableRowBody } from '../table/styles'
+import { TableCell } from '../table-cell'
+import { IngredientFormInputs } from '../../../types/dishes'
 import AddIcon from '@mui/icons-material/Add'
-import { ActionBox, DeleteIcon, EditIcon } from '../../pages/estoque/styles'
-import useFilteredIngredients from '../../hooks/ingredients/use-filtered-ingredients'
+import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/estoque/styles'
+import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients'
 
 export const columns: Column[] = [
     { field: 'nome', headerName: 'Nome' },

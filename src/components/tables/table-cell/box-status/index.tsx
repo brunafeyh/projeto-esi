@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import { ReactNode } from 'react'
-import getStatusStyles from '../../../utils/table'
+import getStatusStyles from '../../../../utils/table'
 
 interface StatusBoxProps {
 	status: ReactNode

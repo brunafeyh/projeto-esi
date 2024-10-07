@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { PageLayout } from '../../layouts/page-layout'
 import { TitlePage } from '../home/styles'
-import StockTable from '../../components/stock-table'
+import StockTable from '../../components/tables/stock-table'
 
 const Estoque: FC = () => {
     return (
