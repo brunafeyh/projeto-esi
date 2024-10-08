@@ -1,4 +1,5 @@
 import { Column } from "../../components/tables/table"
+import { Pedido } from "../../types/order"
 
 export const ACCESS_TOKEN_KEY = 'access_token'
 export const IBM_PLEX_SANS_FONT_FAMILY = 'IBM Plex Sans'
@@ -18,3 +19,15 @@ export const ORDER_COLUMNS: Column[] = [
     { field: 'valorTotal', headerName: 'Valor (R$)' },
     { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
 ]
+
+export const DEFAULT_ORDER: Pedido = {
+  id: '',
+  cpf: '',
+  numeroPedido: '',
+  descricao: '',
+  valorTotal: 0,
+  metodoPagamento: '',
+  data: '',
+  pratos: [],
+};
+

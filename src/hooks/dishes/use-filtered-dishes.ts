@@ -1,42 +1,37 @@
-import { useState, useMemo, useEffect } from 'react';
-import { useCart } from '../use-cart';
-import { useQueryParams } from '../params/query-params';
+import { useMemo } from 'react';
 import { useDishes } from './use-dishes';
+import { useCategoryQueryParam } from '../params/use-category-filter';
+import { useSortOrderQueryParam } from '../params/use-sort';
+import { useFilterQueryParams } from '../params/use-filter';
+import { filterDishesByCategory, filterDishesBySearchTerm, sortDishesByPrice } from '../../utils/dishe';
+import { useCart } from '../cart/use-cart';
 
 export const useFilteredDishes = () => {
-	const { dishes, isLoading, error } = useDishes();
-	const { cartItems, addToCart } = useCart();
-	const { getQueryParam, setQueryParam } = useQueryParams();
+  const { dishes, isLoading, error } = useDishes();
+  const { cartItems, addToCart } = useCart();
+  const { searchTerm, setSearchTerm } = useFilterQueryParams();
+  const { selectedCategory, setSelectedCategory } = useCategoryQueryParam();
+  const { sort, setSort } = useSortOrderQueryParam();
 
-	const [searchTerm, setSearchTerm] = useState<string>(getQueryParam('searchTerm', ''));
-	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(getQueryParam<'asc' | 'desc'>('sortOrder', 'asc'));
-	const [selectedCategory, setSelectedCategory] = useState<string>(getQueryParam('category', ''));
+  const filteredDishes = useMemo(() => {
+    let result = filterDishesBySearchTerm(dishes, searchTerm);
+    result = filterDishesByCategory(result, selectedCategory);
+    result = sortDishesByPrice(result, sort);
+    return result;
+  }, [dishes, searchTerm, sort, selectedCategory]);
 
-	useEffect(() => {
-		setQueryParam('searchTerm', searchTerm);
-		setQueryParam('sortOrder', sortOrder);
-		setQueryParam('category', selectedCategory);
-	}, [searchTerm, sortOrder, selectedCategory, setQueryParam]);
-
-	const filteredDishes = useMemo(() => {
-		return dishes
-			.filter(dish => dish.nome.toLowerCase().includes(searchTerm.toLowerCase()))
-			.filter(dish => selectedCategory ? dish.categoria === selectedCategory : true)
-			.sort((a, b) => sortOrder === 'asc' ? a.valorReais - b.valorReais : b.valorReais - a.valorReais);
-	}, [dishes, searchTerm, sortOrder, selectedCategory]);
-
-	return {
-		dishes,
-		cartItems,
-		searchTerm,
-		sortOrder,
-		selectedCategory,
-		setSearchTerm,
-		setSortOrder,
-		setSelectedCategory,
-		addToCart,
-		filteredDishes,
-		isLoading,
-		error,
-	};
+  return {
+    dishes,
+    cartItems,
+    searchTerm,
+    sort,
+    selectedCategory,
+    setSearchTerm,
+    setSort,
+    setSelectedCategory,
+    addToCart,
+    filteredDishes,
+    isLoading,
+    error,
+  };
 };

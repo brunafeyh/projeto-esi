@@ -4,9 +4,9 @@ import RecommendedDishes from "../recomended-dishes"
 import MoreSelled from "../more-selled"
 import AboutUs from "../about-us"
 import { useDishes } from "../../hooks/dishes/use-dishes"
-import { useCart } from "../../hooks/use-cart"
 import SectionTabs from "./tabs"
 import { Stack } from "@mui/material"
+import { useCart } from "../../hooks/cart/use-cart";
 
 export const HomeSections: FC = () => {
     const { dishes } = useDishes()

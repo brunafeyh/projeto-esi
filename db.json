@@ -66,7 +66,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 1617,
+      "pontosAcumulados": 2466,
       "id": "d0cb"
     },
     {
@@ -980,6 +980,78 @@
           "nome": "Polenta Frita",
           "quantidade": 2,
           "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1728393723688",
+      "numeroPedido": "Pedido-1728393723688",
+      "cpf": "13037025921",
+      "descricao": "Espetinho, Prato Feito, Polenta Frita",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 66.64999999999999,
+      "metodoPagamento": "dinheiro",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        },
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 2,
+          "valor": 19.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        }
+      ]
+    },
+    {
+      "id": "1728394641408",
+      "numeroPedido": "Pedido-1728394641408",
+      "cpf": "13037025921",
+      "descricao": "Espetinho",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 14.99,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        }
+      ]
+    },
+    {
+      "id": "1728394667197",
+      "numeroPedido": "Pedido-1728394667197",
+      "cpf": "13037025921",
+      "descricao": "Espetinho, Prato Feito",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 34.98,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        },
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
         }
       ]
     }

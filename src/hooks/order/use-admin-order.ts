@@ -3,18 +3,14 @@ import { useOrders } from './use-orders'
 import { useOrderMutations } from './use-order-mutations'
 import { useOrderFilter } from './use-order-filters'
 import { Pedido } from '../../types/order'
+import { DEFAULT_ORDER } from '../../utils/constants/values'
+import { findOrderById, mergeOrderData } from '../../utils/order'
+import { useOrderById } from './use-order-by-id'
 
 export const useAdminOrder = () => {
-  const { orders, isLoading, error } = useOrders()
-  const { addOrder, updateOrder, removeOrder } = useOrderMutations()
-  const [newOrder, setNewOrder] = useState<Partial<Pedido>>({
-    numeroPedido: '',
-    descricao: '',
-    valorTotal: 0,
-    metodoPagamento: '',
-    data: '',
-    pratos: [],
-  })
+  const { orders, isLoading, error } = useOrders();
+  const { addOrder, updateOrder, removeOrder } = useOrderMutations();
+  const [newOrder, setNewOrder] = useState<Pedido>(DEFAULT_ORDER);
 
   const {
     filteredPedidos,
@@ -26,66 +22,33 @@ export const useAdminOrder = () => {
   } = useOrderFilter(orders);
 
   const handleRowClick = async (id: string) => {
-    try {
-      const pedido = orders.find(order => order.id === id);
-      if (pedido) return pedido;
-      return null;
-    } catch (error) {
-      console.error('Erro ao buscar detalhes do pedido:', error);
-      return null;
-    }
+    const { order } = useOrderById(id)
+    return order
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
     setNewOrder((prevOrder) => ({
       ...prevOrder,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleAddOrder = async () => {
-    try {
-      addOrder(newOrder as Pedido);
-    } catch (error) {
-      console.error('Erro ao adicionar pedido:', error);
-    }
+    addOrder(newOrder)
+    resetNewOrder()
   }
 
   const handleUpdateOrder = async (id: string, updatedData: Partial<Pedido>) => {
-    try {
-      const existingOrder = orders.find(order => order.id === id);
-      if (!existingOrder) return;
+    const existingOrder = findOrderById(orders, id)
+    if (!existingOrder) return
+    const updatedOrder = mergeOrderData(existingOrder, updatedData)
+    updateOrder(updatedOrder)
+  }
 
-      const updatedOrder: Pedido = {
-        ...existingOrder,
-        ...updatedData,
-      };
+  const handleRemoveOrder = async (id: string) => removeOrder(id)
 
-      updateOrder(updatedOrder);
-    } catch (error) {
-      console.error('Erro ao atualizar pedido:', error);
-    }
-  };
-
-  const handleRemoveOrder = async (id: string) => {
-    try {
-      removeOrder(id);
-    } catch (error) {
-      console.error('Erro ao remover pedido:', error);
-    }
-  };
-
-  const resetNewOrder = () => {
-    setNewOrder({
-      numeroPedido: '',
-      descricao: '',
-      valorTotal: 0,
-      metodoPagamento: '',
-      data: '',
-      pratos: [],
-    });
-  };
+  const resetNewOrder = () => setNewOrder(DEFAULT_ORDER);
 
   return {
     orders,

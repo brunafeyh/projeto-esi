@@ -12,9 +12,9 @@ import CartButton from '../cart/buttom'
 import Pontuation from '../pontuation'
 import { useAuth } from '../../hooks/use-auth'
 import { useNavigate } from 'react-router-dom'
-import { useCart } from '../../hooks/use-cart'
 import ChatBot from '../chat-bot'
 import { MenuIcon } from './menu-icon'
+import { useCart } from '../../hooks/cart/use-cart'
 
 const Menu: FC = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(isCollapsedAtom)
@@ -24,27 +24,13 @@ const Menu: FC = () => {
 
   const popoverRef = usePopover()
 
-  const handleCollapse = () => {
-    setIsCollapsed((collapsed) => !collapsed);
-  }
+  const handleCollapse = () => setIsCollapsed((collapsed) => !collapsed);
 
   const handleLoginRedirect = () => navigate('/login')
 
-  const handleUpdateQuantity = (id: string, quantity: number) => {
-    try {
-      updateQuantity(id, quantity)
-    } catch (error) {
-      console.error('Erro ao atualizar a quantidade do item no carrinho:', error);
-    }
-  }
+  const handleUpdateQuantity = (id: string, quantity: number) => updateQuantity(id, quantity)
 
-  const handleRemoveItem = (id: string) => {
-    try {
-      removeItem(id)
-    } catch (error) {
-      console.error('Erro ao remover o item do carrinho:', error)
-    }
-  }
+  const handleRemoveItem = (id: string) => removeItem(id)
 
   return (
     <>
@@ -58,9 +44,9 @@ const Menu: FC = () => {
             {isAuthenticated() && <Pontuation />}
             {isClient() && (
               <CartButton
-              onUpdateQuantity={handleUpdateQuantity}
-              onRemoveItem={handleRemoveItem}
-            />)}
+                onUpdateQuantity={handleUpdateQuantity}
+                onRemoveItem={handleRemoveItem}
+              />)}
             <ChatBot />
             {isAuthenticated() ? (
               <IconButton onClick={openPopover(popoverRef)}>

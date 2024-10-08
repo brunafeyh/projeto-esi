@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useQueryParams } from '../params/query-params';
 import { Pedido } from '../../types/order';
+import { useDateQueryParams } from '../params/use-date-query-paramns';
 
 interface UseOrderFilterReturn {
     filteredPedidos: Pedido[];
@@ -13,19 +13,14 @@ interface UseOrderFilterReturn {
 }
 
 export const useOrderFilter = (orders: Pedido[]): UseOrderFilterReturn => {
-    const { getQueryParam, setQueryParam } = useQueryParams();
+    const {
+        filterStartDate,
+        filterEndDate,
+        setFilterStartDate,
+        setFilterEndDate
+    } = useDateQueryParams();
 
     const [filteredPedidos, setFilteredPedidos] = useState<Pedido[]>(orders || []);
-    const [filterStartDate, setFilterStartDate] = useState<string>(getQueryParam('startDate', ''));
-    const [filterEndDate, setFilterEndDate] = useState<string>(getQueryParam('endDate', ''));
-
-    const handleSetFilterStartDate = useCallback((date: string) => {
-        setFilterStartDate(date);
-    }, []);
-
-    const handleSetFilterEndDate = useCallback((date: string) => {
-        setFilterEndDate(date);
-    }, []);
 
     const handleSearch = useCallback(() => {
         let filtered = orders;
@@ -46,9 +41,7 @@ export const useOrderFilter = (orders: Pedido[]): UseOrderFilterReturn => {
         }
 
         setFilteredPedidos(filtered);
-        setQueryParam('startDate', filterStartDate);
-        setQueryParam('endDate', filterEndDate);
-    }, [orders, filterStartDate, filterEndDate, setQueryParam]);
+    }, [orders, filterStartDate, filterEndDate]);
 
     useEffect(() => {
         handleSearch();
@@ -58,9 +51,9 @@ export const useOrderFilter = (orders: Pedido[]): UseOrderFilterReturn => {
         filteredPedidos,
         filterStartDate,
         filterEndDate,
-        setFilterStartDate: handleSetFilterStartDate, 
-        setFilterEndDate: handleSetFilterEndDate,     
+        setFilterStartDate,
+        setFilterEndDate,
         setFilteredPedidos,
         handleSearch,
     };
-};
+}

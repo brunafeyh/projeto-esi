@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
-import { useOrders } from '../order/use-orders'
-import { BACKGROUND_COLOR_GRAPHS } from '../../utils/constants/values';
+import { useEffect, useState } from 'react';
+import { useOrders } from '../order/use-orders';
 import { useDishes } from '../dishes/use-dishes';
+import { BACKGROUND_COLOR_GRAPHS } from '../../utils/constants/values';
+import { countCategories, mapDishesToCategories } from '../../utils/graph';
 
 export const usePopularCategoriesData = () => {
   const [data, setData] = useState({
@@ -16,37 +17,25 @@ export const usePopularCategoriesData = () => {
     ],
   });
 
-  const { orders } = useOrders()
-  const { dishes } = useDishes()
+  const { orders } = useOrders();
+  const { dishes } = useDishes();
 
   useEffect(() => {
     if (orders && dishes) {
-      const dishesMap = dishes.reduce((map: any, dishe: any) => {
-        map[dishe.id] = dishe.categoria
-        return map
-      }, {})
-
-      const categoriasCount: { [key: string]: number } = {};
-      orders.forEach((order: any) => {
-        order.pratos.forEach((prato: any) => {
-          const categoria = dishesMap[prato.id]
-          if (categoria) {
-            categoriasCount[categoria] = (categoriasCount[categoria] || 0) + prato.quantidade
-          }
-        })
-      })
+      const dishesMap = mapDishesToCategories(dishes);
+      const categoryCount = countCategories(orders, dishesMap);
 
       setData({
-        labels: Object.keys(categoriasCount),
+        labels: Object.keys(categoryCount),
         datasets: [
           {
             ...data.datasets[0],
-            data: Object.values(categoriasCount),
+            data: Object.values(categoryCount),
           },
         ],
-      })
+      });
     }
-  }, [orders, dishes])
+  }, [orders, dishes]);
 
-  return data
-}
+  return data;
+};

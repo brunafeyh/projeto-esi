@@ -4,14 +4,15 @@ import Table from '../../tables/table'
 import { TableRowBody } from '../../tables/table/styles'
 import { TableCell } from '../../tables/table-cell'
 import { Modal, useModal } from '../../../components/modal'
-import { apiBaseUrl } from '../../../shared/api'
-import axios from 'axios'
 import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style'
 import { TextField } from '../../forms/login/styles'
 import { useOrderFilter } from '../../../hooks/order/use-order-filters'
 import { ORDER_COLUMNS } from '../../../utils/constants/values'
 import { useCustomerOrders } from '../../../hooks/order/use-costumer-order'
 import { Pedido } from '../../../types/order'
+import OrderService from '../../../services/order'
+
+const service = new OrderService()
 
 const CustomerOrder: FC = () => {
     const modalRef = useModal()
@@ -29,8 +30,8 @@ const CustomerOrder: FC = () => {
 
     const handleRowClick = async (id: string) => {
         try {
-            const response = await axios.get(`${apiBaseUrl}/pedidos/${id}`)
-            setSelectedOrder(response.data)
+            const response = await service.getOrderById(id)
+            setSelectedOrder(response)
             modalRef.current?.openModal()
         } catch (error) {
             console.error('Erro ao buscar detalhes do pedido:', error)

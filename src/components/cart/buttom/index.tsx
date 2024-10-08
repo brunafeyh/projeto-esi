@@ -1,13 +1,17 @@
 import React, { useState, useMemo, FC, useEffect } from 'react';
-import { IconButton, Badge, Popover, Box, Button, Typography, Modal, RadioGroup, FormControlLabel, Radio, Divider, TextField } from '@mui/material';
+import {
+  IconButton, Badge, Popover, Box, Button, Typography, Modal,
+  RadioGroup, FormControlLabel, Radio, Divider, TextField
+} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
 import VisaIcon from '@mui/icons-material/CreditCard';
 import MasterCardIcon from '@mui/icons-material/LocalAtm';
-import { useCart } from '../../../hooks/use-cart';
-import { useOrders } from '../../../hooks/order/use-orders';
 import { useAuth } from '../../../hooks/use-auth';
 import { usePontuation } from '../../../hooks/use-pontuation';
+import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
+import { useCart } from '../../../hooks/cart/use-cart'
+import { calculateDiscountValue, calculateFinalValue, calculatePointsEarned, calculateTotalAmount, createOrder } from '../../../utils/cart';
 
 const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -15,9 +19,8 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   const [paymentMethod, setPaymentMethod] = useState('cartao');
   const [pointsToUse, setPointsToUse] = useState(0);
   const { cartItems, clearCart } = useCart();
-  const { addOrder } = useOrders();
+  const { addOrder } = useOrderMutations();
   const { user } = useAuth();
-
   const { pontuation, fetchPontuation, updatePoints, loading, error } = usePontuation();
 
   useEffect(() => {
@@ -49,19 +52,10 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
     setIsModalOpen(false);
   };
 
-  const totalAmount = useMemo(() => {
-    return cartItems.reduce((total, item) => total + (item.valorTotal || 0), 0).toFixed(2);
-  }, [cartItems]);
-
-  const discountValue = useMemo(() => {
-    return pointsToUse * 0.01;
-  }, [pointsToUse]);
-
-  const finalValue = parseFloat(totalAmount) - discountValue;
-
-  const pointsEarned = useMemo(() => {
-    return cartItems.reduce((total, item) => total + (item.valorPontos || 0), 0);
-  }, [cartItems]);
+  const totalAmount = useMemo(() => calculateTotalAmount(cartItems).toFixed(2), [cartItems]);
+  const discountValue = useMemo(() => calculateDiscountValue(pointsToUse), [pointsToUse]);
+  const finalValue = useMemo(() => calculateFinalValue(parseFloat(totalAmount), discountValue), [totalAmount, discountValue]);
+  const pointsEarned = useMemo(() => calculatePointsEarned(cartItems), [cartItems]);
 
   const handleFinalizeOrder = async () => {
     if (!user || !user.cpf) {
@@ -69,22 +63,7 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
       return;
     }
 
-    const order = {
-      id: Date.now().toString(),
-      numeroPedido: `Pedido-${Date.now()}`,
-      cpf: user.cpf,
-      descricao: cartItems.map(item => item.nome).join(', '),
-      observacoes: '',
-      data: new Date().toISOString().split('T')[0],
-      valorTotal: finalValue,
-      metodoPagamento: paymentMethod,
-      pratos: cartItems.map(item => ({
-        id: item.id.toString(),
-        nome: item.nome,
-        quantidade: item.quantidade,
-        valor: item.valorReais,
-      })),
-    };
+    const order = createOrder(user.cpf, cartItems, finalValue, paymentMethod);
 
     try {
       addOrder(order);
@@ -114,14 +93,8 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
         open={open}
         anchorEl={anchorEl}
         onClose={handleClosePopover}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Box p={2} width={300}>
           {user ? (
@@ -136,56 +109,31 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
       </Popover>
 
       <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <Box
-          p={4}
-          bgcolor="white"
-          borderRadius={2}
-          boxShadow={24}
-          mx="auto"
-          mt={10}
-          width={400}
-        >
-          <Typography variant="h6">
-            Detalhes da Compra
-          </Typography>
+        <Box p={4} bgcolor="white" borderRadius={2} boxShadow={24} mx="auto" mt={10} width={400}>
+          <Typography variant="h6">Detalhes da Compra</Typography>
           {cartItems.map((item) => (
             <Typography key={item.id} variant="body1">
               {item.nome} - {item.quantidade} x R$ {(item.valorReais || 0).toFixed(2)} = R$ {(item.valorTotal || 0).toFixed(2)}
             </Typography>
           ))}
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">
-            Total: R$ {totalAmount}
-          </Typography>
-          <Typography variant="h6">
-            Desconto Aplicado: R$ {discountValue}
-          </Typography>
-          <Typography variant="h6">
-            Total com Desconto: R$ {finalValue}
-          </Typography>
+          <Typography variant="h6">Total: R$ {totalAmount}</Typography>
+          <Typography variant="h6">Desconto Aplicado: R$ {discountValue}</Typography>
+          <Typography variant="h6">Total com Desconto: R$ {finalValue}</Typography>
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">
-            Pontos Disponíveis: {pontuation?.pontosAcumulados || 0}
-          </Typography>
+          <Typography variant="h6">Pontos Disponíveis: {pontuation?.pontosAcumulados || 0}</Typography>
           <TextField
             label="Pontos a Utilizar"
             type="number"
             variant="filled"
             value={pointsToUse}
             onChange={(e) => setPointsToUse(Math.min(Number(e.target.value), pontuation?.pontosAcumulados || 0))}
-            InputLabelProps={{
-              shrink: true,
-            }}
+            InputLabelProps={{ shrink: true }}
             fullWidth
           />
           <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">
-            Método de Pagamento
-          </Typography>
-          <RadioGroup
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          >
+          <Typography variant="h6">Método de Pagamento</Typography>
+          <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
             <FormControlLabel value="cartao" control={<Radio />} label="Cartão de Crédito" />
             <FormControlLabel value="dinheiro" control={<Radio />} label="Dinheiro" />
             <FormControlLabel value="pix" control={<Radio />} label="Pix" />
@@ -205,7 +153,7 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
         </Box>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default CartButton;
+export default CartButton

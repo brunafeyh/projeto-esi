@@ -14,10 +14,10 @@ import { useDishes } from '../../hooks/dishes/use-dishes';
 const Cardapio: FC = () => {
 	const {
 		searchTerm,
-		sortOrder,
+		sort,
 		selectedCategory,
 		setSearchTerm,
-		setSortOrder,
+		setSort,
 		setSelectedCategory,
 		addToCart,
 		filteredDishes
@@ -73,8 +73,8 @@ const Cardapio: FC = () => {
 				setSearchTerm={setSearchTerm}
 				selectedCategory={selectedCategory}
 				setSelectedCategory={setSelectedCategory}
-				sortOrder={sortOrder}
-				setSortOrder={setSortOrder}
+				sortOrder={sort}
+				setSortOrder={setSort}
 			/>
 			{user?.role === "ROLE_ADMINISTRATOR" || user?.role === "ROLE_ATTENDANT" ? (
 				<>

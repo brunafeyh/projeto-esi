@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useQueryParams } from './params/query-params'
+import { useQueryParams } from './query-params'
 
 export const useFilterQueryParams = (defaultSearchTerm = '') => {
     const { getQueryParam, setQueryParam } = useQueryParams()
