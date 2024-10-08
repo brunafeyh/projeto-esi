@@ -3,25 +3,69 @@ import { toast } from 'react-toastify';
 import CartService from '../../services/cart';
 import { CartItem, Prato } from '../../types/dishes';
 
+import { getCpf } from '../../utils/auth';
+
 const cartService = new CartService();
 
 export const useCart = () => {
   const queryClient = useQueryClient();
 
-  const { data: cartItems = [], isLoading, error } = useQuery<CartItem[]>({
-    queryKey: ['cart'],
-    queryFn: () => cartService.fetchCartItems(),
+  const cpf = getCpf()
+
+  const { data: cartData, isLoading, error } = useQuery({
+    queryKey: ['cart', cpf],
+    queryFn: () => cartService.fetchCartByCpf(cpf),
+    enabled: !!cpf,
   });
 
+  const cartItems = cartData?.items || []
+
   const addToCartMutation = useMutation({
-    mutationFn: (newItem: CartItem) => cartService.addItemToCart(newItem),
+    mutationFn: (newItem: CartItem) => cartService.addItemToCart(cpf, newItem),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      queryClient.invalidateQueries({ queryKey: ['cart', cpf] });
       toast.success('Prato adicionado ao carrinho com sucesso!');
     },
     onError: (error) => {
       console.error('Erro ao adicionar ao carrinho:', error);
       toast.error('Erro ao adicionar ao carrinho.');
+    },
+  });
+
+  const updateQuantityMutation = useMutation({
+    mutationFn: ({ itemId, quantity }: { itemId: string; quantity: number }) =>
+      cartService.updateCartItemQuantity(cpf, itemId, quantity),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart', cpf] });
+      toast.success('Quantidade do item atualizada com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao atualizar a quantidade do item:', error);
+      toast.error('Erro ao atualizar a quantidade do item.');
+    },
+  });
+
+  const removeItemMutation = useMutation({
+    mutationFn: (itemId: string) => cartService.removeCartItem(cpf, itemId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart', cpf] });
+      toast.success('Item removido do carrinho com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao remover o item do carrinho:', error);
+      toast.error('Erro ao remover o item do carrinho.');
+    },
+  });
+
+  const clearCartMutation = useMutation({
+    mutationFn: () => cartService.clearCart(cpf),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart', cpf] });
+      toast.success('Carrinho limpo com sucesso!');
+    },
+    onError: (error) => {
+      console.error('Erro ao limpar o carrinho:', error);
+      toast.error('Erro ao limpar o carrinho.');
     },
   });
 
@@ -43,50 +87,13 @@ export const useCart = () => {
     }
   };
 
-  const updateQuantityMutation = useMutation({
-    mutationFn: ({ id, quantity }: { id: string; quantity: number }) =>
-      cartService.updateCartItemQuantity(id, quantity),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-      toast.success('Quantidade do item atualizada com sucesso!');
-    },
-    onError: (error) => {
-      console.error('Erro ao atualizar a quantidade do item:', error);
-      toast.error('Erro ao atualizar a quantidade do item.');
-    },
-  });
-  
-  const updateQuantity = (id: string, quantity: number) => {
-    updateQuantityMutation.mutate({ id, quantity });
-  };
-  
-  const removeItemMutation = useMutation({
-    mutationFn: (id: string) => cartService.removeCartItem(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-      toast.success('Item removido do carrinho com sucesso!');
-    },
-    onError: (error) => {
-      console.error('Erro ao remover o item do carrinho:', error);
-      toast.error('Erro ao remover o item do carrinho.');
-    },
-  });
-
-  const removeItem = (id: string) => {
-    removeItemMutation.mutate(id);
+  const updateQuantity = (itemId: string, quantity: number) => {
+    updateQuantityMutation.mutate({ itemId, quantity });
   };
 
-  const clearCartMutation = useMutation({
-    mutationFn: () => cartService.clearCart(cartItems),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-      toast.success('Carrinho limpo com sucesso!');
-    },
-    onError: (error) => {
-      console.error('Erro ao limpar o carrinho:', error);
-      toast.error('Erro ao limpar o carrinho.');
-    },
-  });
+  const removeItem = (itemId: string) => {
+    removeItemMutation.mutate(itemId);
+  };
 
   const clearCart = () => {
     clearCartMutation.mutate();

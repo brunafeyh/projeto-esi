@@ -66,7 +66,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 2616,
+      "pontosAcumulados": 4026,
       "id": "d0cb"
     },
     {
@@ -80,6 +80,12 @@
       "pontosAcumulados": 0,
       "nome": "VINICIUS JIMENES",
       "cpf": "99999999999"
+    },
+    {
+      "id": "13270273978",
+      "pontosAcumulados": 1000,
+      "nome": "viewer",
+      "cpf": "13270273978"
     }
   ],
   "pratos": [
@@ -216,846 +222,6 @@
   ],
   "pedidos": [
     {
-      "id": "1",
-      "numeroPedido": "20240816-001",
-      "cpf": "123.456.789-00",
-      "descricao": "Pedido contendo Strogonoffe de Frango e Polenta Frita",
-      "observacoes": "Adicionar mais batata palha",
-      "data": "2024-01-15",
-      "valorTotal": 45.98,
-      "pratos": [
-        {
-          "id": "1",
-          "nome": "Strogonoffe de Frango",
-          "quantidade": 1,
-          "valor": 35.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "numeroPedido": "20240816-002",
-      "cpf": "987.654.321-00",
-      "descricao": "Pedido contendo Lasanha e Bolo de Chocolate Belga",
-      "observacoes": "Entregar até 19h",
-      "data": "2024-02-20",
-      "valorTotal": 74.98,
-      "pratos": [
-        {
-          "id": "9",
-          "nome": "Lasanha",
-          "quantidade": 1,
-          "valor": 44.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "numeroPedido": "20240816-003",
-      "cpf": "123.456.789-00",
-      "descricao": "Pedido contendo Pizza de Calabresa e Coxinha de Jaca",
-      "observacoes": "Entrega rápida",
-      "data": "2024-03-12",
-      "valorTotal": 50.98,
-      "pratos": [
-        {
-          "id": "3",
-          "nome": "Pizza de Calabresa",
-          "quantidade": 1,
-          "valor": 39.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 10.99
-        }
-      ]
-    },
-    {
-      "id": "4",
-      "numeroPedido": "20240816-004",
-      "cpf": "111.222.333-44",
-      "descricao": "Pedido contendo Churrasco com Farofa e Frango Frito",
-      "observacoes": "Comida extra quente",
-      "data": "2024-04-05",
-      "valorTotal": 77.98,
-      "pratos": [
-        {
-          "id": "11",
-          "nome": "Churrasco com Farofa",
-          "quantidade": 1,
-          "valor": 54.99
-        },
-        {
-          "id": "13",
-          "nome": "Frango Frito",
-          "quantidade": 1,
-          "valor": 22.99
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "numeroPedido": "20240816-005",
-      "cpf": "555.666.777-88",
-      "descricao": "Pedido contendo Pastel de Carne e Prato Feito",
-      "observacoes": "Sem cebola",
-      "data": "2024-05-22",
-      "valorTotal": 25.98,
-      "pratos": [
-        {
-          "id": "15",
-          "nome": "Pastel de Carne",
-          "quantidade": 1,
-          "valor": 5.99
-        },
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 1,
-          "valor": 19.99
-        }
-      ]
-    },
-    {
-      "id": "6",
-      "numeroPedido": "20240816-006",
-      "cpf": "999.888.777-66",
-      "descricao": "Pedido contendo Combo Brasil e Espetinho",
-      "observacoes": "Entrega até 13h",
-      "data": "2024-06-10",
-      "valorTotal": 64.98,
-      "pratos": [
-        {
-          "id": "6",
-          "nome": "Combo Brasil",
-          "quantidade": 1,
-          "valor": 49.99
-        },
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        }
-      ]
-    },
-    {
-      "id": "7",
-      "numeroPedido": "20240816-007",
-      "cpf": "444.555.666-77",
-      "descricao": "Pedido contendo Strogonoffe de Frango e Bolo de Chocolate Belga",
-      "observacoes": "Sem alterações",
-      "data": "2024-07-18",
-      "valorTotal": 65.98,
-      "pratos": [
-        {
-          "id": "1",
-          "nome": "Strogonoffe de Frango",
-          "quantidade": 1,
-          "valor": 35.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "id": "8",
-      "numeroPedido": "20240816-008",
-      "cpf": "123.456.789-00",
-      "descricao": "Pedido contendo Pizza de Calabresa e Polenta Frita",
-      "observacoes": "Molho extra na pizza",
-      "data": "2024-08-25",
-      "valorTotal": 49.98,
-      "pratos": [
-        {
-          "id": "3",
-          "nome": "Pizza de Calabresa",
-          "quantidade": 1,
-          "valor": 39.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "767b",
-      "numeroPedido": "qefqef",
-      "descricao": "134R",
-      "valorTotal": "7",
-      "metodoPagamento": "1341R",
-      "data": "2024-09-01",
-      "pratos": []
-    },
-    {
-      "id": "1725228707110",
-      "numeroPedido": "Pedido-1725228707110",
-      "cpf": "123.456.789-00",
-      "descricao": "",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 0,
-      "metodoPagamento": "cartao",
-      "pratos": []
-    },
-    {
-      "id": "1725229081807",
-      "numeroPedido": "Pedido-1725229081807",
-      "cpf": "123.456.789-00",
-      "descricao": "Pastel de Carne, Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 15.98,
-      "metodoPagamento": "cartao",
-      "pratos": [
-        {
-          "id": "15",
-          "nome": "Pastel de Carne",
-          "quantidade": 1,
-          "valor": 5.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725229139391",
-      "numeroPedido": "Pedido-1725229139391",
-      "cpf": "123.456.789-00",
-      "descricao": "Prato Feito, Bolo de Chocolate Belga",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 49.98,
-      "metodoPagamento": "cartao",
-      "pratos": [
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 1,
-          "valor": 19.99
-        },
-        {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "quantidade": 1,
-          "valor": 29.99
-        }
-      ]
-    },
-    {
-      "id": "1725229282738",
-      "numeroPedido": "Pedido-1725229282738",
-      "cpf": "123.456.789-00",
-      "descricao": "Prato Feito, Frango Frito",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 42.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 1,
-          "valor": 19.99
-        },
-        {
-          "id": "13",
-          "nome": "Frango Frito",
-          "quantidade": 1,
-          "valor": 22.99
-        }
-      ]
-    },
-    {
-      "id": "1725229937027",
-      "numeroPedido": "Pedido-1725229937027",
-      "cpf": "123.456.789-00",
-      "descricao": "Macarrão, Pizza de Calabresa",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 65.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "2",
-          "nome": "Macarrão",
-          "quantidade": 1,
-          "valor": 25.99
-        },
-        {
-          "id": "3",
-          "nome": "Pizza de Calabresa",
-          "quantidade": 1,
-          "valor": 39.99
-        }
-      ]
-    },
-    {
-      "id": "1725230234857",
-      "numeroPedido": "Pedido-1725230234857",
-      "cpf": "123.456.789-00",
-      "descricao": "Pastel de Carne, Polenta Frita",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 18.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "15",
-          "nome": "Pastel de Carne",
-          "quantidade": 1,
-          "valor": 5.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1725230292404",
-      "numeroPedido": "Pedido-1725230292404",
-      "cpf": "123.456.789-00",
-      "descricao": "Espetinho, Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 24.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725230719466",
-      "numeroPedido": "Pedido-1725230719466",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca, ",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 35.97,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        },
-        {
-          "id": "7",
-          "quantidade": 2
-        }
-      ]
-    },
-    {
-      "id": "1725231168837",
-      "numeroPedido": "Pedido-1725231168837",
-      "cpf": "13037025921",
-      "descricao": "Macarrão",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 51.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "2",
-          "nome": "Macarrão",
-          "quantidade": 2,
-          "valor": 25.99
-        }
-      ]
-    },
-    {
-      "id": "1725231320057",
-      "numeroPedido": "Pedido-1725231320057",
-      "cpf": "13037025921",
-      "descricao": "Pastel de Carne, Strogonoffe de Frango",
-      "observacoes": "",
-      "data": "2024-09-01",
-      "valorTotal": 77.97,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "15",
-          "nome": "Pastel de Carne",
-          "quantidade": 1,
-          "valor": 5.99
-        },
-        {
-          "id": "1",
-          "nome": "Strogonoffe de Frango",
-          "quantidade": 2,
-          "valor": 35.99
-        }
-      ]
-    },
-    {
-      "id": "1725274119079",
-      "numeroPedido": "Pedido-1725274119079",
-      "cpf": "13037025921",
-      "descricao": "Pastel de Carne",
-      "observacoes": "",
-      "data": "2024-09-02",
-      "valorTotal": 17.97,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "15",
-          "nome": "Pastel de Carne",
-          "quantidade": 3,
-          "valor": 5.99
-        }
-      ]
-    },
-    {
-      "id": "1725280700025",
-      "numeroPedido": "Pedido-1725280700025",
-      "cpf": "13037025921",
-      "descricao": "Polenta Frita, Espetinho",
-      "observacoes": "",
-      "data": "2024-09-02",
-      "valorTotal": 27.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        },
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        }
-      ]
-    },
-    {
-      "id": "1725281641004",
-      "numeroPedido": "Pedido-1725281641004",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-02",
-      "valorTotal": 9.99,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725285304202",
-      "numeroPedido": "Pedido-1725285304202",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca, Polenta Frita",
-      "observacoes": "",
-      "data": "2024-09-02",
-      "valorTotal": 22.98,
-      "metodoPagamento": "cartao",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1725407336293",
-      "numeroPedido": "Pedido-1725407336293",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-03",
-      "valorTotal": 8.69,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725407583857",
-      "numeroPedido": "Pedido-1725407583857",
-      "cpf": "13037025921",
-      "descricao": "Polenta Frita",
-      "observacoes": "",
-      "data": "2024-09-03",
-      "valorTotal": 11.69,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1725407874617",
-      "numeroPedido": "Pedido-1725407874617",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca, Macarrão",
-      "observacoes": "",
-      "data": "2024-09-03",
-      "valorTotal": 35.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        },
-        {
-          "id": "2",
-          "nome": "Macarrão",
-          "quantidade": 1,
-          "valor": 25.99
-        }
-      ]
-    },
-    {
-      "id": "1725407926764",
-      "numeroPedido": "Pedido-1725407926764",
-      "cpf": "13037025921",
-      "descricao": "Espetinho, Prato Feito",
-      "observacoes": "",
-      "data": "2024-09-03",
-      "valorTotal": 4.979999999999997,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        },
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 1,
-          "valor": 19.99
-        }
-      ]
-    },
-    {
-      "id": "1725409376592",
-      "numeroPedido": "Pedido-1725409376592",
-      "cpf": "13037025921",
-      "descricao": "",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 0,
-      "metodoPagamento": "dinheiro",
-      "pratos": []
-    },
-    {
-      "id": "1725409491141",
-      "numeroPedido": "Pedido-1725409491141",
-      "cpf": "13037025921",
-      "descricao": "Polenta Frita, Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 22.35,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725409566501",
-      "numeroPedido": "Pedido-1725409566501",
-      "cpf": "13037025921",
-      "descricao": "",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 0,
-      "metodoPagamento": "dinheiro",
-      "pratos": []
-    },
-    {
-      "id": "1725409631624",
-      "numeroPedido": "Pedido-1725409631624",
-      "cpf": "13037025921",
-      "descricao": "",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 0,
-      "metodoPagamento": "dinheiro",
-      "pratos": []
-    },
-    {
-      "id": "1725409651730",
-      "numeroPedido": "Pedido-1725409651730",
-      "cpf": "13037025921",
-      "descricao": "Polenta Frita, Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 22.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725409672126",
-      "numeroPedido": "Pedido-1725409672126",
-      "cpf": "13037025921",
-      "descricao": "",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 0,
-      "metodoPagamento": "cartao",
-      "pratos": []
-    },
-    {
-      "id": "1725409780438",
-      "numeroPedido": "Pedido-1725409780438",
-      "cpf": "13037025921",
-      "descricao": "Polenta Frita, Coxinha de Jaca",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 22.98,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        },
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        }
-      ]
-    },
-    {
-      "id": "1725452151886",
-      "numeroPedido": "Pedido-1725452151886",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca, Polenta Frita",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 32.94,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 2,
-          "valor": 9.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1725452648742",
-      "numeroPedido": "Pedido-1725452648742",
-      "cpf": "13037025921",
-      "descricao": "Macarrão, Strogonoffe de Frango",
-      "observacoes": "",
-      "data": "2024-09-04",
-      "valorTotal": 165.94,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "2",
-          "nome": "Macarrão",
-          "quantidade": 5,
-          "valor": 25.99
-        },
-        {
-          "id": "1",
-          "nome": "Strogonoffe de Frango",
-          "quantidade": 1,
-          "valor": 35.99
-        }
-      ]
-    },
-    {
-      "id": "1725621118834",
-      "numeroPedido": "Pedido-1725621118834",
-      "cpf": "13037025921",
-      "descricao": "Coxinha de Jaca, Polenta Frita",
-      "observacoes": "",
-      "data": "2024-09-06",
-      "valorTotal": 35.97,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "8",
-          "nome": "Coxinha de Jaca",
-          "quantidade": 1,
-          "valor": 9.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 2,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1728393723688",
-      "numeroPedido": "Pedido-1728393723688",
-      "cpf": "13037025921",
-      "descricao": "Espetinho, Prato Feito, Polenta Frita",
-      "observacoes": "",
-      "data": "2024-10-08",
-      "valorTotal": 66.64999999999999,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        },
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 2,
-          "valor": 19.99
-        },
-        {
-          "id": "7",
-          "nome": "Polenta Frita",
-          "quantidade": 1,
-          "valor": 12.99
-        }
-      ]
-    },
-    {
-      "id": "1728394641408",
-      "numeroPedido": "Pedido-1728394641408",
-      "cpf": "13037025921",
-      "descricao": "Espetinho",
-      "observacoes": "",
-      "data": "2024-10-08",
-      "valorTotal": 14.99,
-      "metodoPagamento": "cartao",
-      "pratos": [
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        }
-      ]
-    },
-    {
-      "id": "1728394667197",
-      "numeroPedido": "Pedido-1728394667197",
-      "cpf": "13037025921",
-      "descricao": "Espetinho, Prato Feito",
-      "observacoes": "",
-      "data": "2024-10-08",
-      "valorTotal": 34.98,
-      "metodoPagamento": "cartao",
-      "pratos": [
-        {
-          "id": "12",
-          "nome": "Espetinho",
-          "quantidade": 1,
-          "valor": 14.99
-        },
-        {
-          "id": "5",
-          "nome": "Prato Feito",
-          "quantidade": 1,
-          "valor": 19.99
-        }
-      ]
-    },
-    {
       "id": "1728397376451",
       "numeroPedido": "Pedido-1728397376451",
       "cpf": "13037025921",
@@ -1070,6 +236,96 @@
           "nome": "Espetinho",
           "quantidade": 3,
           "valor": 14.99
+        }
+      ]
+    },
+    {
+      "id": "1728418041047",
+      "numeroPedido": "Pedido-1728418041047",
+      "cpf": "13037025921",
+      "descricao": "Strogonoffe de Frango",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 35.99,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 1,
+          "valor": 35.99
+        }
+      ]
+    },
+    {
+      "id": "1728418193527",
+      "numeroPedido": "Pedido-1728418193527",
+      "cpf": "13037025921",
+      "descricao": "Strogonoffe de Frango, Polenta Frita, Espetinho, Prato Feito, Frango Frito",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 106.95,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 1,
+          "valor": 35.99
+        },
+        {
+          "id": "7",
+          "nome": "Polenta Frita",
+          "quantidade": 1,
+          "valor": 12.99
+        },
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 1,
+          "valor": 14.99
+        },
+        {
+          "id": "5",
+          "nome": "Prato Feito",
+          "quantidade": 1,
+          "valor": 19.99
+        },
+        {
+          "id": "13",
+          "nome": "Frango Frito",
+          "quantidade": 1,
+          "valor": 22.99
+        }
+      ]
+    },
+    {
+      "id": "1728419767235",
+      "numeroPedido": "Pedido-1728419767235",
+      "cpf": "13270273978",
+      "descricao": "Pizza de Calabresa, Macarrão, Strogonoffe de Frango",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 173.95,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "3",
+          "nome": "Pizza de Calabresa",
+          "quantidade": 1,
+          "valor": 39.99
+        },
+        {
+          "id": "2",
+          "nome": "Macarrão",
+          "quantidade": 1,
+          "valor": 25.99
+        },
+        {
+          "id": "1",
+          "nome": "Strogonoffe de Frango",
+          "quantidade": 3,
+          "valor": 35.99
         }
       ]
     }
@@ -1233,28 +489,75 @@
   ],
   "carrinho": [
     {
-      "id": "5",
-      "img": "https://t3.ftcdn.net/jpg/05/66/61/00/360_F_566610095_S4tDRuY2c7O4YuUYk5BSQdPDlRuW0kMc.jpg",
-      "nome": "Prato Feito",
-      "descricao": "Arroz, feijão, carne, batata frita e salada.",
-      "valorReais": 19.99,
-      "valorPontos": 200,
-      "categoria": "Brasil",
-      "status": "Disponível",
-      "quantidade": 1,
-      "valorTotal": 19.99
+      "id": "1",
+      "cpf": "13037025921",
+      "items": [
+        {
+          "id": "1",
+          "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+          "nome": "Strogonoffe de Frango",
+          "descricao": "Strogonoffe de frango com arroz e batata palha.",
+          "valorReais": 35.99,
+          "valorPontos": 350,
+          "categoria": "Carnes",
+          "status": "Disponível",
+          "quantidade": 19,
+          "valorTotal": 683.8100000000001
+        },
+        {
+          "id": "2",
+          "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
+          "nome": "Macarrão",
+          "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
+          "valorReais": 25.99,
+          "valorPontos": 250,
+          "categoria": "Massas",
+          "status": "Disponível",
+          "quantidade": 15,
+          "valorTotal": 389.85
+        },
+        {
+          "id": "3",
+          "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
+          "nome": "Pizza de Calabresa",
+          "descricao": "Pizza com molho de tomate, queijo e calabresa.",
+          "valorReais": 39.99,
+          "valorPontos": 400,
+          "categoria": "Massas",
+          "status": "Disponível",
+          "quantidade": 7,
+          "valorTotal": 279.93
+        },
+        {
+          "id": "7",
+          "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
+          "nome": "Polenta Frita",
+          "descricao": "Polenta frita crocante",
+          "valorReais": 12.99,
+          "valorPontos": 130,
+          "categoria": "Brasil",
+          "status": "Disponível",
+          "quantidade": 1,
+          "valorTotal": 12.99
+        },
+        {
+          "id": "13",
+          "img": "https://static.vecteezy.com/ti/fotos-gratis/p2/14214654-deliciosa-carne-de-frango-frito-quente-e-crocante-gratis-foto.jpg",
+          "nome": "Frango Frito",
+          "descricao": "Frango frito crocante com tempero especial.",
+          "valorReais": 22.99,
+          "valorPontos": 230,
+          "categoria": "Carnes",
+          "status": "Disponível",
+          "quantidade": 1,
+          "valorTotal": 22.99
+        }
+      ]
     },
     {
-      "id": "7",
-      "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
-      "nome": "Polenta Frita",
-      "descricao": "Polenta frita crocante",
-      "valorReais": 12.99,
-      "valorPontos": 130,
-      "categoria": "Brasil",
-      "status": "Disponível",
-      "quantidade": 2,
-      "valorTotal": 25.98
+      "id": "11e4",
+      "cpf": "13270273978",
+      "items": []
     }
   ]
 }

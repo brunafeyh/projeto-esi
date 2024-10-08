@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 import { AccessToken, AuthorizationRole, User } from '../types/auth'
+import { useAuth } from '../hooks/use-auth'
 
 
 interface DecodedToken {
@@ -31,3 +32,11 @@ export const getExpirationTime = (token: string | null): number => {
 }
 
 export const roles: AuthorizationRole[] = ['ROLE_ADMINISTRATOR', 'ROLE_ATTENDANT', 'ROLE_CUSTOMER']; 
+
+export function getCpf(): string {
+	const { user } = useAuth();
+	if (user && user.cpf) {
+	  return user.cpf
+	}
+	return ''
+  }
