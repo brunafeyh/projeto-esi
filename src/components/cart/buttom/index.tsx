@@ -111,9 +111,9 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <Box p={4} bgcolor="white" borderRadius={2} boxShadow={24} mx="auto" mt={10} width={400}>
           <Typography variant="h6">Detalhes da Compra</Typography>
-          {cartItems.map((item) => (
-            <Typography key={item.id} variant="body1">
-              {item.nome} - {item.quantidade} x R$ {(item.valorReais || 0).toFixed(2)} = R$ {(item.valorTotal || 0).toFixed(2)}
+          {cartItems.map((item, index) => (
+            <Typography key={item.id || index} variant="body1">
+              {`${item.nome || 'N/A'} - ${item.quantidade || 0} x R$ ${(item.valorReais || 0).toFixed(2)} = R$ ${(item.valorTotal || 0).toFixed(2)}`}
             </Typography>
           ))}
           <Divider sx={{ my: 2 }} />

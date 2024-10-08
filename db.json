@@ -66,7 +66,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 2466,
+      "pontosAcumulados": 2616,
       "id": "d0cb"
     },
     {
@@ -1054,6 +1054,24 @@
           "valor": 19.99
         }
       ]
+    },
+    {
+      "id": "1728397376451",
+      "numeroPedido": "Pedido-1728397376451",
+      "cpf": "13037025921",
+      "descricao": "Espetinho",
+      "observacoes": "",
+      "data": "2024-10-08",
+      "valorTotal": 44.97,
+      "metodoPagamento": "cartao",
+      "pratos": [
+        {
+          "id": "12",
+          "nome": "Espetinho",
+          "quantidade": 3,
+          "valor": 14.99
+        }
+      ]
     }
   ],
   "estatisticas": {
@@ -1213,5 +1231,30 @@
       ]
     }
   ],
-  "carrinho": []
+  "carrinho": [
+    {
+      "id": "5",
+      "img": "https://t3.ftcdn.net/jpg/05/66/61/00/360_F_566610095_S4tDRuY2c7O4YuUYk5BSQdPDlRuW0kMc.jpg",
+      "nome": "Prato Feito",
+      "descricao": "Arroz, feijão, carne, batata frita e salada.",
+      "valorReais": 19.99,
+      "valorPontos": 200,
+      "categoria": "Brasil",
+      "status": "Disponível",
+      "quantidade": 1,
+      "valorTotal": 19.99
+    },
+    {
+      "id": "7",
+      "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
+      "nome": "Polenta Frita",
+      "descricao": "Polenta frita crocante",
+      "valorReais": 12.99,
+      "valorPontos": 130,
+      "categoria": "Brasil",
+      "status": "Disponível",
+      "quantidade": 2,
+      "valorTotal": 25.98
+    }
+  ]
 }

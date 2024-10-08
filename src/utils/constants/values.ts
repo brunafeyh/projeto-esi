@@ -1,4 +1,5 @@
 import { Column } from "../../components/tables/table"
+import { Prato } from "../../types/dishes"
 import { Pedido } from "../../types/order"
 
 export const ACCESS_TOKEN_KEY = 'access_token'
@@ -29,5 +30,13 @@ export const DEFAULT_ORDER: Pedido = {
   metodoPagamento: '',
   data: '',
   pratos: [],
-};
+}
 
+export const DEFAULT_PRATO: Partial<Prato> = {
+  nome: '',
+  descricao: '',
+  valorReais: 0,
+  valorPontos: 0,
+  categoria: '',
+  img: '',
+};
