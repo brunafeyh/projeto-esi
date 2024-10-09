@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { PageLayout } from '../../../layouts/page-layout';
 import { roles } from '../../../utils/auth';
 import { withAuthentication } from '../../../hocs/authentication/with-authentication';
-import CustomerOrder from '../../../components/order/customer/CustomerOrder';
+import CustomerOrder from '../../../components/order/customer';
 import { TitlePage } from '../../home/styles';
 
 const PedidosCliente: FC = () => {

@@ -11,6 +11,7 @@ import { useOrderFilter } from '../../../hooks/order/use-order-filters'
 import { ORDER_COLUMNS } from '../../../utils/constants/values'
 import { useOrderMutations } from '../../../hooks/order/use-order-mutations'
 import { Pedido } from '../../../types/order'
+import { formatDateToDDMMYYYY, getString } from '../../../utils/date'
 
 const AdminOrder: FC = () => {
     const { orders } = useOrders()
@@ -106,7 +107,7 @@ const AdminOrder: FC = () => {
                 renderData={(row) => (
                     <TableRowBody key={row.id} onClick={() => handleOpenDetailsModal(row.id)} style={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
-                        <TableCell>{row.data}</TableCell>
+                        <TableCell>{formatDateToDDMMYYYY(row.data)}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
@@ -184,8 +185,8 @@ const AdminOrder: FC = () => {
                 <Stack spacing={2}>
                     {orderDetails ? (
                         <>
-                            <ModalTitle>Pedido: {orderDetails.numeroPedido}</ModalTitle>
-                            <ModalText>Data: {orderDetails.data}</ModalText>
+                            <ModalTitle>{orderDetails.numeroPedido}</ModalTitle>
+                            <ModalText>Data: {formatDateToDDMMYYYY(getString(orderDetails.data))}</ModalText>
                             <ModalText>Descrição: {orderDetails.descricao}</ModalText>
                             <ModalText>Valor (R$): {orderDetails.valorTotal}</ModalText>
                             <ModalText>Método de Pagamento: {orderDetails.metodoPagamento}</ModalText>
@@ -206,7 +207,7 @@ const AdminOrder: FC = () => {
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                        <Button onClick={() => detailsModalRef.current?.closeModal()} variant="outlined">
+                        <Button onClick={() => detailsModalRef.current?.closeModal()} variant="contained">
                             Fechar
                         </Button>
                     </Box>

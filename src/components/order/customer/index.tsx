@@ -3,14 +3,15 @@ import { Box, Button, Typography } from '@mui/material'
 import Table from '../../tables/table'
 import { TableRowBody } from '../../tables/table/styles'
 import { TableCell } from '../../tables/table-cell'
-import { Modal, useModal } from '../../../components/modal'
-import { CloseButton, FilterBox, ModalContainer, ModalText, ModalTitle } from './style'
+import { Modal, useModal } from '../../modal'
+import { FilterBox, ModalContainer, ModalText, ModalTitle } from './style'
 import { TextField } from '../../forms/login/styles'
 import { useOrderFilter } from '../../../hooks/order/use-order-filters'
 import { ORDER_COLUMNS } from '../../../utils/constants/values'
 import { useCustomerOrders } from '../../../hooks/order/use-costumer-order'
 import { Pedido } from '../../../types/order'
 import OrderService from '../../../services/order'
+import { formatDateToDDMMYYYY } from '../../../utils/date'
 
 const service = new OrderService()
 
@@ -77,7 +78,7 @@ const CustomerOrder: FC = () => {
                 renderData={(row) => (
                     <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} sx={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
-                        <TableCell>{row.data}</TableCell>
+                        <TableCell>{formatDateToDDMMYYYY(row.data)}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
@@ -89,8 +90,8 @@ const CustomerOrder: FC = () => {
                 <ModalContainer>
                     {selectedOrder ? (
                         <>
-                            <ModalTitle variant="h6">Pedido: {selectedOrder.numeroPedido}</ModalTitle>
-                            <ModalText>Data: {selectedOrder.data}</ModalText>
+                            <ModalTitle variant="h6">{selectedOrder.numeroPedido}</ModalTitle>
+                            <ModalText>Data: {formatDateToDDMMYYYY(selectedOrder.data)}</ModalText>
                             <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
                             <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
                             <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
@@ -111,9 +112,9 @@ const CustomerOrder: FC = () => {
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <CloseButton variant="contained" onClick={handleCloseModal}>
+                        <Button variant="contained" onClick={handleCloseModal} sx={{mt: 2}}>
                             Fechar
-                        </CloseButton>
+                        </Button>
                     </Box>
                 </ModalContainer>
             </Modal>

@@ -491,68 +491,7 @@
     {
       "id": "1",
       "cpf": "13037025921",
-      "items": [
-        {
-          "id": "1",
-          "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
-          "nome": "Strogonoffe de Frango",
-          "descricao": "Strogonoffe de frango com arroz e batata palha.",
-          "valorReais": 35.99,
-          "valorPontos": 350,
-          "categoria": "Carnes",
-          "status": "Disponível",
-          "quantidade": 19,
-          "valorTotal": 683.8100000000001
-        },
-        {
-          "id": "2",
-          "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
-          "nome": "Macarrão",
-          "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
-          "valorReais": 25.99,
-          "valorPontos": 250,
-          "categoria": "Massas",
-          "status": "Disponível",
-          "quantidade": 15,
-          "valorTotal": 389.85
-        },
-        {
-          "id": "3",
-          "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
-          "nome": "Pizza de Calabresa",
-          "descricao": "Pizza com molho de tomate, queijo e calabresa.",
-          "valorReais": 39.99,
-          "valorPontos": 400,
-          "categoria": "Massas",
-          "status": "Disponível",
-          "quantidade": 7,
-          "valorTotal": 279.93
-        },
-        {
-          "id": "7",
-          "img": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/524ef64f6115e20d61f0f158e22e07bd.jpg",
-          "nome": "Polenta Frita",
-          "descricao": "Polenta frita crocante",
-          "valorReais": 12.99,
-          "valorPontos": 130,
-          "categoria": "Brasil",
-          "status": "Disponível",
-          "quantidade": 1,
-          "valorTotal": 12.99
-        },
-        {
-          "id": "13",
-          "img": "https://static.vecteezy.com/ti/fotos-gratis/p2/14214654-deliciosa-carne-de-frango-frito-quente-e-crocante-gratis-foto.jpg",
-          "nome": "Frango Frito",
-          "descricao": "Frango frito crocante com tempero especial.",
-          "valorReais": 22.99,
-          "valorPontos": 230,
-          "categoria": "Carnes",
-          "status": "Disponível",
-          "quantidade": 1,
-          "valorTotal": 22.99
-        }
-      ]
+      "items": []
     },
     {
       "id": "11e4",
