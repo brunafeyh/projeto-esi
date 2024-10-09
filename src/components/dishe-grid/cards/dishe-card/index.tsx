@@ -3,6 +3,8 @@ import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Chip
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TitleCard } from '../../../../pages/home/styles';
 import { Prato } from '../../../../types/dishes';
+import { useAuth } from '../../../../hooks/use-auth';
+import { toast } from 'react-toastify';
 
 interface DisheCardProps {
 	dishe: Prato;
@@ -10,6 +12,11 @@ interface DisheCardProps {
 }
 
 const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
+	const { isAuthenticated } = useAuth()
+	const handleAddtoCard = () => {
+		if (!isAuthenticated()) toast.error('Para adicionar um item ao carrinho você deve estar logado!')
+		else addToCart(dishe)
+	}
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
@@ -26,7 +33,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
-				<IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart(dishe)}>
+				<IconButton color="primary" aria-label="add to shopping cart" onClick={handleAddtoCard}>
 					<ShoppingCartIcon />
 				</IconButton>
 				<TitleCard>R$ {dishe.valorReais}</TitleCard>

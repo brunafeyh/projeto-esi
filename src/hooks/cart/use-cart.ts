@@ -2,14 +2,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import CartService from '../../services/cart';
 import { CartItem, Prato } from '../../types/dishes';
-
-import { getCpf } from '../../utils/auth';
+import { getCpf} from '../../utils/auth';
 
 const cartService = new CartService();
 
 export const useCart = () => {
   const queryClient = useQueryClient();
-
   const cpf = getCpf()
 
   const { data: cartData, isLoading, error } = useQuery({
@@ -27,8 +25,8 @@ export const useCart = () => {
       toast.success('Prato adicionado ao carrinho com sucesso!');
     },
     onError: (error) => {
-      console.error('Erro ao adicionar ao carrinho:', error);
-      toast.error('Erro ao adicionar ao carrinho.');
+        console.error('Erro ao adicionar ao carrinho:', error);
+        toast.error('Erro ao adicionar ao carrinho.');
     },
   });
 

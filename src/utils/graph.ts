@@ -1,16 +1,19 @@
+import { useDishes } from "../hooks/dishes/use-dishes";
+import { useOrders } from "../hooks/order/use-orders";
 import { Prato } from "../types/dishes";
+import { DishSale, SalesPerDish } from "../types/graphs";
 import { Pedido } from "../types/order";
 
 export const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDateString = (dateString: string): string => {
-    const [year, month, day] = dateString.split('-');
-    return `${day}/${month}/${year}`;
+  const [year, month, day] = dateString.split('-');
+  return `${day}/${month}/${year}`;
 }
 
 export const filterOrdersByDate = (orders: Pedido[], selectedDate: Date | null): Pedido[] => {
@@ -66,4 +69,58 @@ export const calculateMonthlySales = (orders: Pedido[], selectedYear: number): n
   });
 
   return vendasPorMes;
+};
+
+
+export const calculateTopDishes = (orders: any[]): DishSale[] => {
+  const sales: SalesPerDish = {};
+
+  orders.forEach((order) => {
+    order.pratos.forEach((orderedDish: any) => {
+      const dishId = Number(orderedDish.id);
+
+      if (sales[dishId]) {
+        sales[dishId].quantity += orderedDish.quantidade;
+      } else {
+        sales[dishId] = {
+          name: orderedDish.nome,
+          quantity: orderedDish.quantidade,
+        };
+      }
+    });
+  });
+
+  return Object.values(sales)
+    .sort((a, b) => b.quantity - a.quantity)
+    .slice(0, 5);
+};
+
+export const getMoreSelled = () => {
+  const { orders } = useOrders()
+  const { dishes } = useDishes()
+  const dishCountMap = new Map()
+
+  orders.forEach(order => {
+    order.pratos.forEach(prato => {
+      if (dishCountMap.has(prato.id)) {
+        const existingDish = dishCountMap.get(prato.id);
+        dishCountMap.set(prato.id, {
+          ...existingDish,
+          quantidade: existingDish.quantidade + prato.quantidade,
+        });
+      } else {
+        dishCountMap.set(prato.id, {
+          ...prato,
+        });
+      }
+    });
+  });
+  const sortedDishes = Array.from(dishCountMap.values()).sort((a, b) => b.quantidade - a.quantidade);
+  const top5Dishes = sortedDishes.slice(0, 5);
+  const top5DishDetails = top5Dishes.map(topDish => {
+    const fullDish = dishes.find(dish => dish.id === topDish.id);
+    return fullDish ? { ...fullDish, quantidade: topDish.quantidade } : topDish;
+  });
+
+  return top5DishDetails;
 };

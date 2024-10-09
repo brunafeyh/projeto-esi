@@ -118,9 +118,12 @@ export const useAuth = () => {
     const currentTime = Date.now();
     return !isAccessTokenExpired() && currentTime > expirationTime - 30000;
   }, [expirationTime, isAccessTokenExpired]);
+
   const isClient = () => {
-    const {user} = useAuth()
       return !(user?.role === 'ROLE_ATTENDANT' || user?.role === 'ROLE_ADMINISTRATOR')
+  }
+  const isAdminOrAttendant = () => {
+    return !isClient() && isAuthenticated()
   }
   return {
     token: accessToken,
@@ -136,5 +139,6 @@ export const useAuth = () => {
     isTokenAboutToExpire,
     hasSomeRole,
     renewToken,
+    isAdminOrAttendant
   };
 };

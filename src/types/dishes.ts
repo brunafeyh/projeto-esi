@@ -8,7 +8,9 @@ export interface Prato {
 	valorPontos: number;
 	categoria: string;
 	img: string;
-	imgFile: FileList
+	imgFile: FileList | null
+	quantidade: number
+	valor: number
 }
 
 export interface CartItem extends Prato {
@@ -17,19 +19,19 @@ export interface CartItem extends Prato {
 }
 
 export interface Ingredient {
-    id: string;
-    nome: string;
-    quantidade: string;
+	id: string;
+	nome: string;
+	quantidade: string;
 }
 
 export const ingredientSchema = z.object({
-  nome: z.string().min(1, 'Nome é obrigatório'),
-  quantidade: z.string().min(1, 'Quantidade é obrigatória'),
+	nome: z.string().min(1, 'Nome é obrigatório'),
+	quantidade: z.string().min(1, 'Quantidade é obrigatória'),
 });
 
 export type IngredientFormInputs = z.infer<typeof ingredientSchema>;
 
 export interface IngredientesPrato {
-    idPrato: string;
-    ingredientes: Ingredient[];
+	idPrato: string;
+	ingredientes: Ingredient[];
 }

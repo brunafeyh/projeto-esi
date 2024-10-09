@@ -7,7 +7,7 @@ import { People, RestaurantMenu } from '@mui/icons-material';
 import DailyStatistics from '../../components/graphs/daily';
 import SellYearGraph from '../../components/graphs/sellforyear';
 import PopularCategorys from '../../components/graphs/categorys';
-import SalesLeaders from '../../components/sales-grid';
+import SalesLeaders from '../../components/graphs/sales-grid';
 import { Container, GraphTypography, Stack } from './styles';
 import { useDishes } from '../../hooks/dishes/use-dishes';
 

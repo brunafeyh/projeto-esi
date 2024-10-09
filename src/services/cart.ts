@@ -27,10 +27,8 @@ class CartService {
   async addItemToCart(cpf: string, newItem: CartItem): Promise<Cart> {
     try {
       const existingCart = await this.fetchCartByCpf(cpf);
-  
       if (existingCart && existingCart.id) {
         const existingItemIndex = existingCart.items.findIndex(item => item.id === newItem.id);
-  
         if (existingItemIndex === -1) {
           existingCart.items.push(newItem);
         } else {

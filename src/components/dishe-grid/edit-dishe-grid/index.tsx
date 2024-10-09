@@ -1,76 +1,43 @@
 import { FC, useState } from 'react';
-import { Grid, Button, Typography, Box } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { Prato } from '../../../types/dishes';
 import DisheCard from './edit-dishe-card';
 import { Modal, useModal } from '../../modal';
 import { ConfirmBox, EditBox } from './styles';
-import { TextField } from '../../forms/login/styles';
+import DishForm from '../../forms/dishe';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
-import { convertToBase64 } from '../../../utils/image';
 
 interface DisheGridProps {
     dishes: Prato[];
 }
 
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
-    const { updateDish, deleteDish } = useDishes();
     const editModalRef = useModal();
     const deleteModalRef = useModal();
-    const [selectedDishe, setSelectedDishe] = useState<Prato | null>(null);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const { deleteDish } = useDishes()
+    const [selectedDish, setSelectedDish] = useState<Prato | null>(null);
 
-    const handleEditClick = (dishe: Prato) => {
-        setSelectedDishe(dishe);
+    const handleEditClick = (dish: Prato) => {
+        setSelectedDish(dish);
         editModalRef.current?.openModal();
     };
 
-    const handleDeleteClick = (dishe: Prato) => {
-        setSelectedDishe(dishe);
+    const handleDeleteClick = (dish: Prato) => {
+        setSelectedDish(dish);
         deleteModalRef.current?.openModal();
-    };
+    }
 
     const handleDeleteConfirm = () => {
-        if (selectedDishe) {
-            deleteDish(selectedDishe.id);
-            deleteModalRef.current?.closeModal();
-        }
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        if (selectedDishe) {
-            setSelectedDishe({
-                ...selectedDishe,
-                [name]: name === 'valorReais' || name === 'valorPontos' ? parseFloat(value) || 0 : value,
-            });
-        }
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0] || null;
-        setSelectedFile(file);
-    };
-
-    const handleSave = async () => {
-        if (selectedDishe) {
-            let imageBase64 = selectedDishe.img;
-
-            if (selectedFile) {
-                imageBase64 = await convertToBase64(selectedFile);
-            }
-
-            const updatedDishe = { ...selectedDishe, img: imageBase64 };
-            updateDish(updatedDishe);
-            editModalRef.current?.closeModal();
-        }
-    };
+        if (selectedDish) deleteDish(selectedDish.id)
+        deleteModalRef.current?.closeModal();
+    }
 
     return (
         <>
             <Grid container spacing={2}>
-                {dishes.map((dishe) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
-                        <DisheCard dishe={dishe} onEdit={() => handleEditClick(dishe)} onDelete={() => handleDeleteClick(dishe)} />
+                {dishes.map((dish) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={dish.id}>
+                        <DisheCard dishe={dish} onEdit={() => handleEditClick(dish)} onDelete={() => handleDeleteClick(dish)} />
                     </Grid>
                 ))}
             </Grid>
@@ -79,65 +46,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                     <Typography variant="h6" gutterBottom>
                         Editar Prato
                     </Typography>
-                    <Box>
-                        <TextField
-                            fullWidth
-                            label="Nome"
-                            name="nome"
-                            variant="filled"
-                            value={selectedDishe?.nome || ''}
-                            onChange={handleInputChange}
-                            margin="normal"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Descrição"
-                            name="descricao"
-                            variant="filled"
-                            value={selectedDishe?.descricao || ''}
-                            onChange={handleInputChange}
-                            margin="normal"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Preço"
-                            name="valorReais"
-                            type="number"
-                            variant="filled"
-                            value={selectedDishe?.valorReais || ''}
-                            onChange={handleInputChange}
-                            margin="normal"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Pontos"
-                            name="valorPontos"
-                            type="number"
-                            variant="filled"
-                            value={selectedDishe?.valorPontos || ''}
-                            onChange={handleInputChange}
-                            margin="normal"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Imagem"
-                            name="imgFile"
-                            type="file"
-                            variant="filled"
-                            inputProps={{ accept: 'image/*' }}
-                            onChange={handleFileChange}
-                            margin="normal"
-                            InputLabelProps={{ shrink: true }}
-                        />
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                        <Button variant="outlined" onClick={() => editModalRef.current?.closeModal()} sx={{ mr: 2 }}>
-                            Cancelar
-                        </Button>
-                        <Button variant="contained" color="primary" onClick={handleSave}>
-                            Salvar
-                        </Button>
-                    </Box>
+                    <DishForm dish={selectedDish || undefined} onClose={() => editModalRef.current?.closeModal()} />
                 </EditBox>
             </Modal>
 
@@ -163,4 +72,4 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     );
 };
 
-export default EditDisheGrid;
+export default EditDisheGrid

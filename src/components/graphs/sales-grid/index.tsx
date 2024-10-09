@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { useOrders } from '../../hooks/order/use-orders';
+import { useOrders } from '../../../hooks/order/use-orders';
 import { Box } from './styles';
+import { calculateTopDishes } from '../../../utils/graph';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -12,42 +13,14 @@ interface DishSale {
     quantity: number;
 }
 
-interface SalesPerDish {
-    [key: number]: DishSale;
-}
-
 const SalesLeaders: React.FC = () => {
     const { orders } = useOrders();
     const [topDishes, setTopDishes] = useState<DishSale[]>([]);
 
     useEffect(() => {
-        const calculateTopDishes = () => {
-            const sales: SalesPerDish = {};
-
-            orders.forEach((order) => {
-                order.pratos.forEach((orderedDish) => {
-                    const dishId = Number(orderedDish.id);
-
-                    if (sales[dishId]) {
-                        sales[dishId].quantity += orderedDish.quantidade;
-                    } else {
-                        sales[dishId] = {
-                            name: orderedDish.nome,
-                            quantity: orderedDish.quantidade,
-                        };
-                    }
-                });
-            });
-
-            const sortedSales = Object.values(sales)
-                .sort((a, b) => b.quantity - a.quantity)
-                .slice(0, 5);
-
-            setTopDishes(sortedSales);
-        };
-
         if (orders.length) {
-            calculateTopDishes();
+            const sortedSales = calculateTopDishes(orders)
+            setTopDishes(sortedSales);
         }
     }, [orders]);
 
