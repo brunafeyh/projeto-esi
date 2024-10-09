@@ -11,6 +11,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } 
 import { Prato } from '../../types/dishes';
 import { useDishes } from '../../hooks/dishes/use-dishes';
 import { DEFAULT_PRATO } from '../../utils/constants/values';
+import { convertToBase64 } from '../../utils/image';
 
 const Cardapio: FC = () => {
   const { searchTerm, sort, selectedCategory, setSearchTerm, setSort, setSelectedCategory, addToCart, filteredDishes } = useFilteredDishes();
@@ -26,11 +27,24 @@ const Cardapio: FC = () => {
 
   const handleCloseModal = () => {
     setOpen(false);
-    reset(DEFAULT_PRATO); // Reset the form to default values
+    reset(DEFAULT_PRATO);
   };
 
-  const handleAddDish = (data: Partial<Prato>) => {
-    addDish(data as Prato);
+  const handleAddDish = async (data: Partial<Prato>) => {
+    let imageBase64 = '';
+
+    if (data.imgFile instanceof FileList && data.imgFile.length > 0) {
+      const file = data.imgFile[0];
+      imageBase64 = await convertToBase64(file);
+    }
+
+    const newDish = {
+      ...data,
+      img: imageBase64,
+    };
+
+    await addDish(newDish as Prato);
+
     handleCloseModal();
   };
 
@@ -102,12 +116,15 @@ const Cardapio: FC = () => {
             />
             <TextField
               margin="dense"
-              label="URL da Imagem"
-              type="text"
+              label="Imagem"
+              type="file"
               fullWidth
               variant="filled"
-              {...register('img')}
+              inputProps={{ accept: 'image/*' }}
+              {...register('imgFile')}
+              InputLabelProps={{ shrink: true }}
             />
+
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseModal} variant="outlined">

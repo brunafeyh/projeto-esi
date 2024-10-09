@@ -1,14 +1,15 @@
-import { FC, useState } from 'react'
-import { Grid, Button, Typography, Box } from '@mui/material'
-import { Prato } from '../../../types/dishes'
-import DisheCard from './edit-dishe-card'
-import { Modal, useModal } from '../../modal'
-import { ConfirmBox, EditBox } from './styles'
-import { TextField } from '../../forms/login/styles'
-import { useDishes } from '../../../hooks/dishes/use-dishes'
+import { FC, useState } from 'react';
+import { Grid, Button, Typography, Box } from '@mui/material';
+import { Prato } from '../../../types/dishes';
+import DisheCard from './edit-dishe-card';
+import { Modal, useModal } from '../../modal';
+import { ConfirmBox, EditBox } from './styles';
+import { TextField } from '../../forms/login/styles';
+import { useDishes } from '../../../hooks/dishes/use-dishes';
+import { convertToBase64 } from '../../../utils/image';
 
 interface DisheGridProps {
-    dishes: Prato[]
+    dishes: Prato[];
 }
 
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
@@ -16,23 +17,24 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     const editModalRef = useModal();
     const deleteModalRef = useModal();
     const [selectedDishe, setSelectedDishe] = useState<Prato | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleEditClick = (dishe: Prato) => {
         setSelectedDishe(dishe);
         editModalRef.current?.openModal();
-    }
+    };
 
     const handleDeleteClick = (dishe: Prato) => {
         setSelectedDishe(dishe);
         deleteModalRef.current?.openModal();
-    }
+    };
 
     const handleDeleteConfirm = () => {
         if (selectedDishe) {
             deleteDish(selectedDishe.id);
             deleteModalRef.current?.closeModal();
         }
-    }
+    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -42,14 +44,26 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                 [name]: name === 'valorReais' || name === 'valorPontos' ? parseFloat(value) || 0 : value,
             });
         }
-    }
+    };
 
-    const handleSave = () => {
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] || null;
+        setSelectedFile(file);
+    };
+
+    const handleSave = async () => {
         if (selectedDishe) {
-            updateDish(selectedDishe);
+            let imageBase64 = selectedDishe.img;
+
+            if (selectedFile) {
+                imageBase64 = await convertToBase64(selectedFile);
+            }
+
+            const updatedDishe = { ...selectedDishe, img: imageBase64 };
+            updateDish(updatedDishe);
             editModalRef.current?.closeModal();
         }
-    }
+    };
 
     return (
         <>
@@ -104,6 +118,17 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                             onChange={handleInputChange}
                             margin="normal"
                         />
+                        <TextField
+                            fullWidth
+                            label="Imagem"
+                            name="imgFile"
+                            type="file"
+                            variant="filled"
+                            inputProps={{ accept: 'image/*' }}
+                            onChange={handleFileChange}
+                            margin="normal"
+                            InputLabelProps={{ shrink: true }}
+                        />
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                         <Button variant="outlined" onClick={() => editModalRef.current?.closeModal()} sx={{ mr: 2 }}>
@@ -135,7 +160,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                 </EditBox>
             </Modal>
         </>
-    )
-}
+    );
+};
 
 export default EditDisheGrid;

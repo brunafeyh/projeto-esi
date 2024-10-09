@@ -8,6 +8,7 @@ export interface Prato {
 	valorPontos: number;
 	categoria: string;
 	img: string;
+	imgFile: FileList
 }
 
 export interface CartItem extends Prato {
