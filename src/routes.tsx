@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom'
 import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
-import Settings from './pages/settings'
 import PedidosCliente from './pages/pedidos/cliente'
 import PedidosAdmin from './pages/pedidos/admin'
 import Cardapio from './pages/cardapio'
@@ -25,10 +24,6 @@ export const router = createBrowserRouter([
 			{
 				path: 'cardapio',
 				element: <Cardapio />,
-			},
-			{
-				path: 'settings',
-				element: <Settings />,
 			},
 			{
 				path: 'meus-pedidos',

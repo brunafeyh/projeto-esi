@@ -10,6 +10,8 @@ import PopularCategorys from '../../components/graphs/categorys';
 import SalesLeaders from '../../components/graphs/sales-grid';
 import { Container, GraphTypography, Stack } from './styles';
 import { useDishes } from '../../hooks/dishes/use-dishes';
+import { adminRoles } from '../../utils/auth';
+import { withAuthentication } from '../../hocs/authentication/with-authentication';
 
 const Estatisticas: FC = () => {
     const { allClients, error: errorClientes } = useAllClients();
@@ -71,4 +73,4 @@ const Estatisticas: FC = () => {
     );
 };
 
-export default Estatisticas;
+export default withAuthentication(Estatisticas, adminRoles);

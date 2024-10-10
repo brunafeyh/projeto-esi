@@ -33,6 +33,8 @@ export const getExpirationTime = (token: string | null): number => {
 
 export const roles: AuthorizationRole[] = ['ROLE_ADMINISTRATOR', 'ROLE_ATTENDANT', 'ROLE_CUSTOMER'];
 
+export const adminRoles: AuthorizationRole[] = ['ROLE_ADMINISTRATOR', 'ROLE_ATTENDANT'];
+
 export function getCpf(): string {
 	const { user } = useAuth();
 	if (user && user.cpf) {
