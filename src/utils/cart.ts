@@ -28,10 +28,16 @@ export const createOrder = (
     valorTotal: finalValue,
     metodoPagamento: paymentMethod,
     pratos: cartItems.map(item => ({
-      id: item.id.toString(),
+      id: item.id,
       nome: item.nome,
+      descricao: item.descricao,
+      valorReais: item.valorReais,
+      valorPontos: item.valorPontos,
+      categoria: item.categoria,
+      img: item.img,
+      imgFile: item.imgFile,
       quantidade: item.quantidade,
-      valor: item.valorReais,
+      valor: item.valor,
     })),
   };
 };

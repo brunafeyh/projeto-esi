@@ -100,7 +100,7 @@ const CustomerOrder: FC = () => {
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
                                     selectedOrder.pratos.map((prato, index) => (
                                         <ModalText key={index}>
-                                            {prato.quantidade}x {prato.nome} - R$ {prato.valor ? prato.valor.toFixed(2) : '0.00'}
+                                            {prato.quantidade}x {prato.nome} - R$ {prato.valorReais ? prato.valorReais.toFixed(2) : '0.00'}
                                         </ModalText>
                                     ))
                                 ) : (

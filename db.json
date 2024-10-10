@@ -66,7 +66,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 6076,
+      "pontosAcumulados": 12246,
       "id": "d0cb"
     },
     {
@@ -210,50 +210,7 @@
       "status": "Disponível"
     }
   ],
-  "pedidos": [
-    {
-      "id": "1728499271524",
-      "numeroPedido": "Pedido-1728499271524",
-      "cpf": "13037025921",
-      "descricao": "Strogonoffe de Frango, Macarrão, Pizza de Calabresa, Churrasco com Farofa, Combo Brasil",
-      "observacoes": "",
-      "data": "2024-10-09",
-      "valorTotal": 206.95,
-      "metodoPagamento": "dinheiro",
-      "pratos": [
-        {
-          "id": "1",
-          "nome": "Strogonoffe de Frango",
-          "quantidade": 1,
-          "valor": 35.99
-        },
-        {
-          "id": "2",
-          "nome": "Macarrão",
-          "quantidade": 1,
-          "valor": 25.99
-        },
-        {
-          "id": "3",
-          "nome": "Pizza de Calabresa",
-          "quantidade": 1,
-          "valor": 39.99
-        },
-        {
-          "id": "11",
-          "nome": "Churrasco com Farofa",
-          "quantidade": 1,
-          "valor": 54.99
-        },
-        {
-          "id": "6",
-          "nome": "Combo Brasil",
-          "quantidade": 1,
-          "valor": 49.99
-        }
-      ]
-    }
-  ],
+  "pedidos": [],
   "estatisticas": {
     "data": "2024-08-17",
     "pratosMaisVendidos": [
