@@ -29,3 +29,8 @@ export const ModalTitle = styled(Typography)(({ theme }) => ({
 	fontSize: theme.spacing(2)
 }));
 
+
+export const ModalText = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(1),
+  color: theme.palette.unioeste.neutral.p90,
+}))

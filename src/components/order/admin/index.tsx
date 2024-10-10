@@ -6,7 +6,6 @@ import Table from '../../tables/table';
 import { TableRowBody } from '../../tables/table/styles';
 import { TableCell } from '../../tables/table-cell';
 import { Modal, useModal } from '../../modal';
-import { ModalText, ModalTitle } from '../../../pages/pedidos/admin/styles';
 import { TextField } from '../../forms/login/styles';
 import { useOrders } from '../../../hooks/order/use-orders';
 import { useOrderFilter } from '../../../hooks/order/use-order-filters';
@@ -15,7 +14,7 @@ import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
 import { Pedido } from '../../../types/order';
 import { formatDateToDDMMYYYY, getString } from '../../../utils/date';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
-import { ModalContainer } from '../../modal/styles';
+import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles';
 
 const AdminOrder: FC = () => {
     const { orders } = useOrders();
@@ -27,7 +26,6 @@ const AdminOrder: FC = () => {
         filterEndDate,
         setFilterStartDate,
         setFilterEndDate,
-        handleSearch,
         setFilteredPedidos,
     } = useOrderFilter(orders);
 
@@ -91,7 +89,7 @@ const AdminOrder: FC = () => {
                     <TextField
                         label="Data Inicial"
                         type="date"
-                        variant="outlined"
+                        variant="filled"
                         value={filterStartDate}
                         onChange={(e) => setFilterStartDate(e.target.value)}
                         InputLabelProps={{ shrink: true }}
@@ -100,15 +98,12 @@ const AdminOrder: FC = () => {
                     <TextField
                         label="Data Final"
                         type="date"
-                        variant="outlined"
+                        variant="filled"
                         value={filterEndDate}
                         onChange={(e) => setFilterEndDate(e.target.value)}
                         InputLabelProps={{ shrink: true }}
                         sx={{ mr: 2, width: '200px' }}
                     />
-                    <Button variant="contained" onClick={handleSearch}>
-                        Buscar
-                    </Button>
                 </Box>
                 <Button variant="contained" onClick={handleOpenAddOrderModal}>
                     Adicionar Pedido
