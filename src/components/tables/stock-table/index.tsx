@@ -1,16 +1,11 @@
-import { FC, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import useIngredients from '../../../hooks/ingredients/use-ingredients'
-import Table, { Column } from '../table'
+import { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import useIngredients from '../../../hooks/ingredients/use-ingredients';
+import Table, { Column } from '../table';
 import {
     InputAdornment,
     IconButton,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     Button,
-    TextField as MuiTextField,
     Typography,
     Stack,
     Box,
@@ -22,43 +17,57 @@ import { IngredientFormInputs } from '../../../types/dishes'
 import AddIcon from '@mui/icons-material/Add'
 import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/estoque/styles'
 import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients'
+import { TextField as TextFieldInput } from '../../forms/login/styles'
+import { Modal, useModal } from '../../modal'
+import { ModalContainer, ModalTitle } from '../../modal/styles'
 
 export const columns: Column[] = [
     { field: 'nome', headerName: 'Nome' },
     { field: 'quantidade', headerName: 'Quantidade' },
     { field: 'edit', headerName: '' },
-]
+];
 
 const StockTable: FC = () => {
-    const { ingredients, addIngredient, updateIngredient, deleteIngredient } = useIngredients()
-    const { filteredIngredients, searchTerm, setSearchTerm } = useFilteredIngredients(ingredients)
-    const [editIngredient, setEditIngredient] = useState<string | null>(null)
-    const [isDialogOpen, setDialogOpen] = useState<boolean>(false)
-    const [isEditing, setIsEditing] = useState<boolean>(false)
-    const [ingredientToDelete, setIngredientToDelete] = useState<string | null>(null)
-    const { handleSubmit, control, reset } = useForm<IngredientFormInputs>({ defaultValues: { nome: '', quantidade: '' } })
+    const { ingredients, addIngredient, updateIngredient, deleteIngredient } = useIngredients();
+    const { filteredIngredients, searchTerm, setSearchTerm } = useFilteredIngredients(ingredients);
+    const [editIngredient, setEditIngredient] = useState<string | null>(null);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [ingredientToDelete, setIngredientToDelete] = useState<string | null>(null);
+    const { handleSubmit, register, reset } = useForm<IngredientFormInputs>({ defaultValues: { nome: '', quantidade: '' } });
+    const editModal = useModal()
+    const deleteModal = useModal()
 
-    const openEditDialog = (id?: string, name?: string, quantity?: string) => {
-        setEditIngredient(id || null)
-        reset({ nome: name || '', quantidade: quantity || '' })
-        setIsEditing(!!id)
-        setDialogOpen(true)
-    }
+    const handleOpenEditAddModal = (id?: string, name?: string, quantity?: string) => {
+        setEditIngredient(id || null);
+        reset({ nome: name || '', quantidade: quantity || '' });
+        setIsEditing(!!id);
+        editModal.current?.openModal()
+    };
 
     const handleFormSubmit = (data: IngredientFormInputs) => {
-        if (editIngredient) updateIngredient({ id: editIngredient, updatedData: data });
+        if (editIngredient) updateIngredient({ id: editIngredient, updatedData: data })
         else addIngredient(data)
-        closeDialog()
+        closeEditModal()
+    };
+
+    const handleOpenDeleteModal = (id: any) => {
+        setIngredientToDelete(id)
+        deleteModal.current?.openModal()
     }
 
-    const closeDialog = () => {
-        setDialogOpen(false)
+    const closeEditModal = () => {
+        editModal.current?.closeModal()
         setEditIngredient(null)
-    }
+    };
+
+    const closeDeleteModal = () => {
+        deleteModal.current?.closeModal()
+        setIngredientToDelete(null)
+    };
 
     const handleDeleteConfirm = () => {
         if (ingredientToDelete) deleteIngredient(ingredientToDelete)
-        setIngredientToDelete(null)
+        closeDeleteModal()
     }
 
     return (
@@ -82,7 +91,7 @@ const StockTable: FC = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
-                    onClick={() => openEditDialog()}
+                    onClick={() => handleOpenEditAddModal()}
                     sx={{ ml: 'auto' }}
                 >
                     Adicionar Ingrediente
@@ -98,10 +107,10 @@ const StockTable: FC = () => {
                             <TableCell key={column.field}>
                                 {column.field === 'edit' ? (
                                     <ActionBox>
-                                        <IconButton onClick={() => openEditDialog(row.id, row.nome, row.quantidade)}>
+                                        <IconButton onClick={() => handleOpenEditAddModal(row.id, row.nome, row.quantidade)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton onClick={() => setIngredientToDelete(row.id)}>
+                                        <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </ActionBox>
@@ -114,52 +123,53 @@ const StockTable: FC = () => {
                 )}
             />
 
-            <Dialog open={isDialogOpen} onClose={closeDialog}>
-                <DialogTitle>{isEditing ? 'Editar Ingrediente' : 'Adicionar Ingrediente'}</DialogTitle>
-                <DialogContent>
+            <Modal ref={editModal}>
+                <ModalContainer>
+                    <ModalTitle>{isEditing ? 'Editar Ingrediente' : 'Adicionar Ingrediente'}</ModalTitle>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
-                        <Controller
-                            name="nome"
-                            control={control}
-                            render={({ field }) => (
-                                <MuiTextField {...field} autoFocus margin="dense" label="Nome do Ingrediente" fullWidth variant="standard" />
-                            )}
+                        <TextFieldInput
+                            {...register('nome', { required: true })}
+                            autoFocus
+                            margin="dense"
+                            label="Nome do Ingrediente"
+                            fullWidth
+                            variant="filled"
                         />
-                        <Controller
-                            name="quantidade"
-                            control={control}
-                            render={({ field }) => (
-                                <MuiTextField {...field} margin="dense" label="Quantidade" fullWidth variant="standard" />
-                            )}
+                        <TextFieldInput
+                            {...register('quantidade', { required: true })}
+                            margin="dense"
+                            label="Quantidade"
+                            fullWidth
+                            variant="filled"
                         />
-                        <DialogActions>
-                            <Button onClick={closeDialog} variant="outlined">
+                        <Stack marginTop={2} justifyContent={'flex-end'} gap={1} direction={'row'}>
+                            <Button onClick={closeEditModal} variant="outlined">
                                 Cancelar
                             </Button>
                             <Button type="submit" variant="contained" sx={{ ml: 1 }}>
                                 {isEditing ? 'Salvar Alterações' : 'Adicionar Ingrediente'}
                             </Button>
-                        </DialogActions>
+                        </Stack>
                     </form>
-                </DialogContent>
-            </Dialog>
+                </ModalContainer>
+            </Modal>
 
-            <Dialog open={!!ingredientToDelete} onClose={() => setIngredientToDelete(null)}>
-                <DialogTitle>Confirmar Exclusão</DialogTitle>
-                <DialogContent>
+            <Modal ref={deleteModal}>
+                <ModalContainer>
+                    <ModalTitle>Confirmar Exclusão</ModalTitle>
                     <Typography>Tem certeza que deseja excluir este ingrediente?</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setIngredientToDelete(null)} variant="outlined">
-                        Cancelar
-                    </Button>
-                    <Button onClick={handleDeleteConfirm} variant="contained" color="error">
-                        Excluir
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                    <Stack marginTop={2} justifyContent={'flex-end'} gap={1} direction={'row'}>
+                        <Button onClick={() => closeDeleteModal()} variant="outlined">
+                            Cancelar
+                        </Button>
+                        <Button onClick={handleDeleteConfirm} variant="contained" color="error">
+                            Excluir
+                        </Button>
+                    </Stack>
+                </ModalContainer>
+            </Modal>
         </Stack>
-    )
-}
+    );
+};
 
 export default StockTable

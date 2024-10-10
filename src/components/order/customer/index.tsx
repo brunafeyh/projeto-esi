@@ -4,7 +4,7 @@ import Table from '../../tables/table'
 import { TableRowBody } from '../../tables/table/styles'
 import { TableCell } from '../../tables/table-cell'
 import { Modal, useModal } from '../../modal'
-import { FilterBox, ModalContainer, ModalText, ModalTitle } from './style'
+import { FilterBox, ModalText } from './style'
 import { TextField } from '../../forms/login/styles'
 import { useOrderFilter } from '../../../hooks/order/use-order-filters'
 import { ORDER_COLUMNS } from '../../../utils/constants/values'
@@ -12,6 +12,7 @@ import { useCustomerOrders } from '../../../hooks/order/use-costumer-order'
 import { Pedido } from '../../../types/order'
 import OrderService from '../../../services/order'
 import { formatDateToDDMMYYYY } from '../../../utils/date'
+import { ModalContainer, ModalTitle } from '../../modal/styles'
 
 const service = new OrderService()
 

@@ -1,30 +1,32 @@
-import { FC, useState } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
-import { Prato } from '../../../types/dishes';
-import DisheCard from './edit-dishe-card';
-import { Modal, useModal } from '../../modal';
-import { ConfirmBox, EditBox } from './styles';
-import DishForm from '../../forms/dishe';
-import { useDishes } from '../../../hooks/dishes/use-dishes';
+import { FC, useState } from 'react'
+import { Button, Grid, Typography } from '@mui/material'
+import { Prato } from '../../../types/dishes'
+import DisheCard from './card'
+import { Modal, useModal } from '../../modal'
+import { ConfirmBox, EditBox } from './styles'
+import DishForm from '../../forms/dishe'
+import { useDishes } from '../../../hooks/dishes/use-dishes'
+import { TitleModal } from '../../../pages/cardapio/styles'
+import { ModalContainer } from '../../modal/styles'
 
 interface DisheGridProps {
-    dishes: Prato[];
+    dishes: Prato[]
 }
 
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
-    const editModalRef = useModal();
-    const deleteModalRef = useModal();
+    const editModalRef = useModal()
+    const deleteModalRef = useModal()
     const { deleteDish } = useDishes()
-    const [selectedDish, setSelectedDish] = useState<Prato | null>(null);
+    const [selectedDish, setSelectedDish] = useState<Prato | null>(null)
 
     const handleEditClick = (dish: Prato) => {
-        setSelectedDish(dish);
-        editModalRef.current?.openModal();
+        setSelectedDish(dish)
+        editModalRef.current?.openModal()
     };
 
     const handleDeleteClick = (dish: Prato) => {
-        setSelectedDish(dish);
-        deleteModalRef.current?.openModal();
+        setSelectedDish(dish)
+        deleteModalRef.current?.openModal()
     }
 
     const handleDeleteConfirm = () => {
@@ -42,12 +44,10 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                 ))}
             </Grid>
             <Modal ref={editModalRef}>
-                <EditBox>
-                    <Typography variant="h6" gutterBottom>
-                        Editar Prato
-                    </Typography>
-                    <DishForm dish={selectedDish || undefined} onClose={() => editModalRef.current?.closeModal()} />
-                </EditBox>
+                <ModalContainer>
+                        <TitleModal>Editar Prato</TitleModal>
+                        <DishForm dish={selectedDish || undefined} onClose={() => editModalRef.current?.closeModal()} />
+                </ModalContainer>
             </Modal>
 
             <Modal ref={deleteModalRef}>

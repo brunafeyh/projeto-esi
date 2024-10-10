@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form';
-import { DialogContent, DialogActions, TextField, Button } from '@mui/material'
+import { DialogContent, DialogActions, Button } from '@mui/material'
 import { Prato } from '../../../types/dishes'
 import { DEFAULT_PRATO } from '../../../utils/constants/values'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
 import { convertToBase64 } from '../../../utils/image'
+import { TextField } from '../login/styles';
 
 interface DishFormProps {
     dish?: Prato

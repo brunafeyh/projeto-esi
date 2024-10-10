@@ -6,7 +6,7 @@ import Table from '../../tables/table';
 import { TableRowBody } from '../../tables/table/styles';
 import { TableCell } from '../../tables/table-cell';
 import { Modal, useModal } from '../../modal';
-import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
+import { ModalText, ModalTitle } from '../../../pages/pedidos/admin/styles';
 import { TextField } from '../../forms/login/styles';
 import { useOrders } from '../../../hooks/order/use-orders';
 import { useOrderFilter } from '../../../hooks/order/use-order-filters';
@@ -15,6 +15,7 @@ import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
 import { Pedido } from '../../../types/order';
 import { formatDateToDDMMYYYY, getString } from '../../../utils/date';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
+import { ModalContainer } from '../../modal/styles';
 
 const AdminOrder: FC = () => {
     const { orders } = useOrders();
@@ -105,13 +106,13 @@ const AdminOrder: FC = () => {
                         InputLabelProps={{ shrink: true }}
                         sx={{ mr: 2, width: '200px' }}
                     />
-                    <ContainedButton variant="contained" onClick={handleSearch}>
+                    <Button variant="contained" onClick={handleSearch}>
                         Buscar
-                    </ContainedButton>
+                    </Button>
                 </Box>
-                <ContainedButton variant="contained" onClick={handleOpenAddOrderModal}>
+                <Button variant="contained" onClick={handleOpenAddOrderModal}>
                     Adicionar Pedido
-                </ContainedButton>
+                </Button>
             </Box>
 
             <Table
@@ -128,9 +129,9 @@ const AdminOrder: FC = () => {
                 )}
             />
             <Modal ref={addOrderModalRef} title="Adicionar Novo Pedido">
-                <form onSubmit={handleSubmit(handleAddOrder)}>
-                    <Stack>
-                        <ModalTitle>Adicionar Pedido</ModalTitle>
+                <ModalContainer>
+                    <form onSubmit={handleSubmit(handleAddOrder)}>
+                        <ModalTitle mb={2}>Adicionar Pedido</ModalTitle>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -212,6 +213,7 @@ const AdminOrder: FC = () => {
 
                         <Button
                             variant="contained"
+                            sx={{ width: '100%', marginBottom: 2 }}
                             onClick={() =>
                                 append({
                                     id: '',
@@ -234,19 +236,19 @@ const AdminOrder: FC = () => {
                             <Button onClick={() => addOrderModalRef.current?.closeModal()} variant="outlined">
                                 Cancelar
                             </Button>
-                            <ContainedButton type="submit" variant="contained" sx={{ ml: 2 }}>
+                            <Button type="submit" variant="contained" sx={{ ml: 2 }}>
                                 Adicionar
-                            </ContainedButton>
+                            </Button>
                         </Box>
-                    </Stack>
-                </form>
+                    </form>
+                </ModalContainer>
             </Modal>
 
             <Modal ref={detailsModalRef} title="Detalhes do Pedido">
-                <Stack spacing={2}>
+                <ModalContainer>
                     {orderDetails ? (
                         <>
-                            <ModalTitle>{orderDetails.numeroPedido}</ModalTitle>
+                            <ModalTitle mb={2}>{orderDetails.numeroPedido}</ModalTitle>
                             <ModalText>Data: {formatDateToDDMMYYYY(getString(orderDetails.data))}</ModalText>
                             <ModalText>Descrição: {orderDetails.descricao}</ModalText>
                             <ModalText>Valor (R$): {(orderDetails.valorTotal ?? 0).toFixed(2)}</ModalText>
@@ -256,7 +258,7 @@ const AdminOrder: FC = () => {
                                 {orderDetails.pratos && orderDetails.pratos.length > 0 ? (
                                     orderDetails.pratos.map((prato) => (
                                         <Typography key={uuidv4()} variant="body2">
-                                            {prato.quantidade}x {prato.nome} - R$ {(prato.valor ?? 0).toFixed(2)}
+                                            {prato.quantidade} x {prato.nome} - R$ {(prato.valorReais ?? 0).toFixed(2)}
                                         </Typography>
                                     ))
                                 ) : (
@@ -267,12 +269,12 @@ const AdminOrder: FC = () => {
                     ) : (
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt : 2}}>
                         <Button onClick={() => detailsModalRef.current?.closeModal()} variant="contained">
                             Fechar
                         </Button>
                     </Box>
-                </Stack>
+                </ModalContainer>
             </Modal>
         </Box>
     );

@@ -1,39 +1,32 @@
 import React, { useState, useMemo, FC, useEffect } from 'react';
 import {
-  IconButton, Badge, Popover, Box, Button, Typography, Modal,
-  RadioGroup, FormControlLabel, Radio, Divider, TextField
+  IconButton, Badge, Popover, Box, Button, Typography,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from '..';
-import VisaIcon from '@mui/icons-material/CreditCard';
-import MasterCardIcon from '@mui/icons-material/LocalAtm';
 import { useAuth } from '../../../hooks/use-auth';
 import { usePontuation } from '../../../hooks/use-pontuation';
 import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
-import { useCart } from '../../../hooks/cart/use-cart'
+import { useCart } from '../../../hooks/cart/use-cart';
 import { calculateDiscountValue, calculateFinalValue, calculatePointsEarned, calculateTotalAmount, createOrder } from '../../../utils/cart';
+import CheckoutForm from '../../forms/checkout';
+import { Modal, useModal } from '../../modal';
 
 const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => void, onRemoveItem: (id: string) => void }> = ({ onUpdateQuantity, onRemoveItem }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modal = useModal();
   const [paymentMethod, setPaymentMethod] = useState('cartao');
   const [pointsToUse, setPointsToUse] = useState(0);
   const { cartItems, clearCart } = useCart();
   const { addOrder } = useOrderMutations();
   const { user } = useAuth();
-  const { pontuation, fetchPontuation, updatePoints, loading, error } = usePontuation();
+  const { pontuation, fetchPontuation, updatePoints, loading } = usePontuation();
 
   useEffect(() => {
     if (user?.cpf) {
       fetchPontuation(user.cpf);
     }
   }, [user?.cpf, fetchPontuation]);
-
-  useEffect(() => {
-    if (pontuation && pontuation.pontosAcumulados < pointsToUse) {
-      setPointsToUse(pontuation.pontosAcumulados);
-    }
-  }, [pontuation, pointsToUse]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -44,12 +37,12 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   };
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    modal.current?.openModal();
     handleClosePopover();
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    modal.current?.closeModal();
   };
 
   const totalAmount = useMemo(() => calculateTotalAmount(cartItems).toFixed(2), [cartItems]);
@@ -57,7 +50,9 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   const finalValue = useMemo(() => calculateFinalValue(parseFloat(totalAmount), discountValue), [totalAmount, discountValue]);
   const pointsEarned = useMemo(() => calculatePointsEarned(cartItems), [cartItems]);
 
-  const handleFinalizeOrder = async () => {
+  const handleFinalizeOrder = async (data: any) => {
+    console.log('Credit Card Data:', data);
+
     if (!user || !user.cpf) {
       console.error('Usuário não autenticado ou CPF não encontrado.');
       return;
@@ -68,7 +63,7 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
     try {
       addOrder(order);
       clearCart();
-      setIsModalOpen(false);
+      modal.current?.closeModal();
       if (pontuation) {
         const updatedPoints = pontuation.pontosAcumulados - pointsToUse + pointsEarned;
         await updatePoints(updatedPoints);
@@ -78,19 +73,17 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
     }
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'cart-popover' : undefined;
-
   return (
     <>
-      <IconButton aria-describedby={id} onClick={handleClick} style={{ marginLeft: 'auto' }}>
+      <IconButton aria-describedby="cart-popover" onClick={handleClick} style={{ marginLeft: 'auto' }}>
         <Badge badgeContent={cartItems.length} color="secondary">
           <ShoppingCartIcon style={{ color: '#FFF' }} />
         </Badge>
       </IconButton>
+
       <Popover
-        id={id}
-        open={open}
+        id="cart-popover"
+        open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClosePopover}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -108,52 +101,23 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
         </Box>
       </Popover>
 
-      <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <Box p={4} bgcolor="white" borderRadius={2} boxShadow={24} mx="auto" mt={10} width={400}>
-          <Typography variant="h6">Detalhes da Compra</Typography>
-          {cartItems.map((item, index) => (
-            <Typography key={item.id || index} variant="body1">
-              {`${item.nome || 'N/A'} - ${item.quantidade || 0} x R$ ${(item.valorReais || 0).toFixed(2)} = R$ ${(item.valorTotal || 0).toFixed(2)}`}
-            </Typography>
-          ))}
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">Total: R$ {totalAmount}</Typography>
-          <Typography variant="h6">Desconto Aplicado: R$ {discountValue}</Typography>
-          <Typography variant="h6">Total com Desconto: R$ {finalValue}</Typography>
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">Pontos Disponíveis: {pontuation?.pontosAcumulados || 0}</Typography>
-          <TextField
-            label="Pontos a Utilizar"
-            type="number"
-            variant="filled"
-            value={pointsToUse}
-            onChange={(e) => setPointsToUse(Math.min(Number(e.target.value), pontuation?.pontosAcumulados || 0))}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-          />
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="h6">Método de Pagamento</Typography>
-          <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-            <FormControlLabel value="cartao" control={<Radio />} label="Cartão de Crédito" />
-            <FormControlLabel value="dinheiro" control={<Radio />} label="Dinheiro" />
-            <FormControlLabel value="pix" control={<Radio />} label="Pix" />
-          </RadioGroup>
-          {paymentMethod === 'cartao' && (
-            <Box mt={2} display="flex" justifyContent="space-between">
-              <VisaIcon fontSize="large" />
-              <MasterCardIcon fontSize="large" />
-            </Box>
-          )}
-          <Box mt={2}>
-            <Button fullWidth variant="contained" color="primary" onClick={handleFinalizeOrder} disabled={loading}>
-              Finalizar Pedido
-            </Button>
-          </Box>
-          {error && <Typography color="error">{error}</Typography>}
-        </Box>
+      <Modal ref={modal}>
+        <CheckoutForm
+          totalAmount={totalAmount}
+          discountValue={discountValue}
+          finalValue={finalValue}
+          pointsToUse={pointsToUse}
+          maxPoints={pontuation?.pontosAcumulados || 0}
+          paymentMethod={paymentMethod}
+          onPointsChange={setPointsToUse}
+          onPaymentMethodChange={setPaymentMethod}
+          handleFinalizeOrder={handleFinalizeOrder}
+          handleCloseModal={handleCloseModal}
+          loading={loading}
+        />
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default CartButton
+export default CartButton;

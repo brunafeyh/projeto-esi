@@ -1,14 +1,5 @@
-import { Button, ButtonProps, styled, Stack as StackMui, Typography, TypographyProps } from "@mui/material";
+import { styled, Stack as StackMui, Typography, TypographyProps } from "@mui/material";
 import { FONT_WEIGHTS } from "../../../themes/fonts";
-
-export const ContainedButton = styled(Button)<ButtonProps>(({ theme }) => ({
-	fontSize: theme.spacing(1.5),
-	fontWeight: FONT_WEIGHTS.medium,
-	backgroundColor: '#EF4B0A',
-	'&:hover': {
-			backgroundColor: '#FFB79A',
-	},
-}))
 
 export const Stack = styled(StackMui)(({ theme }) => ({
     padding: theme.spacing(2),
@@ -25,4 +16,5 @@ export const ModalText = styled(Typography)<TypographyProps>(({ theme }) => ({
 	paddingLeft: theme.spacing(0),
 	fontSize: theme.spacing(1.75),
 	fontWeight: FONT_WEIGHTS.regular,
+	marginBottom: theme.spacing(1)
 }))

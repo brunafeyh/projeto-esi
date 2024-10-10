@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Prato } from '../../types/dishes'
 import { useAuth } from '../../hooks/use-auth'
-import EditDisheGrid from '../dishe-grid/edit-dishe-grid'
-import DisheGrid from '../dishe-grid'
+import DisheGrid from '../dishe-grid/view'
+import EditDisheGrid from '../dishe-grid/edit'
 
 interface RecomendadosProps {
   pratos: Prato[]
