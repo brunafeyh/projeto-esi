@@ -2,7 +2,7 @@ import { Stack } from '@mui/material'
 import { theme } from '../../../themes'
 import { FC } from 'react'
 
-const LogoClara: FC = () => {
+const ClearLogo: FC = () => {
 	return (
 		<Stack direction="column" alignItems="flex-start" marginLeft="28px" flexGrow={1}>
 				<img
@@ -13,4 +13,4 @@ const LogoClara: FC = () => {
 		</Stack>
 	)
 }
-export default LogoClara
+export default ClearLogo

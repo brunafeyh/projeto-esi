@@ -11,7 +11,7 @@ import {
   ChartOptions,
 } from 'chart.js'
 import { Box, Grid, MenuItem } from '@mui/material'
-import { FormControl, InputLabel, Select } from '../../cardapio-filter/styles'
+import { FormControl, InputLabel, Select } from '../../menu-filter/styles'
 import { useYearlySalesData } from '../../../hooks/charts/use-sell-for-eyear'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)

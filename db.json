@@ -411,7 +411,32 @@
     {
       "id": "1",
       "cpf": "13037025921",
-      "items": []
+      "items": [
+        {
+          "id": "1",
+          "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+          "nome": "Strogonoffe de Frango",
+          "descricao": "Strogonoffe de frango com arroz e batata palha.",
+          "valorReais": 35.99,
+          "valorPontos": 350,
+          "categoria": "Carnes",
+          "status": "Disponível",
+          "quantidade": 1,
+          "valorTotal": 35.99
+        },
+        {
+          "id": "2",
+          "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
+          "nome": "Macarrão",
+          "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
+          "valorReais": 25.99,
+          "valorPontos": 250,
+          "categoria": "Massas",
+          "status": "Disponível",
+          "quantidade": 1,
+          "valorTotal": 25.99
+        }
+      ]
     },
     {
       "id": "11e4",

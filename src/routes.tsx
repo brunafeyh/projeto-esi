@@ -2,12 +2,12 @@ import { createBrowserRouter } from 'react-router-dom'
 import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
-import PedidosCliente from './pages/pedidos/cliente'
 import RegisterPage from './pages/register'
 import RestaurantMenu from './pages/restaurant-menu'
 import Statistics from './pages/statistics'
-import AdminOrders from './pages/pedidos/admin'
-import Stock from './pages/estoque'
+import Stock from './pages/stock'
+import AdminOrders from './pages/orders/admin'
+import ClientOrders from './pages/orders/client'
 
 export const router = createBrowserRouter([
 	{
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: 'my-orders',
-				element: <PedidosCliente />,
+				element: <ClientOrders />,
 			},
 			{
 				path: 'register',

@@ -10,11 +10,11 @@ import {
     Stack,
     Box,
 } from '@mui/material'
-import { IconSearch, TextField } from '../../cardapio-filter/styles'
+import { IconSearch, TextField } from '../../menu-filter/styles'
 import { TableRowBody } from '../table/styles'
 import { TableCell } from '../table-cell'
 import AddIcon from '@mui/icons-material/Add'
-import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/estoque/styles'
+import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/stock/styles'
 import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients'
 import { TextField as TextFieldInput } from '../../forms/login/styles'
 import { Modal, useModal } from '../../modal'

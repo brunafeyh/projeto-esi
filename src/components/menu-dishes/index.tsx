@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useFilteredDishes } from '../../hooks/dishes/use-filtered-dishes'
-import CardapioFilter from '../../components/cardapio-filter'
 import { useAuth } from '../../hooks/use-auth'
 import DisheGrid from '../../components/dishe-grid/view'
 import { Button, Box } from '@mui/material'
@@ -9,6 +8,7 @@ import EditDisheGrid from '../../components/dishe-grid/edit'
 import { useCart } from '../../hooks/cart/use-cart'
 import { Modal, useModal } from '../../components/modal'
 import { ModalContainer, ModalTitle } from '../../components/modal/styles'
+import MenuFilter from '../menu-filter'
 
 const DishesMenu: FC = () => {
     const { searchTerm, sort, selectedCategory, setSearchTerm, setSort, setSelectedCategory, filteredDishes } = useFilteredDishes()
@@ -21,7 +21,7 @@ const DishesMenu: FC = () => {
 
     return (
         <Box>
-            <CardapioFilter
+            <MenuFilter
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 selectedCategory={selectedCategory}

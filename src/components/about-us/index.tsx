@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { Stack, Typography } from '@mui/material';
 import { TitlePage } from '../../pages/home/styles';
 
-const AboutUs: React.FC = () => {
+const AboutUs: FC = () => {
   return (
     <Stack direction="column" spacing={2} style={{ textAlign: 'center', marginTop: '40px', alignItems: 'center' }}>
       <TitlePage variant="h6" component="div">
@@ -18,7 +18,7 @@ const AboutUs: React.FC = () => {
         Vila A - Foz do Iguaçu
       </Typography>
     </Stack>
-  );
-};
+  )
+}
 
-export default AboutUs;
+export default AboutUs

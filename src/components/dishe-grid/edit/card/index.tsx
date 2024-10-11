@@ -2,13 +2,13 @@ import { FC } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, Chip } from '@mui/material';
 import { TitleCard } from '../../../../pages/home/styles';
 import { Dishe } from '../../../../types/dishes';
-import { DeleteIcon, EditIcon } from '../../../../pages/estoque/styles';
+import { DeleteIcon, EditIcon } from '../../../../pages/stock/styles';
 import { IconButton } from './styles';
 
 interface DisheCardProps {
-	dishe: Dishe;
-	onEdit: (prato: Dishe) => void;
-	onDelete: (prato: Dishe) => void;
+	dishe: Dishe
+	onEdit: (dishe: Dishe) => void
+	onDelete: (dishe: Dishe) => void
 }
 
 const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
@@ -39,7 +39,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
 				</IconButton>
 			</CardActions>
 		</Card>
-	);
-};
+	)
+}
 
-export default DisheCard;
+export default DisheCard

@@ -14,7 +14,6 @@ interface CheckoutFormProps {
     onPaymentMethodChange: (method: string) => void
     handleFinalizeOrder: (data: any) => void
     handleCloseModal: () => void
-    loading: boolean
 }
 
 const CheckoutForm: FC<CheckoutFormProps> = ({
@@ -28,7 +27,6 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
     onPaymentMethodChange,
     handleFinalizeOrder,
     handleCloseModal,
-    loading,
 }) => {
     const { register, handleSubmit, formState: { errors } } = useForm()
 
@@ -109,7 +107,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                     <Button variant="outlined" color="secondary" onClick={handleCloseModal}>
                         Cancelar
                     </Button>
-                    <Button variant="contained" color="primary" type="submit" disabled={loading}>
+                    <Button variant="contained" color="primary" type="submit">
                         Concluir
                     </Button>
                 </Box>

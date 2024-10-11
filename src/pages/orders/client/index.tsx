@@ -5,7 +5,7 @@ import { withAuthentication } from '../../../hocs/authentication/with-authentica
 import CustomerOrder from '../../../components/order/customer';
 import { TitlePage } from '../../home/styles';
 
-const PedidosCliente: FC = () => {
+const ClientOrders: FC = () => {
     return (
         <PageLayout title="Pedidos">
 			<TitlePage>Meus pedidos</TitlePage>
@@ -14,4 +14,4 @@ const PedidosCliente: FC = () => {
     );
 }
 
-export default withAuthentication(PedidosCliente, roles);
+export default withAuthentication(ClientOrders, roles);

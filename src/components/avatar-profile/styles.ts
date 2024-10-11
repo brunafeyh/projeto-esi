@@ -1,4 +1,3 @@
-
 import { Avatar, AvatarProps, styled } from '@mui/material'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 

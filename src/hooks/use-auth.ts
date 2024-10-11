@@ -8,17 +8,16 @@ import { accessTokenAtom, refreshTokenAtom } from '../contexts/auth';
 import { getExpirationTime, getUserFromToken } from '../utils/auth';
 import { AuthCredentials } from '../schemas/form-types';
 import { AuthorizationRole, RegisterCredentials } from '../types/auth';
-import { usePontuation } from './use-pontuation';
 import { API_BASE_URL } from '../shared/api';
+import { usePontuationMutations } from './pontuation/use-pontuation-mutation';
 
 export const useAuth = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [refreshToken, setRefreshToken] = useAtom(refreshTokenAtom);
   const expirationTime = getExpirationTime(accessToken);
   const navigate = useNavigate();
-  const { setNewPontuation } = usePontuation(); 
-
   const user = useMemo(() => getUserFromToken(accessToken), [accessToken]);
+  const { setNewPontuation } = usePontuationMutations();
 
   const updateTokens = (accessToken: string, refreshToken: string) => {
     setAccessToken(accessToken);
@@ -54,7 +53,7 @@ export const useAuth = () => {
       });
 
       await setNewPontuation({
-        id: cpf, 
+        id: cpf,
         pontosAcumulados: 0,
         nome: name,
         cpf: cpf,
@@ -120,7 +119,7 @@ export const useAuth = () => {
   }, [expirationTime, isAccessTokenExpired]);
 
   const isClient = () => {
-      return !(user?.role === 'ROLE_ATTENDANT' || user?.role === 'ROLE_ADMINISTRATOR')
+    return !(user?.role === 'ROLE_ATTENDANT' || user?.role === 'ROLE_ADMINISTRATOR')
   }
   const isAdminOrAttendant = () => {
     return !isClient() && isAuthenticated()

@@ -11,7 +11,7 @@ interface CardapioFilterProps {
 	setSortOrder: (order: 'asc' | 'desc') => void;
 }
 
-const CardapioFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, sortOrder, setSortOrder }) => {
+const MenuFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, sortOrder, setSortOrder }) => {
 	return (
 		<Stack direction="row" spacing={2} style={{ marginBottom: '20px' }}>
 			<TextField
@@ -61,4 +61,4 @@ const CardapioFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, se
 	);
 };
 
-export default CardapioFilter;
+export default MenuFilter;

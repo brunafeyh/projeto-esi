@@ -21,7 +21,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     const handleEditClick = (dish: Dishe) => {
         setSelectedDish(dish)
         editModalRef.current?.openModal()
-    };
+    }
 
     const handleDeleteClick = (dish: Dishe) => {
         setSelectedDish(dish)
@@ -68,7 +68,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                 </EditBox>
             </Modal>
         </>
-    );
-};
+    )
+}
 
 export default EditDisheGrid

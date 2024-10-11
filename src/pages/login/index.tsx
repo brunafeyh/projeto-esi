@@ -3,7 +3,7 @@ import { Stack } from '@mui/material'
 import LoginHeader from '../../components/login-header'
 import { AuthFormSection, ContainerInputLogin, TitleApresentation } from './style'
 import LoginForm from '../../components/forms/login'
-import LogoClara from '../../components/logo/logo-clara'
+import ClearLogo from '../../components/logo/clear-logo'
 
 
 const LoginPage: FC = () => {
@@ -12,7 +12,7 @@ const LoginPage: FC = () => {
 			<LoginHeader />
 			<AuthFormSection>
 				<ContainerInputLogin>
-					<LogoClara />
+					<ClearLogo />
 					<TitleApresentation>Acessar conta</TitleApresentation>
 					<LoginForm />
 				</ContainerInputLogin>

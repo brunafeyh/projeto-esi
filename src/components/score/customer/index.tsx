@@ -1,16 +1,12 @@
-import { FC, useEffect } from 'react';
-import { Typography, CardContent, Box, Avatar } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import { yellow } from '@mui/material/colors';
-import { ContainerPontuation } from '../admin/styles';
-import { usePontuation } from '../../../hooks/use-pontuation';
+import { FC } from 'react'
+import { Typography, CardContent, Box, Avatar } from '@mui/material'
+import StarIcon from '@mui/icons-material/Star'
+import { yellow } from '@mui/material/colors'
+import { ContainerPontuation } from '../admin/styles'
+import { usePontuation } from '../../../hooks/pontuation/use-pontuation'
 
 const CustomerScore: FC<{ cpf: string }> = ({ cpf }) => {
-  const { pontuation, fetchPontuation } = usePontuation();
-
-  useEffect(() => {
-    fetchPontuation(cpf);
-  }, [cpf, fetchPontuation]);
+  const { pontuation } = usePontuation(cpf)
 
   return (
     <ContainerPontuation>
