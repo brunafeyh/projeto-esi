@@ -7,6 +7,7 @@ import { ConfirmBox, EditBox } from './styles'
 import DishForm from '../../forms/dishe'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
 import { ModalContainer, ModalTitle } from '../../modal/styles'
+import { closeModal, openModal } from '../../../utils/modal'
 
 interface DisheGridProps {
     dishes: Dishe[]
@@ -20,17 +21,17 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
 
     const handleEditClick = (dish: Dishe) => {
         setSelectedDish(dish)
-        editModalRef.current?.openModal()
+        openModal(editModalRef)()
     }
 
     const handleDeleteClick = (dish: Dishe) => {
         setSelectedDish(dish)
-        deleteModalRef.current?.openModal()
+        openModal(deleteModalRef)()
     }
 
     const handleDeleteConfirm = () => {
         if (selectedDish) deleteDish(selectedDish.id)
-        deleteModalRef.current?.closeModal();
+        closeModal(deleteModalRef)()
     }
 
     return (
@@ -42,10 +43,11 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                     </Grid>
                 ))}
             </Grid>
+            
             <Modal ref={editModalRef}>
                 <ModalContainer>
-                        <ModalTitle>Editar Prato</ModalTitle>
-                        <DishForm dish={selectedDish || undefined} onClose={() => editModalRef.current?.closeModal()} />
+                    <ModalTitle>Editar Prato</ModalTitle>
+                    <DishForm dish={selectedDish || undefined} onClose={closeModal(editModalRef)} />
                 </ModalContainer>
             </Modal>
 
@@ -58,7 +60,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
                         Você tem certeza que quer apagar este prato?
                     </Typography>
                     <ConfirmBox>
-                        <Button variant="outlined" onClick={() => deleteModalRef.current?.closeModal()}>
+                        <Button variant="outlined" onClick={closeModal(deleteModalRef)}>
                             Cancelar
                         </Button>
                         <Button variant="contained" color="error" onClick={handleDeleteConfirm}>

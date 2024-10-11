@@ -13,6 +13,7 @@ import OrderService from '../../../services/order'
 import { formatDateToDDMMYYYY } from '../../../utils/date'
 import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles'
 import { getStatusColor } from '../../../utils/table'
+import { closeModal, openModal } from '../../../utils/modal'
 
 const service = new OrderService()
 
@@ -33,7 +34,7 @@ const CustomerOrder: FC = () => {
         try {
             const response = await service.getOrderById(id)
             setSelectedOrder(response)
-            modalRef.current?.openModal()
+            openModal(modalRef)
         } catch (error) {
             console.error('Erro ao buscar detalhes do pedido:', error)
         }
@@ -41,7 +42,7 @@ const CustomerOrder: FC = () => {
 
     const handleCloseModal = () => {
         setSelectedOrder(null)
-        modalRef.current?.closeModal()
+        closeModal(modalRef)
     }
 
     return (

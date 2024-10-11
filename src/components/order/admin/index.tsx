@@ -17,75 +17,63 @@ import OrderForm from '../../forms/order'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { getStatusColor } from '../../../utils/table'
+import { closeModal, openModal } from '../../../utils/modal'
 
 const AdminOrder: FC = () => {
-    const { orders } = useOrders();
+    const { orders } = useOrders()
     const { addOrder, updateOrder, removeOrder } = useOrderMutations()
-    const {
-        filteredPedidos,
-        filterStartDate,
-        filterEndDate,
-        setFilterStartDate,
-        setFilterEndDate,
-        setFilteredPedidos,
-    } = useOrderFilter(orders);
+    const { filteredPedidos, filterStartDate, filterEndDate, setFilterStartDate, setFilterEndDate, setFilteredPedidos } = useOrderFilter(orders)
 
     const [orderDetails, setOrderDetails] = useState<Partial<Pedido> | null>(null)
     const [editOrderDetails, setEditOrderDetails] = useState<Partial<Pedido>>()
     const [orderToDelete, setOrderToDelete] = useState<string | null>(null)
+
     const addOrderModalRef = useModal()
     const detailsModalRef = useModal()
     const editOrderModalRef = useModal()
     const deleteOrderModalRef = useModal()
 
     const handleOpenEditModal = (id: string) => {
-        const order = orders.find((pedido) => pedido.id === id);
+        const order = orders.find((pedido) => pedido.id === id)
         if (order) {
-            setEditOrderDetails(order);
-            editOrderModalRef.current?.openModal();
+            setEditOrderDetails(order)
+            openModal(editOrderModalRef)()
         }
     }
 
     const handleAddOrder = (data: Partial<Pedido>) => {
-        data.status = "Em Confirmação";
-        addOrder(data as Pedido);
-        setFilteredPedidos([...orders, data as Pedido]);
-        addOrderModalRef.current?.closeModal();
+        data.status = "Em Confirmação"
+        addOrder(data as Pedido)
+        setFilteredPedidos([...orders, data as Pedido])
+        closeModal(addOrderModalRef)()
     }
 
     const handleEditOrder = (data: Partial<Pedido>) => {
-        if (editOrderDetails?.id) {
-            updateOrder({ ...data, id: editOrderDetails.id } as Pedido)
-        }
-        editOrderModalRef.current?.closeModal();
-        setEditOrderDetails(undefined);
-    }
-
-    const handleOpenAddOrderModal = () => {
-        setEditOrderDetails(undefined);
-        addOrderModalRef.current?.openModal();
+        if (editOrderDetails?.id) updateOrder({ ...data, id: editOrderDetails.id } as Pedido)
+        closeModal(editOrderModalRef)()
+        setEditOrderDetails(undefined)
     }
 
     const handleOpenDetailsModal = (id: string) => {
-        const order = orders.find((pedido) => pedido.id === id);
+        const order = orders.find((pedido) => pedido.id === id)
         if (order) {
-            setOrderDetails(order);
-            detailsModalRef.current?.openModal();
+            setOrderDetails(order)
+            openModal(detailsModalRef)()
         }
-    }
+    };
 
     const handleOpenDeleteModal = (id: string) => {
-        setOrderToDelete(id);
-        deleteOrderModalRef.current?.openModal();
+        setOrderToDelete(id)
+        openModal(deleteOrderModalRef)()
     }
 
     const handleDeleteOrder = () => {
         if (orderToDelete) {
             removeOrder(orderToDelete);
             setOrderToDelete(null);
-            deleteOrderModalRef.current?.closeModal();
+            closeModal(deleteOrderModalRef)();
         }
-    }
+    };
 
     return (
         <Box>
@@ -110,7 +98,7 @@ const AdminOrder: FC = () => {
                         sx={{ mr: 2, width: '200px' }}
                     />
                 </Box>
-                <Button variant="contained" onClick={handleOpenAddOrderModal}>
+                <Button variant="contained" onClick={openModal(addOrderModalRef)}>
                     Adicionar Pedido
                 </Button>
             </Box>
@@ -126,12 +114,7 @@ const AdminOrder: FC = () => {
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
                         <TableCell>
-                            <Chip
-                                label={row.status}
-                                color={getStatusColor(row.status)}
-                                variant="outlined"
-                                size="small"
-                            />
+                            <Chip label={row.status} color={getStatusColor(row.status)} variant="outlined" size="small" />
                         </TableCell>
                         <TableCell>
                             <IconButton
@@ -162,23 +145,14 @@ const AdminOrder: FC = () => {
             <Modal ref={addOrderModalRef} title="Adicionar Pedido">
                 <ModalContainer>
                     <ModalTitle>Adicionar Pedido</ModalTitle>
-                    <OrderForm
-                        onSubmit={handleAddOrder}
-                        isEditMode={false}
-                        onClose={() => addOrderModalRef.current?.closeModal()}
-                    />
+                    <OrderForm onSubmit={handleAddOrder} isEditMode={false} onClose={closeModal(addOrderModalRef)} />
                 </ModalContainer>
             </Modal>
 
             <Modal ref={editOrderModalRef} title="Editar Pedido">
                 <ModalContainer>
                     <ModalTitle>Editar Pedido</ModalTitle>
-                    <OrderForm
-                        onSubmit={handleEditOrder}
-                        defaultValues={editOrderDetails}
-                        isEditMode={true}
-                        onClose={() => editOrderModalRef.current?.closeModal()}
-                    />
+                    <OrderForm onSubmit={handleEditOrder} defaultValues={editOrderDetails} isEditMode={true} onClose={closeModal(editOrderModalRef)} />
                 </ModalContainer>
             </Modal>
 
@@ -186,7 +160,7 @@ const AdminOrder: FC = () => {
                 <ModalContainer>
                     <Typography>Tem certeza que deseja excluir este pedido?</Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                        <Button onClick={() => deleteOrderModalRef.current?.closeModal()} variant="outlined">
+                        <Button onClick={closeModal(deleteOrderModalRef)} variant="outlined">
                             Cancelar
                         </Button>
                         <Button onClick={handleDeleteOrder} variant="contained" color="error" sx={{ ml: 2 }}>
@@ -222,7 +196,7 @@ const AdminOrder: FC = () => {
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                        <Button onClick={() => detailsModalRef.current?.closeModal()} variant="contained">
+                        <Button onClick={closeModal(detailsModalRef)} variant="contained">
                             Fechar
                         </Button>
                     </Box>

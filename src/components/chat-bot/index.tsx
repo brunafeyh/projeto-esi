@@ -8,10 +8,11 @@ import { useVoiceRecognition } from '../../hooks/use-voice-recognition'
 import ChatIcon from '@mui/icons-material/Chat'
 import { Modal, useModal } from '../modal'
 import { ModalTitle } from '../modal/styles'
+import { closeModal, openModal } from '../../utils/modal'
 
 const ChatBot: FC = () => {
     const [inputText, setInputText] = useState<string>('')
-    const modal = useModal()
+    const modalRef = useModal()
     const { messages, sendMessage, addMessage } = useChatBot()
     const { isRecording, audioURL, startRecording, stopRecording, cancelRecording } = useVoiceRecognition(
         (transcript) => sendMessage(transcript),
@@ -29,19 +30,16 @@ const ChatBot: FC = () => {
         if (event.key === 'Enter') handleSendClick()
     }
 
-    const handleOpen = () => modal.current?.openModal()
-    const handleClose = () => modal.current?.closeModal()
-
     return (
         <Stack>
-            <IconButton onClick={handleOpen} style={{ color: '#FFF' }}>
+            <IconButton onClick={openModal(modalRef)} style={{ color: '#FFF' }}>
                 <ChatIcon />
             </IconButton>
-            <Modal ref={modal}>
+            <Modal ref={modalRef}>
                 <ChatContainer>
                     <Box display="flex" justifyContent="space-between" alignItems="center" p={1}>
                         <ModalTitle>ChatBot</ModalTitle>
-                        <IconButton onClick={handleClose} sx={{ width: 16, height: 16 }} >
+                        <IconButton onClick={closeModal(modalRef)} sx={{ width: 16, height: 16 }}>
                             <CloseIcon sx={{ width: 16, height: 16 }} />
                         </IconButton>
                     </Box>
@@ -90,13 +88,13 @@ const ChatBot: FC = () => {
                             }}
                         />
                         <Button variant="contained" color="primary" onClick={handleSendClick} sx={{ height: 40 }}>
-                            <Icon/>
+                            <Icon />
                         </Button>
                     </ControlsContainer>
                 </ChatContainer>
             </Modal>
         </Stack>
-    )
-}
+    );
+};
 
 export default ChatBot

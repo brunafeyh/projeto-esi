@@ -20,6 +20,7 @@ import { TextField as TextFieldInput } from '../../forms/login/styles'
 import { Modal, useModal } from '../../modal'
 import { ModalContainer, ModalTitle } from '../../modal/styles'
 import { IngredientFormInputs } from '../../../types/dishes';
+import { closeModal, openModal } from '../../../utils/modal';
 
 export const columns: Column[] = [
     { field: 'nome', headerName: 'Nome' },
@@ -41,27 +42,27 @@ const StockTable: FC = () => {
         setEditIngredient(id || null);
         reset({ nome: name || '', quantidade: quantity || '' });
         setIsEditing(!!id);
-        editModal.current?.openModal()
-    };
+        openModal(editModal)
+    }
 
     const handleFormSubmit = (data: IngredientFormInputs) => {
         if (editIngredient) updateIngredient({ id: editIngredient, updatedData: data })
         else addIngredient(data)
         closeEditModal()
-    };
+    }
 
     const handleOpenDeleteModal = (id: any) => {
         setIngredientToDelete(id)
-        deleteModal.current?.openModal()
+        openModal(deleteModal)
     }
 
     const closeEditModal = () => {
-        editModal.current?.closeModal()
+        closeModal(editModal)
         setEditIngredient(null)
     };
 
     const closeDeleteModal = () => {
-        deleteModal.current?.closeModal()
+        closeModal(deleteModal)
         setIngredientToDelete(null)
     };
 
