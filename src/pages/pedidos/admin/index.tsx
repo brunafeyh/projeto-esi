@@ -5,7 +5,7 @@ import { TitlePage } from '../../home/styles'
 import { adminRoles } from '../../../utils/auth'
 import { withAuthentication } from '../../../hocs/authentication/with-authentication'
 
-const PedidosAdmin: FC = () => {
+const AdminOrders: FC = () => {
 	return (
 		<PageLayout title="Pedidos">
 			<TitlePage>Pedidos</TitlePage>
@@ -14,4 +14,4 @@ const PedidosAdmin: FC = () => {
 	)
 }
 
-export default withAuthentication(PedidosAdmin, adminRoles);
+export default withAuthentication(AdminOrders, adminRoles)

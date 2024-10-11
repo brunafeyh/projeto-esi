@@ -1,20 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import DishService from '../../services/dishes';
-import { Prato } from '../../types/dishes';
+import { Dishe } from '../../types/dishes';
 
 const dishService = new DishService();
 
 export const useDishes = () => {
   const queryClient = useQueryClient();
 
-  const { data: dishes = [], error, isLoading } = useQuery<Prato[], Error>({
+  const { data: dishes = [], error, isLoading } = useQuery<Dishe[], Error>({
     queryKey: ['dishes'],
     queryFn: () => dishService.fetchDishes(),
   });
 
   const addDishMutation = useMutation({
-    mutationFn: async (newDish: Prato) => {
+    mutationFn: async (newDish: Dishe) => {
       try {
         await dishService.addDish(newDish);
         toast.success('Prato adicionado com sucesso!');
@@ -29,7 +29,7 @@ export const useDishes = () => {
   });
 
   const updateDishMutation = useMutation({
-    mutationFn: async (updatedDish: Prato) => {
+    mutationFn: async (updatedDish: Dishe) => {
       try {
         await dishService.updateDish(updatedDish);
         toast.success('Prato atualizado com sucesso!');

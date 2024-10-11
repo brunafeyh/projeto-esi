@@ -1,23 +1,23 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form';
 import { DialogContent, DialogActions, Button } from '@mui/material'
-import { Prato } from '../../../types/dishes'
-import { DEFAULT_PRATO } from '../../../utils/constants/values'
+import { Dishe } from '../../../types/dishes'
+import { DEFAULT_DISHE } from '../../../utils/constants/values'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
 import { convertToBase64 } from '../../../utils/image'
 import { TextField } from '../login/styles';
 
 interface DishFormProps {
-    dish?: Prato
+    dish?: Dishe
     onClose: () => void
 }
 
 const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
-    const { register, handleSubmit, reset } = useForm<Prato>({
-        defaultValues: dish ? dish : DEFAULT_PRATO,
+    const { register, handleSubmit, reset } = useForm<Dishe>({
+        defaultValues: dish ? dish : DEFAULT_DISHE,
     })
     const { addDish, updateDish } = useDishes()
-    const handleFormSubmit = async (data: Prato) => {
+    const handleFormSubmit = async (data: Dishe) => {
         let imageBase64 = data.img || ''
 
         if (data.imgFile instanceof FileList && data.imgFile.length > 0) {
@@ -29,7 +29,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
 
         if (dish?.id) updateDish(dishData)
         else addDish(dishData)
-        reset(DEFAULT_PRATO)
+        reset(DEFAULT_DISHE)
         onClose()
     }
 

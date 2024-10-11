@@ -1,17 +1,18 @@
 import { useState, FC } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Chip, Typography } from '@mui/material'
 import Table from '../../tables/table'
 import { TableRowBody } from '../../tables/table/styles'
 import { TableCell } from '../../tables/table-cell'
 import { Modal, useModal } from '../../modal'
 import { TextField } from '../../forms/login/styles'
 import { useOrderFilter } from '../../../hooks/order/use-order-filters'
-import { ORDER_COLUMNS } from '../../../utils/constants/values'
+import { CLIENT_ORDER_COLUMNS } from '../../../utils/constants/values'
 import { useCustomerOrders } from '../../../hooks/order/use-costumer-order'
 import { Pedido } from '../../../types/order'
 import OrderService from '../../../services/order'
 import { formatDateToDDMMYYYY } from '../../../utils/date'
 import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles'
+import { getStatusColor } from '../../../utils/table'
 
 const service = new OrderService()
 
@@ -70,7 +71,7 @@ const CustomerOrder: FC = () => {
                 </Box>
             </Box>
             <Table
-                columns={ORDER_COLUMNS}
+                columns={CLIENT_ORDER_COLUMNS}
                 data={filteredPedidos}
                 renderData={(row) => (
                     <TableRowBody key={row.id} onClick={() => handleRowClick(row.id)} sx={{ cursor: 'pointer' }}>
@@ -79,10 +80,17 @@ const CustomerOrder: FC = () => {
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
+                        <TableCell>
+                            <Chip
+                                label={row.status}
+                                color={getStatusColor(row.status)}
+                                variant="outlined"
+                                size="small"
+                            />
+                        </TableCell>
                     </TableRowBody>
                 )}
             />
-
             <Modal ref={modalRef} title="Detalhes do Pedido">
                 <ModalContainer>
                     {selectedOrder ? (
@@ -116,7 +124,7 @@ const CustomerOrder: FC = () => {
                 </ModalContainer>
             </Modal>
         </Box>
-    );
-};
+    )
+}
 
-export default CustomerOrder;
+export default CustomerOrder

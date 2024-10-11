@@ -3,11 +3,11 @@ import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import PedidosCliente from './pages/pedidos/cliente'
-import PedidosAdmin from './pages/pedidos/admin'
-import Cardapio from './pages/cardapio'
-import Estatisticas from './pages/estatisticas'
-import Estoque from './pages/estoque'
 import RegisterPage from './pages/register'
+import RestaurantMenu from './pages/restaurant-menu'
+import Statistics from './pages/statistics'
+import AdminOrders from './pages/pedidos/admin'
+import Stock from './pages/estoque'
 
 export const router = createBrowserRouter([
 	{
@@ -22,11 +22,11 @@ export const router = createBrowserRouter([
 				element: <LoginPage />,
 			},
 			{
-				path: 'cardapio',
-				element: <Cardapio />,
+				path: 'menu',
+				element: <RestaurantMenu />,
 			},
 			{
-				path: 'meus-pedidos',
+				path: 'my-orders',
 				element: <PedidosCliente />,
 			},
 			{
@@ -34,16 +34,16 @@ export const router = createBrowserRouter([
 				element: <RegisterPage />,
 			},			
 			{
-				path: 'estatisticas',
-				element: <Estatisticas />,
+				path: 'statistics',
+				element: <Statistics />,
 			},
 			{
-				path: 'estoque',
-				element: <Estoque />,
+				path: 'stock',
+				element: <Stock />,
 			},
 			{
-				path: 'pedidos',
-				element: <PedidosAdmin />,
+				path: 'orders',
+				element: <AdminOrders />,
 			},
 			{
 				path: '*',

@@ -13,13 +13,13 @@ import {
 import { IconSearch, TextField } from '../../cardapio-filter/styles'
 import { TableRowBody } from '../table/styles'
 import { TableCell } from '../table-cell'
-import { IngredientFormInputs } from '../../../types/dishes'
 import AddIcon from '@mui/icons-material/Add'
 import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/estoque/styles'
 import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients'
 import { TextField as TextFieldInput } from '../../forms/login/styles'
 import { Modal, useModal } from '../../modal'
 import { ModalContainer, ModalTitle } from '../../modal/styles'
+import { IngredientFormInputs } from '../../../types/dishes';
 
 export const columns: Column[] = [
     { field: 'nome', headerName: 'Nome' },

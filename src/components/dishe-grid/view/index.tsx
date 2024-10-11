@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
-import { Prato } from '../../../types/dishes';
+import { Dishe } from '../../../types/dishes';
 import DisheCard from './cards';
 
 interface DisheGridProps {
-	dishes: Prato[];
-	addToCart: (prato: Prato) => void;
+	dishes: Dishe[];
+	addToCart: (prato: Dishe) => void;
 }
 
 const DisheGrid: FC<DisheGridProps> = ({ dishes, addToCart }) => {

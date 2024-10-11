@@ -1,30 +1,29 @@
 import { FC, useState } from 'react'
 import { Button, Grid, Typography } from '@mui/material'
-import { Prato } from '../../../types/dishes'
+import { Dishe } from '../../../types/dishes'
 import DisheCard from './card'
 import { Modal, useModal } from '../../modal'
 import { ConfirmBox, EditBox } from './styles'
 import DishForm from '../../forms/dishe'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
-import { TitleModal } from '../../../pages/cardapio/styles'
-import { ModalContainer } from '../../modal/styles'
+import { ModalContainer, ModalTitle } from '../../modal/styles'
 
 interface DisheGridProps {
-    dishes: Prato[]
+    dishes: Dishe[]
 }
 
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     const editModalRef = useModal()
     const deleteModalRef = useModal()
     const { deleteDish } = useDishes()
-    const [selectedDish, setSelectedDish] = useState<Prato | null>(null)
+    const [selectedDish, setSelectedDish] = useState<Dishe | null>(null)
 
-    const handleEditClick = (dish: Prato) => {
+    const handleEditClick = (dish: Dishe) => {
         setSelectedDish(dish)
         editModalRef.current?.openModal()
     };
 
-    const handleDeleteClick = (dish: Prato) => {
+    const handleDeleteClick = (dish: Dishe) => {
         setSelectedDish(dish)
         deleteModalRef.current?.openModal()
     }
@@ -45,7 +44,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
             </Grid>
             <Modal ref={editModalRef}>
                 <ModalContainer>
-                        <TitleModal>Editar Prato</TitleModal>
+                        <ModalTitle>Editar Prato</ModalTitle>
                         <DishForm dish={selectedDish || undefined} onClose={() => editModalRef.current?.closeModal()} />
                 </ModalContainer>
             </Modal>

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import CartService from '../../services/cart';
-import { CartItem, Prato } from '../../types/dishes';
+import { CartItem, Dishe } from '../../types/dishes';
 import { getCpf} from '../../utils/auth';
 
 const cartService = new CartService();
@@ -67,7 +67,7 @@ export const useCart = () => {
     },
   });
 
-  const addToCart = (dish: Prato) => {
+  const addToCart = (dish: Dishe) => {
     const existingItem = cartItems.find((item) => item.id === dish.id);
 
     if (existingItem) {

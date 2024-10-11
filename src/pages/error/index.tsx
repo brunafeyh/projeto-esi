@@ -1,19 +1,16 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import NotFoundContainer from '../../layouts/not-found-container';
-import { Button, ErrorCode, ErrorTitle, Stack } from './styles';
+import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import NotFoundContainer from '../../layouts/not-found-container'
+import { Button, ErrorCode, ErrorTitle, Stack } from './styles'
 
 interface Props {
-  code: number;
-  title: string;
+  code: number
+  title: string
 }
 
-const ErrorPage: React.FC<Props> = ({ code, title }) => {
-  const navigate = useNavigate();
-
-  const handleGoHome = () => {
-    navigate('/');
-  };
+const ErrorPage: FC<Props> = ({ code, title }) => {
+  const navigate = useNavigate()
+  const handleGoHome = () => navigate('/')
 
   return (
     <NotFoundContainer>
@@ -29,7 +26,7 @@ const ErrorPage: React.FC<Props> = ({ code, title }) => {
         </Button>
       </Stack>
     </NotFoundContainer>
-  );
-};
+  )
+}
 
-export default ErrorPage;
+export default ErrorPage

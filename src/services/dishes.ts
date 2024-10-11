@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiBaseUrl } from '../shared/api';
-import { Prato } from '../types/dishes';
+import { Dishe } from '../types/dishes';
 
 class DishService {
   private apiUrl: string;
@@ -9,17 +9,17 @@ class DishService {
     this.apiUrl = apiUrl;
   }
 
-  async fetchDishes(): Promise<Prato[]> {
+  async fetchDishes(): Promise<Dishe[]> {
     const response = await axios.get(this.apiUrl);
     return response.data;
   }
 
-  async addDish(newDish: Prato): Promise<Prato> {
+  async addDish(newDish: Dishe): Promise<Dishe> {
     const response = await axios.post(this.apiUrl, newDish);
     return response.data;
   }
 
-  async updateDish(updatedDish: Prato): Promise<Prato> {
+  async updateDish(updatedDish: Dishe): Promise<Dishe> {
     const response = await axios.put(`${this.apiUrl}/${updatedDish.id}`, updatedDish);
     return response.data;
   }

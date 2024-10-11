@@ -1,16 +1,18 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { Pedido } from '../../types/order'
 import OrderService from '../../services/order'
+import { useAuth } from '../use-auth'
 
 const service = new OrderService()
 
 export const useOrderMutations = () => {
     const queryClient = useQueryClient()
+    const { user } = useAuth()
+
     const addOrderMutation = useMutation({
-        mutationFn: async (newPedido: Pedido
-        ) => {
-            return service.addOrder(newPedido)
+        mutationFn: async (newPedido: Pedido) => {
+            return service.addOrder(newPedido);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['orders'] });
@@ -26,9 +28,13 @@ export const useOrderMutations = () => {
         mutationFn: async (updatedPedido: Pedido) => {
             return service.updateOrder(updatedPedido)
         },
-        onSuccess: () => {
+        onSuccess: (updatedPedido: Pedido) => {
             queryClient.invalidateQueries({ queryKey: ['orders'] })
-            toast.success('Pedido atualizado com sucesso!')
+            if (updatedPedido.cpf === user?.cpf) {
+                toast.info(`Seu pedido nº ${updatedPedido.numeroPedido} foi atualizado.`)
+            } else {
+                toast.success('Pedido atualizado com sucesso!')
+            }
         },
         onError: (error) => {
             console.error('Erro ao atualizar o pedido:', error)
@@ -41,26 +47,18 @@ export const useOrderMutations = () => {
             return service.deleteOrder(id)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['orders'] });
-            toast.success('Pedido removido com sucesso!');
+            queryClient.invalidateQueries({ queryKey: ['orders'] })
+            toast.success('Pedido removido com sucesso!')
         },
         onError: (error) => {
-            console.error('Erro ao remover o pedido:', error);
-            toast.error('Erro ao remover o pedido.');
+            console.error('Erro ao remover o pedido:', error)
+            toast.error('Erro ao remover o pedido.')
         },
     })
 
-    const addOrder = (pedido: Pedido) => {
-        addOrderMutation.mutate(pedido);
-    }
-
-    const updateOrder = (pedido: Pedido) => {
-        updateOrderMutation.mutate(pedido);
-    }
-
-    const removeOrder = (id: string) => {
-        removeOrderMutation.mutate(id);
-    }
+    const addOrder = (pedido: Pedido) => addOrderMutation.mutate(pedido)
+    const updateOrder = (pedido: Pedido) => updateOrderMutation.mutate(pedido)
+    const removeOrder = (id: string) => removeOrderMutation.mutate(id)
 
     return {
         addOrder,

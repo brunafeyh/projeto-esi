@@ -1,25 +1,26 @@
-import { FC, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { Box, Button, Typography, MenuItem, Select, TextField as MuiTextField } from '@mui/material';
-import Table from '../../tables/table';
-import { TableRowBody } from '../../tables/table/styles';
-import { TableCell } from '../../tables/table-cell';
-import { Modal, useModal } from '../../modal';
-import { TextField } from '../../forms/login/styles';
-import { useOrders } from '../../../hooks/order/use-orders';
-import { useOrderFilter } from '../../../hooks/order/use-order-filters';
-import { ORDER_COLUMNS } from '../../../utils/constants/values';
-import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
-import { Pedido } from '../../../types/order';
-import { formatDateToDDMMYYYY, getString } from '../../../utils/date';
-import { useDishes } from '../../../hooks/dishes/use-dishes';
-import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles';
+import { FC, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import { Box, Button, Chip, IconButton, Typography } from '@mui/material'
+import Table from '../../tables/table'
+import { TableRowBody } from '../../tables/table/styles'
+import { TableCell } from '../../tables/table-cell'
+import { Modal, useModal } from '../../modal'
+import { TextField } from '../../forms/login/styles'
+import { useOrders } from '../../../hooks/order/use-orders'
+import { useOrderFilter } from '../../../hooks/order/use-order-filters'
+import { ORDER_COLUMNS } from '../../../utils/constants/values'
+import { useOrderMutations } from '../../../hooks/order/use-order-mutations'
+import { Pedido } from '../../../types/order'
+import { formatDateToDDMMYYYY, getString } from '../../../utils/date'
+import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles'
+import OrderForm from '../../forms/order'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { getStatusColor } from '../../../utils/table'
 
 const AdminOrder: FC = () => {
     const { orders } = useOrders();
-    const { dishes } = useDishes();
-    const { addOrder } = useOrderMutations();
+    const { addOrder, updateOrder, removeOrder } = useOrderMutations()
     const {
         filteredPedidos,
         filterStartDate,
@@ -29,50 +30,41 @@ const AdminOrder: FC = () => {
         setFilteredPedidos,
     } = useOrderFilter(orders);
 
-    const { register, handleSubmit, reset, control, setValue } = useForm<Partial<Pedido>>();
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'pratos',
-    });
+    const [orderDetails, setOrderDetails] = useState<Partial<Pedido> | null>(null)
+    const [editOrderDetails, setEditOrderDetails] = useState<Partial<Pedido>>()
+    const [orderToDelete, setOrderToDelete] = useState<string | null>(null)
+    const addOrderModalRef = useModal()
+    const detailsModalRef = useModal()
+    const editOrderModalRef = useModal()
+    const deleteOrderModalRef = useModal()
 
-    const [orderDetails, setOrderDetails] = useState<Partial<Pedido> | null>(null);
-    const addOrderModalRef = useModal();
-    const detailsModalRef = useModal();
+    const handleOpenEditModal = (id: string) => {
+        const order = orders.find((pedido) => pedido.id === id);
+        if (order) {
+            setEditOrderDetails(order);
+            editOrderModalRef.current?.openModal();
+        }
+    }
 
     const handleAddOrder = (data: Partial<Pedido>) => {
+        data.status = "Em Confirmação";
         addOrder(data as Pedido);
         setFilteredPedidos([...orders, data as Pedido]);
         addOrderModalRef.current?.closeModal();
-        reset();
-    };
+    }
+
+    const handleEditOrder = (data: Partial<Pedido>) => {
+        if (editOrderDetails?.id) {
+            updateOrder({ ...data, id: editOrderDetails.id } as Pedido)
+        }
+        editOrderModalRef.current?.closeModal();
+        setEditOrderDetails(undefined);
+    }
 
     const handleOpenAddOrderModal = () => {
-        reset({
-            numeroPedido: '',
-            descricao: '',
-            valorTotal: 0,
-            metodoPagamento: '',
-            data: '',
-            pratos: [],
-        });
+        setEditOrderDetails(undefined);
         addOrderModalRef.current?.openModal();
-    };
-
-    const handleDishChange = (index: number, dishId: string) => {
-        const selectedDish = dishes.find(dish => dish.id === dishId);
-        if (selectedDish) {
-            setValue(`pratos.${index}.id`, selectedDish.id);
-            setValue(`pratos.${index}.nome`, selectedDish.nome);
-            setValue(`pratos.${index}.descricao`, selectedDish.descricao);
-            setValue(`pratos.${index}.valorReais`, selectedDish.valorReais);
-            setValue(`pratos.${index}.valorPontos`, selectedDish.valorPontos);
-            setValue(`pratos.${index}.categoria`, selectedDish.categoria);
-            setValue(`pratos.${index}.img`, selectedDish.img);
-            setValue(`pratos.${index}.imgFile`, selectedDish.imgFile);
-            setValue(`pratos.${index}.quantidade`, 1);
-            setValue(`pratos.${index}.valor`, selectedDish.valorReais);
-        }
-    };
+    }
 
     const handleOpenDetailsModal = (id: string) => {
         const order = orders.find((pedido) => pedido.id === id);
@@ -80,7 +72,20 @@ const AdminOrder: FC = () => {
             setOrderDetails(order);
             detailsModalRef.current?.openModal();
         }
-    };
+    }
+
+    const handleOpenDeleteModal = (id: string) => {
+        setOrderToDelete(id);
+        deleteOrderModalRef.current?.openModal();
+    }
+
+    const handleDeleteOrder = () => {
+        if (orderToDelete) {
+            removeOrder(orderToDelete);
+            setOrderToDelete(null);
+            deleteOrderModalRef.current?.closeModal();
+        }
+    }
 
     return (
         <Box>
@@ -120,122 +125,74 @@ const AdminOrder: FC = () => {
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
+                        <TableCell>
+                            <Chip
+                                label={row.status}
+                                color={getStatusColor(row.status)}
+                                variant="outlined"
+                                size="small"
+                            />
+                        </TableCell>
+                        <TableCell>
+                            <IconButton
+                                size="small"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenEditModal(row.id);
+                                }}
+                                sx={{ width: 20, height: 20, mr: 1 }}
+                            >
+                                <EditIcon sx={{ width: 20, height: 20 }} />
+                            </IconButton>
+                            <IconButton
+                                size="small"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenDeleteModal(row.id);
+                                }}
+                                sx={{ width: 20, height: 20 }}
+                            >
+                                <DeleteIcon sx={{ width: 20, height: 20 }} />
+                            </IconButton>
+                        </TableCell>
                     </TableRowBody>
                 )}
             />
-            <Modal ref={addOrderModalRef} title="Adicionar Novo Pedido">
+
+            <Modal ref={addOrderModalRef} title="Adicionar Pedido">
                 <ModalContainer>
-                    <form onSubmit={handleSubmit(handleAddOrder)}>
-                        <ModalTitle mb={2}>Adicionar Pedido</ModalTitle>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Nº Pedido"
-                            type="text"
-                            fullWidth
-                            variant="filled"
-                            {...register('numeroPedido')}
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Descrição"
-                            type="text"
-                            fullWidth
-                            variant="filled"
-                            {...register('descricao')}
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Valor (R$)"
-                            type="number"
-                            fullWidth
-                            variant="filled"
-                            {...register('valorTotal', { valueAsNumber: true })}
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Método de Pagamento"
-                            type="text"
-                            fullWidth
-                            variant="filled"
-                            {...register('metodoPagamento')}
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Data"
-                            type="date"
-                            fullWidth
-                            variant="filled"
-                            {...register('data')}
-                            InputLabelProps={{ shrink: true }}
-                        />
+                    <ModalTitle>Adicionar Pedido</ModalTitle>
+                    <OrderForm
+                        onSubmit={handleAddOrder}
+                        isEditMode={false}
+                        onClose={() => addOrderModalRef.current?.closeModal()}
+                    />
+                </ModalContainer>
+            </Modal>
 
-                        <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>Pratos</Typography>
-                        {fields.map((_, index) => (
-                            <Box key={uuidv4()} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                                <Select
-                                    fullWidth
-                                    variant="filled"
-                                    defaultValue=""
-                                    {...register(`pratos.${index}.id`)}
-                                    onChange={(e) => handleDishChange(index, e.target.value)}
-                                    sx={{ mr: 2 }}
-                                >
-                                    <MenuItem value="" disabled>Selecione um prato</MenuItem>
-                                    {dishes.map((dish) => (
-                                        <MenuItem key={uuidv4()} value={dish.id}>
-                                            {dish.nome} - R$ {(dish.valorReais ?? 0).toFixed(2)}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                                <MuiTextField
-                                    label="Quantidade"
-                                    type="number"
-                                    variant="filled"
-                                    {...register(`pratos.${index}.quantidade`, { valueAsNumber: true })}
-                                    sx={{ width: '100px', ml: 2 }}
-                                />
-                                <Button
-                                    variant="outlined"
-                                    color="error"
-                                    onClick={() => remove(index)}
-                                    sx={{ ml: 2 }}
-                                >
-                                    Remover
-                                </Button>
-                            </Box>
-                        ))}
+            <Modal ref={editOrderModalRef} title="Editar Pedido">
+                <ModalContainer>
+                    <ModalTitle>Editar Pedido</ModalTitle>
+                    <OrderForm
+                        onSubmit={handleEditOrder}
+                        defaultValues={editOrderDetails}
+                        isEditMode={true}
+                        onClose={() => editOrderModalRef.current?.closeModal()}
+                    />
+                </ModalContainer>
+            </Modal>
 
-                        <Button
-                            variant="contained"
-                            sx={{ width: '100%', marginBottom: 2 }}
-                            onClick={() =>
-                                append({
-                                    id: '',
-                                    nome: '',
-                                    descricao: '',
-                                    valorReais: 0,
-                                    valorPontos: 0,
-                                    categoria: '',
-                                    img: '',
-                                    imgFile: null,
-                                    quantidade: 1,
-                                    valor: 0,
-                                })
-                            }
-                        >
-                            Adicionar Prato
+            <Modal ref={deleteOrderModalRef} title="Confirmar Exclusão">
+                <ModalContainer>
+                    <Typography>Tem certeza que deseja excluir este pedido?</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                        <Button onClick={() => deleteOrderModalRef.current?.closeModal()} variant="outlined">
+                            Cancelar
                         </Button>
-
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                            <Button onClick={() => addOrderModalRef.current?.closeModal()} variant="outlined">
-                                Cancelar
-                            </Button>
-                            <Button type="submit" variant="contained" sx={{ ml: 2 }}>
-                                Adicionar
-                            </Button>
-                        </Box>
-                    </form>
+                        <Button onClick={handleDeleteOrder} variant="contained" color="error" sx={{ ml: 2 }}>
+                            Excluir
+                        </Button>
+                    </Box>
                 </ModalContainer>
             </Modal>
 
@@ -264,7 +221,7 @@ const AdminOrder: FC = () => {
                     ) : (
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt : 2}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                         <Button onClick={() => detailsModalRef.current?.closeModal()} variant="contained">
                             Fechar
                         </Button>
@@ -272,7 +229,7 @@ const AdminOrder: FC = () => {
                 </ModalContainer>
             </Modal>
         </Box>
-    );
-};
+    )
+}
 
 export default AdminOrder

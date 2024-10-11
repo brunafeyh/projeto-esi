@@ -1,5 +1,4 @@
 import { Column } from "../../components/tables/table"
-import { Prato } from "../../types/dishes"
 import { Pedido } from "../../types/order"
 
 export const ACCESS_TOKEN_KEY = 'access_token'
@@ -19,6 +18,18 @@ export const ORDER_COLUMNS: Column[] = [
     { field: 'descricao', headerName: 'Descrição' },
     { field: 'valorTotal', headerName: 'Valor (R$)' },
     { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
+    { field: 'status', headerName: 'Status' },
+    { field: 'edit', headerName: '' },
+]
+
+
+export const CLIENT_ORDER_COLUMNS: Column[] = [
+  { field: 'numeroPedido', headerName: 'Nº Pedido' },
+  { field: 'data', headerName: 'Data' },
+  { field: 'descricao', headerName: 'Descrição' },
+  { field: 'valorTotal', headerName: 'Valor (R$)' },
+  { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
+  { field: 'status', headerName: 'Status' },
 ]
 
 export const DEFAULT_ORDER: Pedido = {
@@ -30,13 +41,18 @@ export const DEFAULT_ORDER: Pedido = {
   metodoPagamento: '',
   data: '',
   pratos: [],
+  status: 'Em confirmação'
 }
 
-export const DEFAULT_PRATO: Partial<Prato> = {
+export const DEFAULT_DISHE = {
+  id: '',
   nome: '',
   descricao: '',
   valorReais: 0,
   valorPontos: 0,
   categoria: '',
   img: '',
+  imgFile: null,
+  quantidade: 1,
+  valor: 0,
 };

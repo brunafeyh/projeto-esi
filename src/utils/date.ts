@@ -1,7 +1,8 @@
-import { Prato } from "../types/dishes"
-import { DEFAULT_PRATO } from "./constants/values"
+import { Dishe } from "../types/dishes"
+import { DEFAULT_DISHE } from "./constants/values"
 
-export const formatDateToDDMMYYYY = (dateString: string): string => {
+export const formatDateToDDMMYYYY = (dateString?: string): string => {
+    if (!dateString) return 'Data Inválida'
     const [year, month, day] = dateString.split('-')
     return `${day}/${month}/${year}`
 }
@@ -11,7 +12,7 @@ export const getString = (value?: string) => {
     return ''
 }
 
-export const getDishe = (value?: Prato) => {
+export const getDishe = (value?: Dishe) => {
     if (value) return value
-    return DEFAULT_PRATO
+    return DEFAULT_DISHE
 }

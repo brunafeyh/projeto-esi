@@ -1,13 +1,14 @@
-import { Prato } from "./dishes";
+import { Dishe } from "./dishes"
 
 export type Pedido = {
-  id?: string;
-  numeroPedido: string;
-  cpf: string;
-  descricao: string;
-  observacoes?: string;
-  data: string;
-  valorTotal: number;
-  metodoPagamento: string;
-  pratos: Prato[];
-};
+  id?: string
+  numeroPedido: string
+  cpf: string
+  descricao: string
+  observacoes?: string
+  data: string
+  valorTotal: number
+  metodoPagamento: string
+  status: string
+  pratos: Dishe[]
+}

@@ -7,7 +7,7 @@ import { useChatBot } from '../../hooks/use-chat-bot'
 import { useVoiceRecognition } from '../../hooks/use-voice-recognition'
 import ChatIcon from '@mui/icons-material/Chat'
 import { Modal, useModal } from '../modal'
-import { TitleModal } from '../../pages/cardapio/styles'
+import { ModalTitle } from '../modal/styles'
 
 const ChatBot: FC = () => {
     const [inputText, setInputText] = useState<string>('')
@@ -40,7 +40,7 @@ const ChatBot: FC = () => {
             <Modal ref={modal}>
                 <ChatContainer>
                     <Box display="flex" justifyContent="space-between" alignItems="center" p={1}>
-                        <TitleModal>ChatBot</TitleModal>
+                        <ModalTitle>ChatBot</ModalTitle>
                         <IconButton onClick={handleClose} sx={{ width: 16, height: 16 }} >
                             <CloseIcon sx={{ width: 16, height: 16 }} />
                         </IconButton>

@@ -1,25 +1,22 @@
-import { PageLayout } from '../../layouts/page-layout';
-import { FC } from 'react';
-import { TitlePage } from '../home/styles';
-import { useAllClients } from '../../hooks/use-clients';
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import { People, RestaurantMenu } from '@mui/icons-material';
-import DailyStatistics from '../../components/graphs/daily';
-import SellYearGraph from '../../components/graphs/sellforyear';
-import PopularCategorys from '../../components/graphs/categorys';
-import SalesLeaders from '../../components/graphs/sales-grid';
-import { Container, GraphTypography, Stack } from './styles';
-import { useDishes } from '../../hooks/dishes/use-dishes';
-import { adminRoles } from '../../utils/auth';
-import { withAuthentication } from '../../hocs/authentication/with-authentication';
+import { PageLayout } from '../../layouts/page-layout'
+import { FC } from 'react'
+import { TitlePage } from '../home/styles'
+import { useAllClients } from '../../hooks/use-clients'
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
+import { People, RestaurantMenu } from '@mui/icons-material'
+import DailyStatistics from '../../components/graphs/daily'
+import SellYearGraph from '../../components/graphs/sellforyear'
+import PopularCategorys from '../../components/graphs/categorys'
+import SalesLeaders from '../../components/graphs/sales-grid'
+import { Container, GraphTypography, Stack } from './styles'
+import { useDishes } from '../../hooks/dishes/use-dishes'
+import { adminRoles } from '../../utils/auth'
+import { withAuthentication } from '../../hocs/authentication/with-authentication'
 
-const Estatisticas: FC = () => {
-    const { allClients, error: errorClientes } = useAllClients();
-    const { totalDishes, error: errorDishes } = useDishes();
-
-    if (errorClientes || errorDishes) {
-        return <Typography>Erro ao carregar as estatísticas.</Typography>;
-    }
+const Statistics: FC = () => {
+    const { allClients, error: errorClientes } = useAllClients()
+    const { totalDishes, error: errorDishes } = useDishes()
+    if (errorClientes || errorDishes) return <Typography>Erro ao carregar as estatísticas.</Typography>
     return (
         <PageLayout title='Estatísticas'>
             <TitlePage>
@@ -70,7 +67,7 @@ const Estatisticas: FC = () => {
                 </Grid>
             </Box>
         </PageLayout>
-    );
-};
+    )
+}
 
-export default withAuthentication(Estatisticas, adminRoles);
+export default withAuthentication(Statistics, adminRoles)

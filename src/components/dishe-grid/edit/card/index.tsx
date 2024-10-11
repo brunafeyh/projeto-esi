@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, Chip } from '@mui/material';
 import { TitleCard } from '../../../../pages/home/styles';
-import { Prato } from '../../../../types/dishes';
+import { Dishe } from '../../../../types/dishes';
 import { DeleteIcon, EditIcon } from '../../../../pages/estoque/styles';
 import { IconButton } from './styles';
 
 interface DisheCardProps {
-	dishe: Prato;
-	onEdit: (prato: Prato) => void;
-	onDelete: (prato: Prato) => void;
+	dishe: Dishe;
+	onEdit: (prato: Dishe) => void;
+	onDelete: (prato: Dishe) => void;
 }
 
 const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export interface Prato {
+export interface Dishe {
 	id: string;
 	nome: string;
 	descricao: string;
@@ -13,7 +13,7 @@ export interface Prato {
 	valor: number
 }
 
-export interface CartItem extends Prato {
+export interface CartItem extends Dishe {
 	quantidade: number;
 	valorTotal: number;
 }

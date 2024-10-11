@@ -5,7 +5,7 @@ import StockTable from '../../components/tables/stock-table'
 import { withAuthentication } from '../../hocs/authentication/with-authentication'
 import { adminRoles } from '../../utils/auth'
 
-const Estoque: FC = () => {
+const Stock: FC = () => {
     return (
         <PageLayout title="Estoque">
             <TitlePage>Estoque</TitlePage>
@@ -14,4 +14,4 @@ const Estoque: FC = () => {
     )
 }
 
-export default withAuthentication(Estoque, adminRoles);
+export default withAuthentication(Stock, adminRoles);
