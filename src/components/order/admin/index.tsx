@@ -34,25 +34,25 @@ const AdminOrder: FC = () => {
     const deleteOrderModalRef = useModal()
 
     const handleOpenEditModal = (id: string) => {
-        const order = orders.find((pedido) => pedido.id === id)
+        const order = orders.find((pedido) => pedido.id === id);
         if (order) {
-            setEditOrderDetails(order)
-            openModal(editOrderModalRef)()
+            setEditOrderDetails(order);
+            openModal(editOrderModalRef)();
         }
-    }
+    };
 
     const handleAddOrder = (data: Partial<Pedido>) => {
-        data.status = "Em Confirmação"
-        addOrder(data as Pedido)
-        setFilteredPedidos([...orders, data as Pedido])
-        closeModal(addOrderModalRef)()
-    }
+        data.status = "Em Confirmação";
+        addOrder(data as Pedido);
+        setFilteredPedidos([...orders, data as Pedido]);
+        closeModal(addOrderModalRef)();
+    };
 
     const handleEditOrder = (data: Partial<Pedido>) => {
         if (editOrderDetails?.id) updateOrder({ ...data, id: editOrderDetails.id } as Pedido)
         closeModal(editOrderModalRef)()
         setEditOrderDetails(undefined)
-    }
+    };
 
     const handleOpenDetailsModal = (id: string) => {
         const order = orders.find((pedido) => pedido.id === id)
@@ -65,13 +65,13 @@ const AdminOrder: FC = () => {
     const handleOpenDeleteModal = (id: string) => {
         setOrderToDelete(id)
         openModal(deleteOrderModalRef)()
-    }
+    };
 
     const handleDeleteOrder = () => {
         if (orderToDelete) {
-            removeOrder(orderToDelete);
-            setOrderToDelete(null);
-            closeModal(deleteOrderModalRef)();
+            removeOrder(orderToDelete)
+            setOrderToDelete(null)
+            closeModal(deleteOrderModalRef)()
         }
     };
 
@@ -184,7 +184,7 @@ const AdminOrder: FC = () => {
                                 {orderDetails.pratos && orderDetails.pratos.length > 0 ? (
                                     orderDetails.pratos.map((prato) => (
                                         <Typography key={uuidv4()} variant="body2">
-                                            {prato.quantidade} x {prato.nome} - R$ {(prato.valorReais ?? 0).toFixed(2)}
+                                            {prato.quantidade} x {prato.prato.name} - R$ {parseFloat(prato.prato.reaisPrice?.toString() || '0').toFixed(2)}
                                         </Typography>
                                     ))
                                 ) : (

@@ -5,7 +5,7 @@ import Cart from '..';
 import { useAuth } from '../../../hooks/use-auth';
 import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
 import { useCart } from '../../../hooks/cart/use-cart';
-import { calculateDiscountValue, calculateFinalValue, calculatePointsEarned, calculateTotalAmount, createOrder } from '../../../utils/cart';
+import { calcularValorTotal, calculateDiscountValue, calculateFinalValue, calculatePointsEarned, createOrder } from '../../../utils/cart';
 import CheckoutForm from '../../forms/checkout';
 import { Popover, usePopover } from '../../popover';
 import { Modal, useModal } from '../../modal';
@@ -33,11 +33,15 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   const handleCloseModal = closeModal(modalRef);
 
   const handleOpen = () => {
-    handleClosePopover()
-    handleOpenModal()
-  }
+    handleClosePopover();
+    handleOpenModal();
+  };
 
-  const totalAmount = useMemo(() => calculateTotalAmount(cartItems).toFixed(2), [cartItems]);
+  const totalAmount = useMemo(() => {
+    const amount = calcularValorTotal(cartItems)
+    return Number(amount).toFixed(2)
+  }, [cartItems])
+
   const discountValue = useMemo(() => calculateDiscountValue(pointsToUse), [pointsToUse]);
   const finalValue = useMemo(() => calculateFinalValue(parseFloat(totalAmount), discountValue), [totalAmount, discountValue]);
   const pointsEarned = useMemo(() => calculatePointsEarned(cartItems), [cartItems]);
@@ -69,7 +73,7 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
     <>
       <IconButton aria-describedby="cart-popover" onClick={handleOpenPopover} style={{ marginLeft: 'auto' }}>
         <Badge badgeContent={cartItems.length} color="secondary">
-          <ShoppingCartIcon style={{ color: '#FFF' }} />
+          <ShoppingCartIcon style={{ color: 'white' }} />
         </Badge>
       </IconButton>
 
@@ -106,4 +110,4 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   );
 };
 
-export default CartButton
+export default CartButton;

@@ -61,7 +61,7 @@
     {
       "cpf": "13037025921",
       "nome": "João Silva",
-      "pontosAcumulados": 13526,
+      "pontosAcumulados": "NaN0350400",
       "id": "d0cb"
     },
     {
@@ -83,169 +83,146 @@
       "cpf": "13270273978"
     }
   ],
+  "categories": [
+    {
+      "id": "2",
+      "name": "Carnes"
+    },
+    {
+      "id": "3",
+      "name": "Vegano"
+    },
+    {
+      "id": "4",
+      "name": "Sobremesas"
+    },
+    {
+      "id": "5",
+      "name": "Bebidas"
+    }
+  ],
   "pratos": [
     {
       "id": "1",
       "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
-      "nome": "Strogonoffe de Frango",
-      "descricao": "Strogonoffe de frango com arroz e batata palha.",
-      "valorReais": 35.99,
-      "valorPontos": 350,
-      "categoria": "Carnes",
-      "status": "Disponível"
-    },
-    {
-      "id": "2",
-      "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
-      "nome": "Macarrão",
-      "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
-      "valorReais": 25.99,
-      "valorPontos": 250,
-      "categoria": "Massas",
-      "status": "Disponível"
-    },
-    {
-      "id": "3",
-      "img": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
-      "nome": "Pizza de Calabresa",
-      "descricao": "Pizza com molho de tomate, queijo e calabresa.",
-      "valorReais": 39.99,
-      "valorPontos": 400,
-      "categoria": "Massas",
-      "status": "Disponível"
-    },
-    {
-      "id": "4",
-      "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhvk9n3KcmFDGZ3GCITvxNaY1H_Lzhf-aF1C9FlHsdwDGceBG7nf0RsrIC6NvWjZI-yVw6cDWNWW-sl0wirHbYjaO4jKLtKhkxjfB02AjBRkPOLbBJXnE6EcwsJ-ltxz5ovDgTwyQfr1F_/s1600/Bife+Acebolado.png",
-      "nome": "Bife Acebolado",
-      "descricao": "Bife grelhado com cebolas caramelizadas.",
-      "valorReais": 29.99,
-      "valorPontos": 300,
-      "categoria": "Carnes",
-      "status": "Disponível"
-    },
-    {
-      "id": "5",
-      "img": "https://t3.ftcdn.net/jpg/05/66/61/00/360_F_566610095_S4tDRuY2c7O4YuUYk5BSQdPDlRuW0kMc.jpg",
-      "nome": "Prato Feito",
-      "descricao": "Arroz, feijão, carne, batata frita e salada.",
-      "valorReais": 19.99,
-      "valorPontos": 200,
-      "categoria": "Brasil",
-      "status": "Disponível"
-    },
-    {
-      "id": "6",
-      "nome": "Combo Brasil",
-      "img": "https://img.freepik.com/fotos-gratis/variedade-plana-com-deliciosa-comida-brasileira_23-2148739179.jpg",
-      "descricao": "Combo de feijoada com guarnições e sobremesa.",
-      "valorReais": 49.99,
-      "valorPontos": 500,
-      "categoria": "Brasil",
-      "status": "Disponível"
-    },
-    {
-      "id": "9",
-      "img": "https://wallpaper.forfun.com/fetch/68/688a328a838881302e19874992e60345.jpeg",
-      "nome": "Lasanha",
-      "descricao": "Lasanha de queijo e presunto ao molho bolonhesa.",
-      "valorReais": 44.99,
-      "valorPontos": 450,
-      "categoria": "Massas",
-      "status": "Disponível"
-    },
-    {
-      "id": "10",
-      "img": "https://i.pinimg.com/originals/86/d4/5d/86d45d132fabcf599228910a49684dd3.jpg",
-      "nome": "Bolo de Chocolate Belga",
-      "descricao": "Bolo de chocolate belga com recheio de ganache.",
-      "valorReais": 29.99,
-      "valorPontos": 300,
-      "categoria": "Sobremesas",
-      "status": "Disponível"
-    },
-    {
-      "id": "11",
-      "img": "https://st2.depositphotos.com/1672917/6989/i/450/depositphotos_69899447-stock-photo-traditional-brazilian-barbecue.jpg",
-      "nome": "Churrasco com Farofa",
-      "descricao": "Churrasco de picanha com farofa de ovos.",
-      "valorReais": 54.99,
-      "valorPontos": 550,
-      "categoria": "Carnes",
-      "status": "Disponível"
-    },
-    {
-      "id": "12",
-      "img": "https://t4.ftcdn.net/jpg/01/07/16/95/360_F_107169588_npa3G6IiqqqtsehxOCFTcAVAA6dTtKgX.jpg",
-      "nome": "Espetinho",
-      "descricao": "Espetinho de carne com pimentões e cebola.",
-      "valorReais": 14.99,
-      "valorPontos": 150,
-      "categoria": "Carnes",
-      "status": "Disponível"
-    },
-    {
-      "id": "13",
-      "img": "https://static.vecteezy.com/ti/fotos-gratis/p2/14214654-deliciosa-carne-de-frango-frito-quente-e-crocante-gratis-foto.jpg",
-      "nome": "Frango Frito",
-      "descricao": "Frango frito crocante com tempero especial.",
-      "valorReais": 22.99,
-      "valorPontos": 230,
-      "categoria": "Carnes",
-      "status": "Disponível"
-    },
-    {
-      "id": "14",
-      "img": "https://i.panelinha.com.br/i1/228-bk-2979-carne-de-panela-com-cenoura-e-batata-na-pressao.webp",
-      "nome": "Carne de Panela",
-      "descricao": "Carne cozida lentamente com batatas e cenouras.",
-      "valorReais": 34.99,
-      "valorPontos": 350,
-      "categoria": "Carnes",
-      "status": "Disponível"
+      "name": "Strogonoffe de Frango",
+      "description": "Strogonoffe de frango com arroz e batata palha.",
+      "reaisPrice": "35.99",
+      "pointsPrice": "350",
+      "reaisCostValue": "0",
+      "image": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+      "isAvailable": "true",
+      "categoryId": null,
+      "dishIngredientFormDTOList": [],
+      "imgFile": null,
+      "quantidade": "1",
+      "valor": "35.99"
     }
   ],
   "pedidos": [
     {
-      "id": "1728669779125",
-      "numeroPedido": "Pedido-1728669779125",
+      "id": "1729277254350",
+      "numeroPedido": "Pedido-1729277254350",
       "cpf": "13037025921",
-      "descricao": "Frango Frito, Prato Feito, Bolo de Chocolate Belga",
+      "descricao": "Macarrão, Strogonoffe de Frango, Pizza de Calabresa",
       "observacoes": "",
-      "data": "2024-10-11",
-      "valorTotal": 113,
+      "data": "2024-10-18",
+      "valorTotal": 101.97,
       "metodoPagamento": "dinheiro",
-      "status": "Concluído",
+      "status": "Em Confirmação",
       "pratos": [
         {
-          "id": "13",
-          "nome": "Frango Frito",
-          "descricao": "Frango frito crocante com tempero especial.",
-          "valorReais": 22.99,
-          "valorPontos": 230,
-          "categoria": "Carnes",
-          "img": "https://static.vecteezy.com/ti/fotos-gratis/p2/14214654-deliciosa-carne-de-frango-frito-quente-e-crocante-gratis-foto.jpg",
+          "prato": {
+            "id": "2",
+            "name": "Macarrão",
+            "description": "Macarrão ao molho de tomate fresco e manjericão.",
+            "reaisPrice": "25.99",
+            "pointsPrice": "250",
+            "reaisCostValue": "0",
+            "image": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
+            "isAvailable": "true",
+            "categoryId": "2",
+            "dishIngredientFormDTOList": [],
+            "imgFile": null
+          },
           "quantidade": 1
         },
         {
-          "id": "5",
-          "nome": "Prato Feito",
-          "descricao": "Arroz, feijão, carne, batata frita e salada.",
-          "valorReais": 19.99,
-          "valorPontos": 200,
-          "categoria": "Brasil",
-          "img": "https://t3.ftcdn.net/jpg/05/66/61/00/360_F_566610095_S4tDRuY2c7O4YuUYk5BSQdPDlRuW0kMc.jpg",
-          "quantidade": 3
+          "prato": {
+            "id": "1",
+            "name": "Strogonoffe de Frango",
+            "description": "Strogonoffe de frango com arroz e batata palha.",
+            "reaisPrice": "35.99",
+            "pointsPrice": "350",
+            "reaisCostValue": "0",
+            "image": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+            "isAvailable": "true",
+            "categoryId": "1",
+            "dishIngredientFormDTOList": [],
+            "imgFile": null
+          },
+          "quantidade": 1
         },
         {
-          "id": "10",
-          "nome": "Bolo de Chocolate Belga",
-          "descricao": "Bolo de chocolate belga com recheio de ganache.",
-          "valorReais": 29.99,
-          "valorPontos": 300,
-          "categoria": "Sobremesas",
-          "img": "https://i.pinimg.com/originals/86/d4/5d/86d45d132fabcf599228910a49684dd3.jpg",
+          "prato": {
+            "id": "3",
+            "name": "Pizza de Calabresa",
+            "description": "Pizza com molho de tomate, queijo e calabresa.",
+            "reaisPrice": "39.99",
+            "pointsPrice": "400",
+            "reaisCostValue": "0",
+            "image": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
+            "isAvailable": "true",
+            "categoryId": "2",
+            "dishIngredientFormDTOList": [],
+            "imgFile": null
+          },
           "quantidade": 1
+        }
+      ]
+    },
+    {
+      "id": "1729278268024",
+      "numeroPedido": "Pedido-1729278268024",
+      "cpf": "13037025921",
+      "descricao": "Strogonoffe de Frango, Pizza de Calabresa",
+      "observacoes": "",
+      "data": "2024-10-18",
+      "valorTotal": 115.97,
+      "metodoPagamento": "dinheiro",
+      "status": "Em Confirmação",
+      "pratos": [
+        {
+          "prato": {
+            "id": "1",
+            "name": "Strogonoffe de Frango",
+            "description": "Strogonoffe de frango com arroz e batata palha.",
+            "reaisPrice": "35.99",
+            "pointsPrice": "350",
+            "reaisCostValue": "0",
+            "image": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
+            "isAvailable": "true",
+            "categoryId": "1",
+            "dishIngredientFormDTOList": [],
+            "imgFile": null
+          },
+          "quantidade": 1
+        },
+        {
+          "prato": {
+            "id": "3",
+            "name": "Pizza de Calabresa",
+            "description": "Pizza com molho de tomate, queijo e calabresa.",
+            "reaisPrice": "39.99",
+            "pointsPrice": "400",
+            "reaisCostValue": "0",
+            "image": "https://media.istockphoto.com/id/1442417585/pt/foto/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=170667a&w=0&k=20&c=hPvSxKVqw6hv6Mwd03BZo5vLcwAW7AzqXjysDOG1hw8=",
+            "isAvailable": "true",
+            "categoryId": "2",
+            "dishIngredientFormDTOList": [],
+            "imgFile": null
+          },
+          "quantidade": 2
         }
       ]
     }
@@ -337,10 +314,6 @@
   },
   "categorias": [
     {
-      "id": "1",
-      "nome": "Carnes"
-    },
-    {
       "id": "2",
       "nome": "Massas"
     },
@@ -411,32 +384,7 @@
     {
       "id": "1",
       "cpf": "13037025921",
-      "items": [
-        {
-          "id": "1",
-          "img": "https://redesupermarket.com.br/wp-content/uploads/2022/04/sTROGONOFF.png",
-          "nome": "Strogonoffe de Frango",
-          "descricao": "Strogonoffe de frango com arroz e batata palha.",
-          "valorReais": 35.99,
-          "valorPontos": 350,
-          "categoria": "Carnes",
-          "status": "Disponível",
-          "quantidade": 1,
-          "valorTotal": 35.99
-        },
-        {
-          "id": "2",
-          "img": "https://www.sabornamesa.com.br/media/k2/items/cache/380d25d8d08b30f6a93b74397bf8e996_XL.jpg",
-          "nome": "Macarrão",
-          "descricao": "Macarrão ao molho de tomate fresco e manjericão.",
-          "valorReais": 25.99,
-          "valorPontos": 250,
-          "categoria": "Massas",
-          "status": "Disponível",
-          "quantidade": 1,
-          "valorTotal": 25.99
-        }
-      ]
+      "items": []
     },
     {
       "id": "11e4",

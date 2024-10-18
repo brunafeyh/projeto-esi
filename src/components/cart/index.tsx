@@ -1,16 +1,23 @@
-import React from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CartItem } from '../../types/dishes';
 import { IconButton, TextField } from './styles';
 
 interface CartProps {
-  items: CartItem[]
-  onUpdateQuantity: (id: string, quantidade: number) => void
-  onRemoveItem: (id: string) => void
+  items: CartItem[];
+  onUpdateQuantity: (id: string, quantidade: number) => void;
+  onRemoveItem: (id: string) => void;
 }
 
 const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) => {
+  console.log(items)
+  const handleQuantityChange = (id: string, value: string) => {
+    const quantidade = parseInt(value, 10)
+    if (!isNaN(quantidade) && quantidade > 0) {
+      onUpdateQuantity(id, quantidade);
+    }
+  };
+
   return (
     <Box p={2} width={300}>
       <Typography variant="h6">Carrinho</Typography>
@@ -20,15 +27,15 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) =>
         <>
           {items.map((item, index) => (
             <Box key={`${item.id}-${index}`} display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-              <Typography variant="body2">{item.nome}</Typography>
+              <Typography variant="body2">{item.name}</Typography>
               <Stack direction="row" alignItems="center">
                 <TextField
                   type="number"
                   value={item.quantidade}
-                  onChange={(e) => onUpdateQuantity(item.id, parseInt(e.target.value))}
+                  onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                   InputProps={{ inputProps: { min: 1 } }}
                   label="Quantidade"
-                  variant='filled'
+                  variant="filled"
                 />
                 <IconButton onClick={() => onRemoveItem(item.id)}>
                   <DeleteIcon fontSize="small" />
@@ -42,5 +49,4 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) =>
   );
 };
 
-
-export default Cart
+export default Cart;

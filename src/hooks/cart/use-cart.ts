@@ -74,13 +74,13 @@ export const useCart = () => {
       addToCartMutation.mutate({
         ...existingItem,
         quantidade: existingItem.quantidade + 1,
-        valorTotal: existingItem.valorTotal + dish.valorReais,
+        valorTotal: existingItem.valorTotal + dish.reaisPrice,
       });
     } else {
       addToCartMutation.mutate({
         ...dish,
         quantidade: 1,
-        valorTotal: dish.valorReais,
+        valorTotal: dish.reaisPrice,
       });
     }
   };

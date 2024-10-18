@@ -1,37 +1,48 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { DialogContent, DialogActions, Button } from '@mui/material'
-import { Dishe } from '../../../types/dishes'
-import { DEFAULT_DISHE } from '../../../utils/constants/values'
-import { useDishes } from '../../../hooks/dishes/use-dishes'
-import { convertToBase64 } from '../../../utils/image'
+import { DialogContent, DialogActions, Button } from '@mui/material';
+import { Dishe } from '../../../types/dishes';
+import { DEFAULT_DISHE } from '../../../utils/constants/values';
+import { useDishes } from '../../../hooks/dishes/use-dishes';
+import { convertToBase64 } from '../../../utils/image';
 import { TextField } from '../login/styles';
+// Importar uuid para gerar ID
+import { v4 as uuidv4 } from 'uuid';
 
 interface DishFormProps {
-    dish?: Dishe
-    onClose: () => void
+    dish?: Dishe;
+    onClose: () => void;
 }
 
 const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
     const { register, handleSubmit, reset } = useForm<Dishe>({
         defaultValues: dish ? dish : DEFAULT_DISHE,
-    })
-    const { addDish, updateDish } = useDishes()
+    });
+    const { addDish, updateDish } = useDishes();
+
     const handleFormSubmit = async (data: Dishe) => {
-        let imageBase64 = data.img || ''
+        let imageBase64 = data.image || '';
 
         if (data.imgFile instanceof FileList && data.imgFile.length > 0) {
             const file = data.imgFile[0];
-            imageBase64 = await convertToBase64(file)
+            imageBase64 = await convertToBase64(file);
         }
 
-        const dishData = { ...data, img: imageBase64 }
+        const dishData = {
+            ...data,
+            image: imageBase64,
+            id: dish?.id || uuidv4(),
+        };
 
-        if (dish?.id) updateDish(dishData)
-        else addDish(dishData)
-        reset(DEFAULT_DISHE)
-        onClose()
-    }
+        if (dish?.id) {
+            updateDish(dishData);
+        } else {
+            addDish(dishData);
+        }
+
+        reset(DEFAULT_DISHE);
+        onClose();
+    };
 
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -42,7 +53,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     type="text"
                     fullWidth
                     variant="filled"
-                    {...register('nome', { required: true })}
+                    {...register('name', { required: true })}
                 />
                 <TextField
                     margin="dense"
@@ -50,7 +61,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     type="text"
                     fullWidth
                     variant="filled"
-                    {...register('descricao', { required: true })}
+                    {...register('description', { required: true })}
                 />
                 <TextField
                     margin="dense"
@@ -58,7 +69,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     type="number"
                     fullWidth
                     variant="filled"
-                    {...register('valorReais', { required: true, valueAsNumber: true })}
+                    {...register('reaisPrice', { required: true, valueAsNumber: true })}
                 />
                 <TextField
                     margin="dense"
@@ -66,15 +77,15 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     type="number"
                     fullWidth
                     variant="filled"
-                    {...register('valorPontos', { required: true, valueAsNumber: true })}
+                    {...register('pointsPrice', { required: true, valueAsNumber: true })}
                 />
                 <TextField
                     margin="dense"
-                    label="Categoria"
-                    type="text"
+                    label="Categoria ID"
+                    type="number"
                     fullWidth
                     variant="filled"
-                    {...register('categoria', { required: true })}
+                    {...register('categoryId', { required: true, valueAsNumber: true })}
                 />
                 <TextField
                     margin="dense"
@@ -99,4 +110,4 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
     );
 };
 
-export default DishForm;
+export default DishForm

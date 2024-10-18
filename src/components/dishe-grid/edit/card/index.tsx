@@ -16,21 +16,21 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
 				sx={{ height: 140 }}
-				image={dishe.img || '/images/logo-restaurante-clara.png'}
-				title={dishe.nome}
+				image={dishe.image || '/images/logo-restaurante-clara.png'}
+				title={dishe.name}
 			/>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
-					{dishe.nome}
+					{dishe.name}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
-					{dishe.descricao}
+					{dishe.description}
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
-				<TitleCard>R$ {dishe.valorReais}</TitleCard>
-				<TitleCard>{dishe.valorPontos} pontos</TitleCard>
-				<Chip label={dishe.categoria} />
+				<TitleCard>R$ {dishe.reaisPrice}</TitleCard>
+				<TitleCard>{dishe.pointsPrice} pontos</TitleCard>
+				<Chip label={dishe.categoryId} /> {/*COLOCAR O NOME DA CATEGORIA */}
 				<IconButton color="secondary" aria-label="edit" onClick={() => onEdit(dishe)}>
 					<EditIcon />
 				</IconButton>

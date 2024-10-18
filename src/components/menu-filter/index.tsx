@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Stack, MenuItem, InputAdornment } from '@mui/material';
+import { Stack, MenuItem, InputAdornment, CircularProgress } from '@mui/material';
 import { IconSearch, Select, TextField, FormControl, InputLabel } from './styles';
+import { useCategories } from '../../hooks/category/use-categorys';
 
 interface CardapioFilterProps {
 	searchTerm: string;
@@ -12,6 +13,19 @@ interface CardapioFilterProps {
 }
 
 const MenuFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, sortOrder, setSortOrder }) => {
+	const { categories, isLoading, error } = useCategories();
+
+	const categoryItems: JSX.Element[] = [];
+	if (!isLoading && !error) {
+		categories.forEach((category) => {
+			categoryItems.push(
+				<MenuItem key={category.id} value={category.id}>
+					{category.name}
+				</MenuItem>
+			);
+		});
+	}
+
 	return (
 		<Stack direction="row" spacing={2} style={{ marginBottom: '20px' }}>
 			<TextField
@@ -39,10 +53,17 @@ const MenuFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, select
 					<MenuItem value="">
 						<em>Todos</em>
 					</MenuItem>
-					<MenuItem value="Carnes">Carnes</MenuItem>
-					<MenuItem value="Massas">Massas</MenuItem>
-					<MenuItem value="Vegano">Vegano</MenuItem>
-					<MenuItem value="Sobremesas">Sobremesas</MenuItem>
+					{isLoading ? (
+						<MenuItem value="" disabled>
+							<CircularProgress size={24} />
+						</MenuItem>
+					) : error ? (
+						<MenuItem value="" disabled>
+							Erro ao carregar categorias
+						</MenuItem>
+					) : (
+						categoryItems
+					)}
 				</Select>
 			</FormControl>
 
@@ -61,4 +82,4 @@ const MenuFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, select
 	);
 };
 
-export default MenuFilter;
+export default MenuFilter

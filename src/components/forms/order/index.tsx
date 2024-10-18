@@ -4,7 +4,8 @@ import { Box, Button, MenuItem, Select, Typography, SelectChangeEvent, IconButto
 import { Pedido } from '../../../types/order';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
 import { TextField } from '../login/styles';
-import DeleteIcon from '@mui/icons-material/Delete'
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Dishe } from '../../../types/dishes';
 
 interface OrderFormProps {
     onSubmit: (data: Partial<Pedido>) => void;
@@ -27,16 +28,8 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
         const dishId = event.target.value as string;
         const selectedDish = dishes.find(dish => dish.id === dishId);
         if (selectedDish) {
-            setValue(`pratos.${index}.id`, selectedDish.id);
-            setValue(`pratos.${index}.nome`, selectedDish.nome);
-            setValue(`pratos.${index}.descricao`, selectedDish.descricao);
-            setValue(`pratos.${index}.valorReais`, selectedDish.valorReais);
-            setValue(`pratos.${index}.valorPontos`, selectedDish.valorPontos);
-            setValue(`pratos.${index}.categoria`, selectedDish.categoria);
-            setValue(`pratos.${index}.img`, selectedDish.img);
-            setValue(`pratos.${index}.imgFile`, selectedDish.imgFile);
+            setValue(`pratos.${index}.prato`, selectedDish); 
             setValue(`pratos.${index}.quantidade`, 1);
-            setValue(`pratos.${index}.valor`, selectedDish.valorReais);
         }
     };
 
@@ -112,13 +105,13 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
                     <Select
                         fullWidth
                         variant="filled"
-                        value={watch(`pratos.${index}.id`) || ''}
+                        value={watch(`pratos.${index}.prato.id`) || ''}
                         onChange={(e) => handleDishChange(index, e)}
                     >
                         <MenuItem value="" disabled>Selecione um prato</MenuItem>
                         {dishes.map((dish) => (
                             <MenuItem key={dish.id} value={dish.id}>
-                                {dish.nome} - R$ {(dish.valorReais ?? 0).toFixed(2)}
+                                {dish.name} - R$ {(dish.reaisPrice ?? 0).toFixed(2)}
                             </MenuItem>
                         ))}
                     </Select>
@@ -142,16 +135,8 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
                 variant="contained"
                 sx={{ width: '100%', marginBottom: 2 }}
                 onClick={() => append({
-                    id: '',
-                    nome: '',
-                    descricao: '',
-                    valorReais: 0,
-                    valorPontos: 0,
-                    categoria: '',
-                    img: '',
-                    imgFile: null,
+                    prato: {} as Dishe,
                     quantidade: 1,
-                    valor: 0,
                 })}
             >
                 Adicionar Prato
@@ -168,4 +153,4 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
     );
 };
 
-export default OrderForm;
+export default OrderForm

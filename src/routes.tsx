@@ -8,6 +8,8 @@ import Statistics from './pages/statistics'
 import Stock from './pages/stock'
 import AdminOrders from './pages/orders/admin'
 import ClientOrders from './pages/orders/client'
+import CategoriesPage from './pages/categorys'
+import Settings from './pages/settings'
 
 export const router = createBrowserRouter([
 	{
@@ -36,6 +38,14 @@ export const router = createBrowserRouter([
 			{
 				path: 'statistics',
 				element: <Statistics />,
+			},
+			{
+				path: 'settings',
+				element: <Settings />,
+			},
+			{
+				path: 'categorys',
+				element: <CategoriesPage />,
 			},
 			{
 				path: 'stock',

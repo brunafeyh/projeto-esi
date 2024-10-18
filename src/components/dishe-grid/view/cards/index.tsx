@@ -21,24 +21,24 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
 				sx={{ height: 140 }}
-				image={dishe.img || '/images/logo-restaurante-clara.png'}
-				title={dishe.nome}
+				image={dishe.image || '/images/logo-restaurante-clara.png'}
+				title={dishe.name}
 			/>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
-					{dishe.nome}
+					{dishe.name}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
-					{dishe.descricao}
+					{dishe.description}
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ justifyContent: 'space-between' }}>
 				<IconButton color="primary" aria-label="add to shopping cart" onClick={handleAddtoCard}>
 					<ShoppingCartIcon />
 				</IconButton>
-				<TitleCard>R$ {dishe.valorReais}</TitleCard>
-				<TitleCard>{dishe.valorPontos} pontos</TitleCard>
-				<Chip label={dishe.categoria} />
+				<TitleCard>R$ {dishe.reaisPrice}</TitleCard>
+				<TitleCard>{dishe.pointsPrice} pontos</TitleCard>
+				<Chip label={dishe.categoryId} /> {/* dar um jeito de colocar o nome da categoria mesmo*/}
 			</CardActions>
 		</Card>
 	);

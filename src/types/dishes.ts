@@ -2,15 +2,19 @@ import { z } from 'zod';
 
 export interface Dishe {
 	id: string;
-	nome: string;
-	descricao: string;
-	valorReais: number;
-	valorPontos: number;
-	categoria: string;
-	img: string;
+	name: string;
+	description: string;
+	reaisPrice: number;
+	pointsPrice: number;
+	reaisCostValue: number;
+	image: string;
+	isAvailable: boolean
+	categoryId: number
+	dishIngredientFormDTOList: Array<{
+		ingredientId: number
+		quantity: number
+	}>;
 	imgFile: FileList | null
-	quantidade: number
-	valor: number
 }
 
 export interface CartItem extends Dishe {

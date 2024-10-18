@@ -28,21 +28,21 @@ const CustomerOrder: FC = () => {
         filterEndDate,
         setFilterStartDate,
         setFilterEndDate,
-    } = useOrderFilter(customerOrders);
+    } = useOrderFilter(customerOrders)
 
     const handleRowClick = async (id: string) => {
         try {
             const response = await service.getOrderById(id)
-            setSelectedOrder(response)
-            openModal(modalRef)
+            setSelectedOrder(response);
+            openModal(modalRef)();
         } catch (error) {
-            console.error('Erro ao buscar detalhes do pedido:', error)
+            console.error('Erro ao buscar detalhes do pedido:', error);
         }
     }
 
     const handleCloseModal = () => {
         setSelectedOrder(null)
-        closeModal(modalRef)
+        closeModal(modalRef)()
     }
 
     return (
@@ -71,6 +71,7 @@ const CustomerOrder: FC = () => {
                     />
                 </Box>
             </Box>
+
             <Table
                 columns={CLIENT_ORDER_COLUMNS}
                 data={filteredPedidos}
@@ -92,6 +93,7 @@ const CustomerOrder: FC = () => {
                     </TableRowBody>
                 )}
             />
+
             <Modal ref={modalRef} title="Detalhes do Pedido">
                 <ModalContainer>
                     {selectedOrder ? (
@@ -99,14 +101,14 @@ const CustomerOrder: FC = () => {
                             <ModalTitle variant="h6">{selectedOrder.numeroPedido}</ModalTitle>
                             <ModalText>Data: {formatDateToDDMMYYYY(selectedOrder.data)}</ModalText>
                             <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
-                            <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
+                            <ModalText>Valor (R$): {selectedOrder.valorTotal.toFixed(2)}</ModalText>
                             <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
                             <ModalText>Pratos: </ModalText>
                             <Box>
                                 {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
                                     selectedOrder.pratos.map((prato, index) => (
                                         <ModalText key={index}>
-                                            {prato.quantidade}x {prato.nome} - R$ {prato.valorReais ? prato.valorReais.toFixed(2) : '0.00'}
+                                            {prato.quantidade}x {prato.prato.name} - R$ {parseFloat(prato.prato.reaisPrice?.toString() || '0').toFixed(2)}
                                         </ModalText>
                                     ))
                                 ) : (
@@ -125,7 +127,7 @@ const CustomerOrder: FC = () => {
                 </ModalContainer>
             </Modal>
         </Box>
-    )
-}
+    );
+};
 
 export default CustomerOrder
