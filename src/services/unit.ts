@@ -7,6 +7,14 @@ export interface Unit {
     acronym: string;
 }
 
+export interface PaginatedResponse<T> {
+    content: T[];
+    totalElements: number;
+    totalPages: number;
+    number: number;  
+    size: number;   
+}
+
 class UnitService {
     private apiUrl: string
 
@@ -16,6 +24,17 @@ class UnitService {
 
     async fetchUnits(): Promise<Unit[]> {
         const response = await apiInstance.get(`${this.apiUrl}/list`);
+        return response.data;
+    }
+    
+    async fetchPaginatedUnits(page: number, size: number, sort: string[] = ['name']): Promise<PaginatedResponse<Unit>> {
+        const response = await apiInstance.get(`${this.apiUrl}/page`, {
+            params: {
+                page,
+                size,
+                sort,
+            }
+        });
         return response.data;
     }
 

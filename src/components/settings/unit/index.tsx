@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button, IconButton, TablePagination } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useUnits } from '../../../hooks/unit/use-units';
+import { usePaginatedUnits } from '../../../hooks/unit/use-paginated-units';
 import Table from '../../tables/table';
 import { TableRowBody } from '../../tables/table/styles';
 import { TableCell } from '../../tables/table-cell';
@@ -13,15 +13,17 @@ import { useUnitMutations } from '../../../hooks/unit/use-units-mutations';
 import { TitlePage } from '../../../pages/home/styles';
 import Loading from '../../loading';
 import UnitForm from '../../forms/unit';
+import { usePaginationParams } from '../../../hooks/params/pagination';
 
 interface UnitFormData {
-    id?: number;
-    name: string;
-    acronym: string;
+    id?: number
+    name: string
+    acronym: string
 }
 
 export const UnitsSection: FC = () => {
-    const { units, error, isLoading } = useUnits();
+    const { page, pageSize, changePage, changePageSize } = usePaginationParams(); 
+    const { data, error, isLoading } = usePaginatedUnits(page, pageSize);
     const { addUnit, updateUnit, deleteUnit } = useUnitMutations();
 
     const modalRef = useModal();
@@ -41,25 +43,33 @@ export const UnitsSection: FC = () => {
     };
 
     const onSubmit = (data: UnitFormData) => {
-        const { id, name, acronym } = data
-        if (id) updateUnit({ id, name, acronym })
-        else addUnit({ name, acronym })
-        handleCloseDialog()
-    }
+        const { id, name, acronym } = data;
+        if (id) updateUnit({ id, name, acronym });
+        else addUnit({ name, acronym });
+        handleCloseDialog();
+    };
 
     const handleOpenDeleteModal = (id: number) => {
-        setUnitToDelete(id)
+        setUnitToDelete(id);
         deleteModalRef.current?.openModal();
-    }
+    };
 
     const handleConfirmDelete = () => {
         if (unitToDelete) {
             deleteUnit(unitToDelete);
             deleteModalRef.current?.closeModal();
         }
-    }
+    };
 
-    if (isLoading) return <Loading />;
+    const handleChangePage = (_: unknown, newPage: number) => {
+        changePage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        changePageSize(parseInt(event.target.value, 10));
+    };
+
+    if (isLoading) return <Loading />
 
     return (
         <Box>
@@ -70,30 +80,42 @@ export const UnitsSection: FC = () => {
             {error ? (
                 <p>Erro ao carregar unidades</p>
             ) : (
-                <Table
-                    columns={[
-                        { field: 'id', headerName: 'ID' },
-                        { field: 'name', headerName: 'Nome' },
-                        { field: 'acronym', headerName: 'Sigla' },
-                        { field: 'actions', headerName: '' }
-                    ]}
-                    data={units}
-                    renderData={(row: any) => (
-                        <TableRowBody key={row.id}>
-                            <TableCell>{row.id}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.acronym}</TableCell>
-                            <TableCell>
-                                <IconButton onClick={() => handleOpenDialog(row)}>
-                                    <EditIcon sx={{ width: 16, height: 16 }} />
-                                </IconButton>
-                                <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
-                                    <DeleteIcon sx={{ width: 16, height: 16 }} />
-                                </IconButton>
-                            </TableCell>
-                        </TableRowBody>
-                    )}
-                />
+                <>
+                    <Table
+                        columns={[
+                            { field: 'id', headerName: 'ID' },
+                            { field: 'name', headerName: 'Nome' },
+                            { field: 'acronym', headerName: 'Sigla' },
+                            { field: 'actions', headerName: '' }
+                        ]}
+                        data={data?.content || []}
+                        renderData={(row: any) => (
+                            <TableRowBody key={row.id}>
+                                <TableCell>{row.id}</TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.acronym}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => handleOpenDialog(row)}>
+                                        <EditIcon sx={{ width: 16, height: 16 }} />
+                                    </IconButton>
+                                    <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
+                                        <DeleteIcon sx={{ width: 16, height: 16 }} />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRowBody>
+                        )}
+                    />
+                    <TablePagination
+                        component="div"
+                        count={data?.totalElements || 0}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        rowsPerPage={pageSize}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        labelRowsPerPage="Linhas por página"
+                        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count !== -1 ? count : `mais de ${to}`}`}
+                    />
+                </>
             )}
 
             <Modal ref={modalRef}>
@@ -121,5 +143,5 @@ export const UnitsSection: FC = () => {
                 </ModalContainer>
             </Modal>
         </Box>
-    );
-};
+    )
+}
