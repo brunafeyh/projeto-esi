@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Stack } from '@mui/material';
-import CategoriesPage from '../../../pages/categorys';
 import SectionTabs from '../tab';
-import SectionWrapper from '../../sections/wrapper';
-import { UnitsSection } from '../../unit';
-import { getCurrentPage } from '../../../utils/page';
+import { getCurrentPage } from '../../../../utils/page';
+import SectionWrapper from '../../home/wrapper';
+import CategoriesPage from '../../../settings/categorys';
+import { UnitsSection } from '../../../settings/unit';
 
 export const SettingsSections: FC = () => {
     getCurrentPage()

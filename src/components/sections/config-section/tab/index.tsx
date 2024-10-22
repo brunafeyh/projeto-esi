@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent } from 'react'
-import { useSectionNavegation } from '../../../hooks/use-section'
-import { Tabs } from '../../../pages/home/styles'
 import { Tab } from '@mui/material'
+import { Tabs } from '../../../../pages/home/styles'
+import { useSectionNavegation } from '../../../../hooks/use-section'
 
 const SectionTabs: FC = () => {
   const { updateSection, currentSection } = useSectionNavegation()

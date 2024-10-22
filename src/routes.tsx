@@ -8,7 +8,7 @@ import Statistics from './pages/statistics'
 import Stock from './pages/stock'
 import AdminOrders from './pages/orders/admin'
 import ClientOrders from './pages/orders/client'
-import CategoriesPage from './pages/categorys'
+import CategoriesPage from './components/settings/categorys'
 import Settings from './pages/settings'
 
 export const router = createBrowserRouter([

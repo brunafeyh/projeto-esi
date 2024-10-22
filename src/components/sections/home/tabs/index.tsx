@@ -1,14 +1,12 @@
 import { FC, SyntheticEvent } from 'react'
-import { Tabs } from '../../../pages/home/styles'
 import { Tab } from '@mui/material'
-import { useSectionNavegation } from '../../../hooks/use-section'
+import { useSectionNavegation } from '../../../../hooks/use-section'
+import { Tabs } from '../../../../pages/home/styles'
 
 const SectionTabs: FC = () => {
   const { updateSection, currentSection} = useSectionNavegation()
 
-  const handleChange = (_: SyntheticEvent, newValue: string) => {
-    updateSection(newValue)
-  }
+  const handleChange = (_: SyntheticEvent, newValue: string) => updateSection(newValue)
 
   return (
     <Tabs value={currentSection} onChange={handleChange}>

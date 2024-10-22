@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { PageLayout } from '../../layouts/page-layout'
-import { SettingsSections } from '../../components/config-section/content'
+import { SettingsSections } from '../../components/sections/config-section/content'
 
 const Settings: FC = () => {
   return (

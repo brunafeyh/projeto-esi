@@ -19,7 +19,7 @@ class CategoryService {
     }
 
     async addCategory(newCategory: string): Promise<Category> {
-        const response = await axios.post(this.apiUrl, newCategory);
+        const response = await axios.post(this.apiUrl, { name: newCategory }); 
         return response.data;
     }
 
@@ -27,10 +27,12 @@ class CategoryService {
         const response = await axios.put(`${this.apiUrl}/${updatedCategory.id}`, updatedCategory);
         return response.data;
     }
+
     async getCategoryById(id: number): Promise<Category> {
         const response = await axios.get(`${this.apiUrl}/${id}`);
         return response.data;
     }
+
     async deleteCategory(id: number): Promise<void> {
         await axios.delete(`${this.apiUrl}/${id}`);
     }

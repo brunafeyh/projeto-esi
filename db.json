@@ -99,6 +99,14 @@
     {
       "id": "5",
       "name": "Bebidas"
+    },
+    {
+      "id": "6544",
+      "name": "bolinho"
+    },
+    {
+      "id": "9184",
+      "name": "yujuruj"
     }
   ],
   "pratos": [
@@ -485,6 +493,58 @@
     {
       "id": "5",
       "nome": "Sobremesas"
+    }
+  ],
+  "units": [
+    {
+      "id": "1",
+      "name": "Metro",
+      "acronym": "m"
+    },
+    {
+      "id": "2",
+      "name": "Quilograma",
+      "acronym": "kg"
+    },
+    {
+      "id": "3",
+      "name": "Litro",
+      "acronym": "L"
+    },
+    {
+      "id": "4",
+      "name": "Centímetro",
+      "acronym": "cm"
+    },
+    {
+      "id": "5",
+      "name": "Milímetro",
+      "acronym": "mm"
+    },
+    {
+      "id": "6",
+      "name": "Grama",
+      "acronym": "g"
+    },
+    {
+      "id": "7",
+      "name": "Mililitro",
+      "acronym": "mL"
+    },
+    {
+      "id": "8",
+      "name": "Polegada",
+      "acronym": "in"
+    },
+    {
+      "id": "9",
+      "name": "Peça",
+      "acronym": "pc"
+    },
+    {
+      "id": "10",
+      "name": "Unidade",
+      "acronym": "un"
     }
   ],
   "historicoPedidos": [

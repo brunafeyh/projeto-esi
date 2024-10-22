@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { PageLayout } from '../../layouts/page-layout'
-import { HomeSections } from '../../components/sections'
+import { HomeSections } from '../../components/sections/home'
 
 const HomePage: FC = () => {
   return (

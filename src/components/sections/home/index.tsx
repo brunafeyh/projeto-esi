@@ -1,12 +1,12 @@
 import { FC } from "react";
 import SectionWrapper from "./wrapper"
-import AboutUs from "../about-us"
-import { useDishes } from "../../hooks/dishes/use-dishes"
 import SectionTabs from "./tabs"
 import { Stack } from "@mui/material"
-import { useCart } from "../../hooks/cart/use-cart";
-import SectionDishes from "../section-dishes";
-import { getMoreSelled } from "../../utils/graph";
+import { useDishes } from "../../../hooks/dishes/use-dishes";
+import { useCart } from "../../../hooks/cart/use-cart";
+import { getMoreSelled } from "../../../utils/graph";
+import SectionDishes from "../../section-dishes";
+import AboutUs from "../../about-us";
 
 export const HomeSections: FC = () => {
     const { dishes } = useDishes()
