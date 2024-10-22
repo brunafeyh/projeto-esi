@@ -1,10 +1,11 @@
 import { useCallback } from 'react'
 import { useQueryParams } from './params/query-params'
-import { INICIAL_SECTION, SECTION_KEY } from '../utils/constants/values'
+import { SECTION_KEY } from '../utils/constants/values'
+import { getInitialSection } from '../utils/initial-value'
 
 export const useSectionNavegation = () => {
     const { getQueryParam, setQueryParam, removeParams } = useQueryParams()
-    const currentSection = getQueryParam(SECTION_KEY, INICIAL_SECTION)
+    const currentSection = getQueryParam(SECTION_KEY, getInitialSection())
 
     const updateSection = useCallback((section: string) => {
         removeParams()

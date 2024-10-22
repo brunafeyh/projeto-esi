@@ -4,8 +4,10 @@ import CategoriesPage from '../../../pages/categorys';
 import SectionTabs from '../tab';
 import SectionWrapper from '../../sections/wrapper';
 import { UnitsSection } from '../../unit';
+import { getCurrentPage } from '../../../utils/page';
 
 export const SettingsSections: FC = () => {
+    getCurrentPage()
     return (
         <Stack>
             <SectionTabs />
@@ -16,5 +18,5 @@ export const SettingsSections: FC = () => {
                 <UnitsSection />
             </SectionWrapper>
         </Stack>
-    );
-};
+    )
+}

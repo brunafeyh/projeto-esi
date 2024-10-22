@@ -28,7 +28,7 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
         const dishId = event.target.value as string;
         const selectedDish = dishes.find(dish => dish.id === dishId);
         if (selectedDish) {
-            setValue(`pratos.${index}.prato`, selectedDish); 
+            setValue(`pratos.${index}.prato`, selectedDish);
             setValue(`pratos.${index}.quantidade`, 1);
         }
     };
@@ -106,12 +106,15 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
                         fullWidth
                         variant="filled"
                         value={watch(`pratos.${index}.prato.id`) || ''}
-                        onChange={(e) => handleDishChange(index, e)}
+                        onChange={(e) => {
+                            handleDishChange(index, e);
+                            setValue(`pratos.${index}.prato.id`, e.target.value);
+                        }}
                     >
                         <MenuItem value="" disabled>Selecione um prato</MenuItem>
                         {dishes.map((dish) => (
                             <MenuItem key={dish.id} value={dish.id}>
-                                {dish.name} - R$ {(dish.reaisPrice ?? 0).toFixed(2)}
+                                {dish.name} - R$ {(parseFloat(dish.reaisPrice?.toString() || '0') || 0).toFixed(2)}
                             </MenuItem>
                         ))}
                     </Select>
@@ -131,6 +134,7 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
                     </IconButton>
                 </Box>
             ))}
+
             <Button
                 variant="contained"
                 sx={{ width: '100%', marginBottom: 2 }}

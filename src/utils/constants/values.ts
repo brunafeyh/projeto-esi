@@ -7,6 +7,7 @@ export const REFRESH_TOKEN_KEY = 'refresh_token'
 
 export const SECTION_KEY = 'section'
 export const INICIAL_SECTION = 'recommendations'
+export const INICIAL_SECTION_SETTINGS = 'categories'
 
 export const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 

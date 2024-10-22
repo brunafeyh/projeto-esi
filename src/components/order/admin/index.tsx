@@ -184,7 +184,7 @@ const AdminOrder: FC = () => {
                                 {orderDetails.pratos && orderDetails.pratos.length > 0 ? (
                                     orderDetails.pratos.map((prato) => (
                                         <Typography key={uuidv4()} variant="body2">
-                                            {prato.quantidade} x {prato.prato.name} - R$ {parseFloat(prato.prato.reaisPrice?.toString() || '0').toFixed(2)}
+                                            {prato.quantidade} x {prato.prato.name} - R$ {(parseFloat(prato.prato.reaisPrice?.toString() || '0') || 0).toFixed(2)}
                                         </Typography>
                                     ))
                                 ) : (
