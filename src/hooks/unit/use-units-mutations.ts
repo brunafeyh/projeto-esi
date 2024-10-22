@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import UnitService, { Unit } from '../../services/unit'
-import { toast } from 'react-toastify'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import UnitService, { Unit } from '../../services/unit';
+import { toast } from 'react-toastify';
 
-const unitService = new UnitService()
+const unitService = new UnitService();
 
 export const useUnitMutations = () => {
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
     const addUnitMutation = useMutation({
         mutationFn: async (newUnit: Omit<Unit, 'id'>) => {

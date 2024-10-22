@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { apiBaseUrl } from '../shared/api';
+import apiInstance from "../shared/api";
+
 
 export interface Unit {
     id: number;
@@ -8,35 +8,30 @@ export interface Unit {
 }
 
 class UnitService {
-    private apiUrl: string;
+    private apiUrl: string
 
-    constructor(apiUrl: string = `${apiBaseUrl}/units`) {
-        this.apiUrl = apiUrl;
+    constructor() {
+        this.apiUrl = '/measurement-unit' 
     }
 
     async fetchUnits(): Promise<Unit[]> {
-        const response = await axios.get(this.apiUrl);
+        const response = await apiInstance.get(`${this.apiUrl}/list`);
         return response.data;
     }
 
     async addUnit(newUnit: Omit<Unit, 'id'>): Promise<Unit> {
-        const response = await axios.post(this.apiUrl, newUnit);
+        const response = await apiInstance.post(`${this.apiUrl}/create`, newUnit);
         return response.data;
     }
 
     async updateUnit(updatedUnit: Unit): Promise<Unit> {
-        const response = await axios.put(`${this.apiUrl}/${updatedUnit.id}`, updatedUnit);
-        return response.data;
-    }
-
-    async getUnitById(id: number): Promise<Unit> {
-        const response = await axios.get(`${this.apiUrl}/${id}`);
+        const response = await apiInstance.put(`${this.apiUrl}/update/${updatedUnit.id}`, updatedUnit);
         return response.data;
     }
 
     async deleteUnit(id: number): Promise<void> {
-        await axios.delete(`${this.apiUrl}/${id}`);
+        await apiInstance.delete(`${this.apiUrl}/delete/${id}`);
     }
 }
 
-export default UnitService
+export default UnitService;

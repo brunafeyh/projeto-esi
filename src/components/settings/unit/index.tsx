@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { Box, Button, IconButton } from '@mui/material';
-import { useForm } from 'react-hook-form';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUnits } from '../../../hooks/unit/use-units';
@@ -10,9 +9,10 @@ import { TableCell } from '../../tables/table-cell';
 import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles';
 import { Modal } from '../../modal';
 import useModal from '../../../hooks/use-modal';
-import { TextField } from '../../forms/login/styles';
 import { useUnitMutations } from '../../../hooks/unit/use-units-mutations';
 import { TitlePage } from '../../../pages/home/styles';
+import Loading from '../../loading';
+import UnitForm from '../../forms/unit';
 
 interface UnitFormData {
     id?: number;
@@ -21,60 +21,45 @@ interface UnitFormData {
 }
 
 export const UnitsSection: FC = () => {
-    const { units, error } = useUnits();
+    const { units, error, isLoading } = useUnits();
     const { addUnit, updateUnit, deleteUnit } = useUnitMutations();
-    const modalRef = useModal();
-    const deleteModalRef = useModal(); 
 
-    const { register, handleSubmit, reset } = useForm<UnitFormData>();
+    const modalRef = useModal();
+    const deleteModalRef = useModal();
 
     const [selectedUnit, setSelectedUnit] = useState<UnitFormData | null>(null);
     const [unitToDelete, setUnitToDelete] = useState<number | null>(null);
 
     const handleOpenDialog = (unit: UnitFormData | null = null) => {
         setSelectedUnit(unit);
-        reset(unit ? { id: unit.id, name: unit.name, acronym: unit.acronym } : { name: '', acronym: '' });
         modalRef.current?.openModal();
     };
 
     const handleCloseDialog = () => {
         modalRef.current?.closeModal();
         setSelectedUnit(null);
-        reset();
     };
 
     const onSubmit = (data: UnitFormData) => {
-        const { id, name, acronym } = data;
-        if (id !== undefined) {
-            updateUnit({ id, name, acronym });
-        } else {
-            addUnit({ name, acronym });
-        }
-        handleCloseDialog();
-    };
+        const { id, name, acronym } = data
+        if (id) updateUnit({ id, name, acronym })
+        else addUnit({ name, acronym })
+        handleCloseDialog()
+    }
 
     const handleOpenDeleteModal = (id: number) => {
-        setUnitToDelete(id);
+        setUnitToDelete(id)
         deleteModalRef.current?.openModal();
-    };
+    }
 
     const handleConfirmDelete = () => {
-        if (unitToDelete !== null) {
+        if (unitToDelete) {
             deleteUnit(unitToDelete);
             deleteModalRef.current?.closeModal();
         }
-    };
+    }
 
-    const handleDelete = (id: number) => {
-        handleOpenDeleteModal(id);
-    };
-
-    const columns = [
-        { field: 'id', headerName: 'ID' },
-        { field: 'name', headerName: 'Nome' },
-        { field: 'acronym', headerName: 'Sigla' },
-        { field: 'actions', headerName: '' }
-    ];
+    if (isLoading) return <Loading />;
 
     return (
         <Box>
@@ -86,7 +71,12 @@ export const UnitsSection: FC = () => {
                 <p>Erro ao carregar unidades</p>
             ) : (
                 <Table
-                    columns={columns}
+                    columns={[
+                        { field: 'id', headerName: 'ID' },
+                        { field: 'name', headerName: 'Nome' },
+                        { field: 'acronym', headerName: 'Sigla' },
+                        { field: 'actions', headerName: '' }
+                    ]}
                     data={units}
                     renderData={(row: any) => (
                         <TableRowBody key={row.id}>
@@ -97,7 +87,7 @@ export const UnitsSection: FC = () => {
                                 <IconButton onClick={() => handleOpenDialog(row)}>
                                     <EditIcon sx={{ width: 16, height: 16 }} />
                                 </IconButton>
-                                <IconButton onClick={() => handleDelete(row.id)}>
+                                <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
                                     <DeleteIcon sx={{ width: 16, height: 16 }} />
                                 </IconButton>
                             </TableCell>
@@ -109,30 +99,15 @@ export const UnitsSection: FC = () => {
             <Modal ref={modalRef}>
                 <ModalContainer>
                     <ModalTitle>{selectedUnit ? 'Editar Unidade de Medida' : 'Adicionar Unidade de Medida'}</ModalTitle>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <TextField
-                            margin="dense"
-                            label="Nome"
-                            fullWidth
-                            {...register('name', { required: true })}
-                            variant="filled"
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Sigla"
-                            fullWidth
-                            {...register('acronym', { required: true })}
-                            variant="filled"
-                        />
-                        <Box mt={2} display="flex" justifyContent="flex-end" gap={2}>
-                            <Button onClick={handleCloseDialog} variant="outlined">Cancelar</Button>
-                            <Button type="submit" variant="contained">
-                                {selectedUnit ? 'Salvar Alterações' : 'Adicionar'}
-                            </Button>
-                        </Box>
-                    </form>
+                    <UnitForm
+                        defaultValues={selectedUnit}
+                        onSubmit={onSubmit}
+                        onClose={handleCloseDialog}
+                        isEditMode={!!selectedUnit}
+                    />
                 </ModalContainer>
             </Modal>
+
             <Modal ref={deleteModalRef}>
                 <ModalContainer>
                     <ModalTitle>Confirmar Exclusão</ModalTitle>
