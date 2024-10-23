@@ -16,7 +16,7 @@ const MenuFilter: FC<CardapioFilterProps> = ({ searchTerm, setSearchTerm, select
 	const { categories, isLoading, error } = useCategories();
 
 	const categoryItems: JSX.Element[] = [];
-	if (!isLoading && !error) {
+	if (!isLoading && !error && Array.isArray(categories)) {
 		categories.forEach((category) => {
 			categoryItems.push(
 				<MenuItem key={category.id} value={category.id}>

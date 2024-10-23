@@ -5,6 +5,8 @@ import { TitleCard } from '../../../../pages/home/styles';
 import { Dishe } from '../../../../types/dishes';
 import { useAuth } from '../../../../hooks/use-auth';
 import { toast } from 'react-toastify';
+import { useCategoryByIdFromList } from '../../../../hooks/category/use-category-by-id';
+import Loading from '../../../loading';
 
 interface DisheCardProps {
 	dishe: Dishe;
@@ -13,10 +15,12 @@ interface DisheCardProps {
 
 const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 	const { isAuthenticated } = useAuth()
+	const { category, isLoading } = useCategoryByIdFromList(dishe.categoryId)
 	const handleAddtoCard = () => {
 		if (!isAuthenticated()) toast.error('Para adicionar um item ao carrinho você deve estar logado!')
 		else addToCart(dishe)
 	}
+	if(isLoading) return <Loading/>
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
@@ -38,7 +42,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, addToCart }) => {
 				</IconButton>
 				<TitleCard>R$ {dishe.reaisPrice}</TitleCard>
 				<TitleCard>{dishe.pointsPrice} pontos</TitleCard>
-				<Chip label={dishe.categoryId} /> {/* dar um jeito de colocar o nome da categoria mesmo*/}
+				<Chip label={category?.name} />
 			</CardActions>
 		</Card>
 	);

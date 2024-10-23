@@ -4,6 +4,8 @@ import { TitleCard } from '../../../../pages/home/styles';
 import { Dishe } from '../../../../types/dishes';
 import { DeleteIcon, EditIcon } from '../../../../pages/stock/styles';
 import { IconButton } from './styles';
+import { useCategoryByIdFromList } from '../../../../hooks/category/use-category-by-id';
+import Loading from '../../../loading';
 
 interface DisheCardProps {
 	dishe: Dishe
@@ -12,6 +14,8 @@ interface DisheCardProps {
 }
 
 const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
+	const { category, isLoading } = useCategoryByIdFromList(dishe.categoryId)
+	if(isLoading) return <Loading/>
 	return (
 		<Card sx={{ maxWidth: 345 }}>
 			<CardMedia
@@ -30,7 +34,7 @@ const DisheCard: FC<DisheCardProps> = ({ dishe, onEdit, onDelete }) => {
 			<CardActions sx={{ justifyContent: 'space-between' }}>
 				<TitleCard>R$ {dishe.reaisPrice}</TitleCard>
 				<TitleCard>{dishe.pointsPrice} pontos</TitleCard>
-				<Chip label={dishe.categoryId} /> {/*COLOCAR O NOME DA CATEGORIA */}
+				<Chip label={category?.name} /> 
 				<IconButton color="secondary" aria-label="edit" onClick={() => onEdit(dishe)}>
 					<EditIcon />
 				</IconButton>

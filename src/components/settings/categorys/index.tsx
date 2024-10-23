@@ -12,6 +12,7 @@ import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles';
 import { Modal } from '../../modal';
 import useModal from '../../../hooks/use-modal';
 import CategoryForm from '../../forms/category';
+import Loading from '../../loading';
 
 interface CategoryFormData {
     id?: number
@@ -19,7 +20,7 @@ interface CategoryFormData {
 }
 
 const CategoriesPage: FC = () => {
-    const { categories, error } = useCategories()
+    const { categories, error, isLoading } = useCategories()
     const { addCategory, updateCategory, deleteCategory } = useCategoryMutations()
     const modalRef = useModal()
     const deleteModalRef = useModal()
@@ -60,6 +61,7 @@ const CategoriesPage: FC = () => {
         { field: 'name', headerName: 'Nome' },
         { field: 'actions', headerName: '' }
     ]
+    if (isLoading) return <Loading />
 
     return (
         <Box>

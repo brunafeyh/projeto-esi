@@ -1,13 +1,14 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { DialogContent, DialogActions, Button } from '@mui/material';
+import { DialogContent, DialogActions, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { Dishe } from '../../../types/dishes';
 import { DEFAULT_DISHE } from '../../../utils/constants/values';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
 import { convertToBase64 } from '../../../utils/image';
 import { TextField } from '../login/styles';
-// Importar uuid para gerar ID
 import { v4 as uuidv4 } from 'uuid';
+import { useCategories } from '../../../hooks/category/use-categorys';
+import Loading from '../../loading';
 
 interface DishFormProps {
     dish?: Dishe;
@@ -15,10 +16,17 @@ interface DishFormProps {
 }
 
 const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
-    const { register, handleSubmit, reset } = useForm<Dishe>({
+    const { register, handleSubmit, reset, setValue } = useForm<Dishe>({
         defaultValues: dish ? dish : DEFAULT_DISHE,
     });
     const { addDish, updateDish } = useDishes();
+    const { categories, isLoading } = useCategories();
+
+    useEffect(() => {
+        if (dish) {
+            setValue('categoryId', dish.categoryId);
+        }
+    }, [dish, setValue]);
 
     const handleFormSubmit = async (data: Dishe) => {
         let imageBase64 = data.image || '';
@@ -43,6 +51,8 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         reset(DEFAULT_DISHE);
         onClose();
     };
+
+    if(isLoading) return <Loading/>
 
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -79,14 +89,27 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     variant="filled"
                     {...register('pointsPrice', { required: true, valueAsNumber: true })}
                 />
-                <TextField
-                    margin="dense"
-                    label="Categoria ID"
-                    type="number"
-                    fullWidth
-                    variant="filled"
-                    {...register('categoryId', { required: true, valueAsNumber: true })}
-                />
+
+                {/* Category Select */}
+                <FormControl variant="filled" fullWidth margin="dense">
+                    <InputLabel id="category-label">Categoria</InputLabel>
+                    <Select
+                        labelId="category-label"
+                        defaultValue={dish?.categoryId || ''}
+                        {...register('categoryId', { required: true })}
+                    >
+                        {isLoading ? (
+                            <MenuItem disabled>Carregando categorias...</MenuItem>
+                        ) : (
+                            categories.map((category) => (
+                                <MenuItem key={category.id} value={category.id}>
+                                    {category.name}
+                                </MenuItem>
+                            ))
+                        )}
+                    </Select>
+                </FormControl>
+
                 <TextField
                     margin="dense"
                     label="Imagem"
@@ -110,4 +133,4 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
     );
 };
 
-export default DishForm
+export default DishForm;
