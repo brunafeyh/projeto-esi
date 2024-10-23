@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Ingredient } from '../../types/dishes';
-import { useFilterQueryParams } from '../params/use-filter';
-import { filterIngredientsBySearchTerm } from '../../utils/ingredients';
+import { useState, useMemo } from 'react';
+import { Ingredient } from '../../services/ingredients';
 
 const useFilteredIngredients = (ingredients: Ingredient[]) => {
-  const { searchTerm, setSearchTerm } = useFilterQueryParams();
-  const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>(ingredients);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
-  useEffect(() => {
-    const filtered = filterIngredientsBySearchTerm(ingredients, searchTerm);
-    setFilteredIngredients(filtered);
-  }, [ingredients, searchTerm]);
+    const filteredIngredients = useMemo(() => {
+        return ingredients.filter((ingredient) =>
+            ingredient.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [ingredients, searchTerm]);
 
-  return { filteredIngredients, searchTerm, setSearchTerm };
+    return {
+        filteredIngredients,
+        searchTerm,
+        setSearchTerm,
+    };
 };
 
 export default useFilteredIngredients;

@@ -29,11 +29,13 @@ export interface Ingredient {
 }
 
 export const ingredientSchema = z.object({
-	nome: z.string().min(1, 'Nome é obrigatório'),
-	quantidade: z.string().min(1, 'Quantidade é obrigatória'),
+  name: z.string().min(1, 'Nome é obrigatório'),
+  totalQuantityAvailable: z.number().min(1, 'Quantidade é obrigatória'),
+  measurementUnitId: z.number().min(1, 'Unidade de Medida é obrigatória'),
 });
 
 export type IngredientFormInputs = z.infer<typeof ingredientSchema>;
+
 
 export interface IngredientesPrato {
 	idPrato: string;

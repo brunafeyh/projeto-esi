@@ -1,68 +1,88 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import IngredientService from '../../services/ingredients';
-import { Ingredient } from '../../types/dishes';
+import IngredientService, { Ingredient } from '../../services/ingredients';
 
 const ingredientService = new IngredientService();
 
 const useIngredients = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient();  
 
     const { data: ingredients = [], isLoading, isError } = useQuery<Ingredient[]>({
         queryKey: ['ingredients'],
-        queryFn: () => ingredientService.fetchIngredients(),
-        staleTime: 1000 * 60 * 5,
+        queryFn: () => ingredientService.fetchIngredients(),  
     });
 
-    const filteredIngredients = ingredients.filter(ingredient =>
-        (ingredient.nome || '').toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredIngredients = ingredients.filter((ingredient) =>
+        (ingredient.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const addIngredientMutation = useMutation({
-        mutationFn: (newIngredient: Partial<Ingredient>) =>
-            ingredientService.addIngredient(newIngredient),
+        mutationFn: (newIngredient: Partial<Ingredient>) => {
+            if (!newIngredient.measurementUnitId) {
+                throw new Error('Measurement unit ID is required');
+            }
+            return ingredientService.createIngredient(
+                newIngredient.name!, 
+                newIngredient.totalQuantityAvailable!, 
+                newIngredient.measurementUnitId
+            );
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['ingredients'] });
-            toast.success('Ingrediente adicionado com sucesso!');
+            toast.success('Ingrediente adicionado com sucesso!');  
         },
-        onError: () => {
-            toast.error('Erro ao adicionar o ingrediente.');
+        onError: (error) => {
+            toast.error('Erro ao adicionar o ingrediente: ' + error.message); 
         },
     });
 
     const updateIngredientMutation = useMutation({
-        mutationFn: ({ id, updatedData }: { id: string; updatedData: Partial<Ingredient> }) =>
-            ingredientService.updateIngredient(id, updatedData),
+        mutationFn: ({ id, updatedData }: { id: number; updatedData: Partial<Ingredient> }) => {
+            if (!updatedData.measurementUnitId) {
+                throw new Error('Measurement unit ID is required');
+            }
+            return ingredientService.updateIngredient(
+                id, 
+                updatedData.name!, 
+                updatedData.totalQuantityAvailable!, 
+                updatedData.measurementUnitId 
+            );
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['ingredients'] });
-            toast.success('Ingrediente atualizado com sucesso!');
+            toast.success('Ingrediente atualizado com sucesso!'); 
         },
-        onError: () => {
-            toast.error('Erro ao atualizar o ingrediente.');
-        },
+        onError: (error) => {
+            toast.error('Erro ao atualizar o ingrediente: ' + error.message); 
+        }
     });
 
     const deleteIngredientMutation = useMutation({
-        mutationFn: (id: string) => ingredientService.deleteIngredient(id),
+        mutationFn: (id: number) => ingredientService.deleteIngredient(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['ingredients'] });
+            queryClient.invalidateQueries({ queryKey: ['ingredients'] }); 
             toast.success('Ingrediente excluído com sucesso!');
         },
-        onError: () => {
-            toast.error('Erro ao excluir o ingrediente.');
+        onError: (error) => {
+            toast.error('Erro ao excluir o ingrediente: ' + error.message); 
         },
     });
 
+    const transformedIngredients = filteredIngredients.map(ingredient => ({
+        ...ingredient,
+        measurementUnitId: ingredient.measurementUnit?.id, 
+    }));
+
     return {
-        ingredients: filteredIngredients,
+        ingredients: transformedIngredients,
         searchTerm,
-        setSearchTerm,
+        setSearchTerm, 
         addIngredient: addIngredientMutation.mutate,
         updateIngredient: updateIngredientMutation.mutate,
-        deleteIngredient: deleteIngredientMutation.mutate,
-        isLoading,
+        deleteIngredient: deleteIngredientMutation.mutate, 
+        isLoading, 
         isError,
     };
 };

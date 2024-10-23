@@ -4,6 +4,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import HomeIcon from '@mui/icons-material/Home'
 import AnalyticsIcon from '@mui/icons-material/Analytics'
 import InventoryIcon from '@mui/icons-material/Inventory'
+import SettingsIcon from '@mui/icons-material/Settings';
 import { FC } from 'react'
 
 interface CollapsedOptionsProps {
@@ -40,6 +41,11 @@ export const CollapsedOptionsAdmin: FC<CollapsedOptionsProps> = ({ onChange }) =
 				<InventoryIcon fontSize="small" />
 			</ToggleButton>
 		</Tooltip>
+		<Tooltip title="Configurações" placement="top">
+			<ToggleButton value="settings" onClick={() => onChange('settings')}>
+				<SettingsIcon fontSize="small" />
+			</ToggleButton>
+		</Tooltip>
 	</>
 )
 
@@ -64,6 +70,10 @@ export const ExpandedOptionsAdmin: FC<ExpandedOptionsProps> = ({ onChange }) => 
 		<ToggleButton value="stock" onClick={() => onChange('stock')}>
 			<InventoryIcon fontSize="small" />
 			Estoque
+		</ToggleButton>
+		<ToggleButton value="settings" onClick={() => onChange('settings')}>
+			<SettingsIcon fontSize="small" />
+			Configurações
 		</ToggleButton>
 	</>
 )

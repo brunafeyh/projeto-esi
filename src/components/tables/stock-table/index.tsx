@@ -9,67 +9,82 @@ import {
     Typography,
     Stack,
     Box,
-} from '@mui/material'
-import { IconSearch, TextField } from '../../menu-filter/styles'
-import { TableRowBody } from '../table/styles'
-import { TableCell } from '../table-cell'
-import AddIcon from '@mui/icons-material/Add'
-import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/stock/styles'
-import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients'
-import { TextField as TextFieldInput } from '../../forms/login/styles'
-import { Modal, useModal } from '../../modal'
-import { ModalContainer, ModalTitle } from '../../modal/styles'
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel,
+} from '@mui/material';
+import { IconSearch, TextField } from '../../menu-filter/styles';
+import { TableRowBody } from '../table/styles';
+import { TableCell } from '../table-cell';
+import AddIcon from '@mui/icons-material/Add';
+import { ActionBox, DeleteIcon, EditIcon } from '../../../pages/stock/styles';
+import useFilteredIngredients from '../../../hooks/ingredients/use-filtered-ingredients';
+import { TextField as TextFieldInput } from '../../forms/login/styles';
+import { Modal, useModal } from '../../modal';
+import { ModalContainer, ModalTitle } from '../../modal/styles';
 import { IngredientFormInputs } from '../../../types/dishes';
 import { closeModal, openModal } from '../../../utils/modal';
+import Loading from '../../loading';
+import { useUnits } from '../../../hooks/unit/use-units';
+import { useUnitsByIdFromList } from '../../../hooks/unit/use-units-by-id';
 
 export const columns: Column[] = [
-    { field: 'nome', headerName: 'Nome' },
-    { field: 'quantidade', headerName: 'Quantidade' },
+    { field: 'name', headerName: 'Nome' },
+    { field: 'totalQuantityAvailable', headerName: 'Quantidade' },
+    { field: 'measurementUnit', headerName: 'Unidade de Medida' },
     { field: 'edit', headerName: '' },
 ];
 
 const StockTable: FC = () => {
-    const { ingredients, addIngredient, updateIngredient, deleteIngredient } = useIngredients();
+    const { ingredients, addIngredient, updateIngredient, deleteIngredient, isLoading } = useIngredients();
     const { filteredIngredients, searchTerm, setSearchTerm } = useFilteredIngredients(ingredients);
-    const [editIngredient, setEditIngredient] = useState<string | null>(null);
+    const { units, isLoading: isUnitsLoading } = useUnits();
+    const [editIngredient, setEditIngredient] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [ingredientToDelete, setIngredientToDelete] = useState<string | null>(null);
-    const { handleSubmit, register, reset } = useForm<IngredientFormInputs>({ defaultValues: { nome: '', quantidade: '' } });
-    const editModal = useModal()
-    const deleteModal = useModal()
+    const { handleSubmit, register, reset, setValue } = useForm<IngredientFormInputs>({ defaultValues: { name: '', totalQuantityAvailable: 0, measurementUnitId: 0 } });
+    const editModal = useModal();
+    const deleteModal = useModal();
 
-    const handleOpenEditAddModal = (id?: string, name?: string, quantity?: string) => {
+    const handleOpenEditAddModal = (id?: number, data?: IngredientFormInputs) => {
         setEditIngredient(id || null);
-        reset({ nome: name || '', quantidade: quantity || '' });
+        reset({
+            name: data?.name || '',
+            totalQuantityAvailable: data?.totalQuantityAvailable || 0,
+            measurementUnitId: data?.measurementUnitId || 0
+        });
         setIsEditing(!!id);
-        openModal(editModal)
-    }
+        editModal.current?.openModal();
+    };
 
     const handleFormSubmit = (data: IngredientFormInputs) => {
-        if (editIngredient) updateIngredient({ id: editIngredient, updatedData: data })
-        else addIngredient(data)
-        closeEditModal()
-    }
+        if (editIngredient) updateIngredient({ id: editIngredient, updatedData: data });
+        else addIngredient(data);
+        closeEditModal();
+    };
 
     const handleOpenDeleteModal = (id: any) => {
-        setIngredientToDelete(id)
-        openModal(deleteModal)
-    }
+        setIngredientToDelete(id);
+        openModal(deleteModal)();
+    };
 
     const closeEditModal = () => {
-        closeModal(editModal)
-        setEditIngredient(null)
+        closeModal(editModal)();
+        setEditIngredient(null);
     };
 
     const closeDeleteModal = () => {
-        closeModal(deleteModal)
-        setIngredientToDelete(null)
+        closeModal(deleteModal)();
+        setIngredientToDelete(null);
     };
 
     const handleDeleteConfirm = () => {
-        if (ingredientToDelete) deleteIngredient(ingredientToDelete)
-        closeDeleteModal()
-    }
+        if (ingredientToDelete) deleteIngredient(Number(ingredientToDelete));
+        closeDeleteModal();
+    };
+
+    if (isLoading || isUnitsLoading) return <Loading />
 
     return (
         <Stack>
@@ -102,26 +117,38 @@ const StockTable: FC = () => {
             <Table
                 columns={columns}
                 data={filteredIngredients}
-                renderData={(row) => (
-                    <TableRowBody key={row.id}>
-                        {columns.map((column) => (
-                            <TableCell key={column.field}>
-                                {column.field === 'edit' ? (
-                                    <ActionBox>
-                                        <IconButton onClick={() => handleOpenEditAddModal(row.id, row.nome, row.quantidade)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </ActionBox>
-                                ) : (
-                                    row[column.field]
-                                )}
-                            </TableCell>
-                        ))}
-                    </TableRowBody>
-                )}
+                renderData={(row) => {
+                    const { unit, isLoading: isUnitLoading } = useUnitsByIdFromList(row.measurementUnitId);
+                    return (
+                        <TableRowBody key={row.id}>
+                            {columns.map((column) => (
+                                <TableCell key={column.field}>
+                                    {column.field === 'edit' ? (
+                                        <ActionBox>
+                                            <IconButton
+                                                onClick={() => handleOpenEditAddModal(row.id, {
+                                                    name: row.name,
+                                                    totalQuantityAvailable: row.totalQuantityAvailable,
+                                                    measurementUnitId: row.measurementUnitId
+                                                })}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+
+                                            <IconButton onClick={() => handleOpenDeleteModal(row.id)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </ActionBox>
+                                    ) : column.field === 'measurementUnit' ? (
+                                        isUnitLoading ? 'Carregando...' : unit ? `${unit.name} (${unit.acronym})` : 'N/A'
+                                    ) : (
+                                        row[column.field]
+                                    )}
+                                </TableCell>
+                            ))}
+                        </TableRowBody>
+                    );
+                }}
             />
 
             <Modal ref={editModal}>
@@ -129,7 +156,7 @@ const StockTable: FC = () => {
                     <ModalTitle>{isEditing ? 'Editar Ingrediente' : 'Adicionar Ingrediente'}</ModalTitle>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <TextFieldInput
-                            {...register('nome', { required: true })}
+                            {...register('name', { required: true })}
                             autoFocus
                             margin="dense"
                             label="Nome do Ingrediente"
@@ -137,12 +164,28 @@ const StockTable: FC = () => {
                             variant="filled"
                         />
                         <TextFieldInput
-                            {...register('quantidade', { required: true })}
+                            {...register('totalQuantityAvailable', { required: true })}
                             margin="dense"
                             label="Quantidade"
+                            type="number"
                             fullWidth
                             variant="filled"
                         />
+                        <FormControl fullWidth margin="dense" variant="filled">
+                            <InputLabel id="measurement-unit-label">Unidade de Medida</InputLabel>
+                            <Select
+                                labelId="measurement-unit-label"
+                                {...register('measurementUnitId', { required: true })}
+                                defaultValue=""
+                                onChange={(e) => setValue('measurementUnitId', Number(e.target.value))}
+                            >
+                                {units.map((unit) => (
+                                    <MenuItem key={unit.id} value={unit.id}>
+                                        {unit.name} ({unit.acronym})
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                         <Stack marginTop={2} justifyContent={'flex-end'} gap={1} direction={'row'}>
                             <Button onClick={closeEditModal} variant="outlined">
                                 Cancelar
@@ -170,7 +213,7 @@ const StockTable: FC = () => {
                 </ModalContainer>
             </Modal>
         </Stack>
-    );
-};
+    )
+}
 
 export default StockTable
