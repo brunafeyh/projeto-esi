@@ -13,9 +13,11 @@ export interface Dishe {
 	dishIngredientFormDTOList: Array<{
 		ingredientId: number
 		quantity: number
+		measurementUnitId: number;
 	}>;
 	imgFile: FileList | null
 }
+  
 
 export interface CartItem extends Dishe {
 	quantidade: number;

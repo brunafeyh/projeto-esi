@@ -89,8 +89,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     variant="filled"
                     {...register('pointsPrice', { required: true, valueAsNumber: true })}
                 />
-
-                {/* Category Select */}
+                
                 <FormControl variant="filled" fullWidth margin="dense">
                     <InputLabel id="category-label">Categoria</InputLabel>
                     <Select

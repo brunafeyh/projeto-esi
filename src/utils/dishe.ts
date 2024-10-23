@@ -6,7 +6,8 @@ export const filterDishesBySearchTerm = (dishes: Dishe[], searchTerm: string): D
 };
 
 export const filterDishesByCategory = (dishes: Dishe[], category: string): Dishe[] => {
-  return category ? dishes.filter(dish => dish.categoryId === category) : dishes;
+  const idcategory = Number(category)
+  return category ? dishes.filter(dish => dish.categoryId === idcategory) : dishes;
 };
 
 export const sortDishesByPrice = (dishes: Dishe[], sortOrder: 'asc' | 'desc'): Dishe[] => {

@@ -7,6 +7,7 @@ class DishService {
 
   constructor(apiUrl: string = `${apiBaseUrl}/pratos`) {
     this.apiUrl = apiUrl;
+    
   }
 
   async fetchDishes(): Promise<Dishe[]> {
