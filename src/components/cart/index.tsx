@@ -10,7 +10,6 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) => {
-  console.log(items)
   const handleQuantityChange = (id: string, value: string) => {
     const quantidade = parseInt(value, 10)
     if (!isNaN(quantidade) && quantidade > 0) {
@@ -32,12 +31,12 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemoveItem }) =>
                 <TextField
                   type="number"
                   value={item.quantidade}
-                  onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                  onChange={(e) => handleQuantityChange(String(item.id), e.target.value)}
                   InputProps={{ inputProps: { min: 1 } }}
                   label="Quantidade"
                   variant="filled"
                 />
-                <IconButton onClick={() => onRemoveItem(item.id)}>
+                <IconButton onClick={() => onRemoveItem(String(item.id))}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </Stack>

@@ -1,4 +1,5 @@
 import { Column } from "../../components/tables/table"
+import { DishValueForm } from "../../types/dishes"
 import { Pedido } from "../../types/order"
 
 export const ACCESS_TOKEN_KEY = 'access_token'
@@ -45,15 +46,16 @@ export const DEFAULT_ORDER: Pedido = {
   status: 'Em confirmação'
 }
 
-export const DEFAULT_DISHE = {
+export const DEFAULT_DISHE: DishValueForm = {
   id: '',
-  nome: '',
-  descricao: '',
-  valorReais: 0,
-  valorPontos: 0,
-  categoria: '',
-  img: '',
-  imgFile: null,
-  quantidade: 1,
-  valor: 0,
+  name: '',
+  description: '',
+  reaisPrice: 0,
+  pointsPrice: 0,
+  reaisCostValue: 0, 
+  image: '',
+  isAvailable: true,
+  categoryId: 0, 
+  dishIngredientFormDTOList: [], 
+  imgFile: null, 
 };

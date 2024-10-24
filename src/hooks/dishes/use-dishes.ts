@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import DishService from '../../services/dishes';
-import { Dishe } from '../../types/dishes';
+import { DishValueForm } from '../../types/dishes';
 import { Dish } from '../../types/dish';
 
 const dishService = new DishService();
@@ -15,48 +15,45 @@ export const useDishes = () => {
   });
 
   const addDishMutation = useMutation({
-    mutationFn: async (newDish: Dishe) => {
-      try {
+    mutationFn: async (newDish: DishValueForm) => {
         await dishService.addDish(newDish);
-        toast.success('Prato adicionado com sucesso!');
-      } catch (error) {
-        toast.error('Erro ao adicionar prato.');
-        throw error;
-      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
+      toast.success('Prato adicionado com sucesso!');
     },
+    onError: (error) => {
+      toast.error(`Erro ao adicionar prato : ${error}`);
+      throw error;
+    }
   });
 
   const updateDishMutation = useMutation({
-    mutationFn: async (updatedDish: Dishe) => {
-      try {
-        await dishService.updateDish(updatedDish.id, updatedDish);
-        toast.success('Prato atualizado com sucesso!');
-      } catch (error) {
-        toast.error('Erro ao atualizar prato.');
-        throw error;
-      }
+    mutationFn: async (updatedDish: DishValueForm) => {
+       await dishService.updateDish(updatedDish.id, updatedDish)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
+      toast.success('Prato atualizado com sucesso!');
     },
+    onError: (error) => {
+      toast.error(`Erro ao atualizar prato : ${error}`);
+      throw error;
+    }
   });
 
   const deleteDishMutation = useMutation({
     mutationFn: async (id: string) => {
-      try {
         await dishService.deleteDish(id);
-        toast.success('Prato removido com sucesso!');
-      } catch (error) {
-        toast.error('Erro ao remover prato.');
-        throw error;
-      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
+      toast.success('Prato removido com sucesso!')
     },
+    onError: (error) => {
+      toast.error(`Erro ao remover prato : ${error}`);
+      throw error;
+    }
   });
 
   const totalDishes = dishes.length;

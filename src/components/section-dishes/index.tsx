@@ -1,12 +1,12 @@
 import { FC } from 'react'
-import { Dishe } from '../../types/dishes'
 import { useAuth } from '../../hooks/use-auth'
 import DisheGrid from '../dishe-grid/view'
 import EditDisheGrid from '../dishe-grid/edit'
+import { Dish } from '../../types/dish'
 
 interface RecomendadosProps {
-  pratos: Dishe[]
-  onAddToCart: (prato: Dishe) => void
+  pratos: Dish[]
+  onAddToCart: (prato: Dish) => void
 }
 
 const SectionDishes: FC<RecomendadosProps> = ({ pratos, onAddToCart }) => {

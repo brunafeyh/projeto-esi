@@ -1,19 +1,19 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
-import { Dishe } from '../../../types/dishes';
 import DisheCard from './cards';
+import { Dish } from '../../../types/dish';
 
 interface DisheGridProps {
-	dishes: Dishe[];
-	addToCart: (prato: Dishe) => void;
+	dishes: Dish[];
+	addToCart: (prato: Dish) => void;
 }
 
 const DisheGrid: FC<DisheGridProps> = ({ dishes, addToCart }) => {
 	return (
 		<Grid container spacing={2}>
-			{dishes.map((dishe) => (
-				<Grid item xs={12} sm={6} md={4} lg={3} key={dishe.id}>
-					<DisheCard dishe={dishe} addToCart={addToCart} />
+			{dishes.map((dish) => (
+				<Grid item xs={12} sm={6} md={4} lg={3} key={dish.id}>
+					<DisheCard dish={dish} addToCart={addToCart} />
 				</Grid>
 			))}
 		</Grid>

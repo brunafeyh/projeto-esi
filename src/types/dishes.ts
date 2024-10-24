@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { Dish } from './dish';
 
-export interface Dishe {
+export interface DishValueForm {
 	id: string;
 	name: string;
 	description: string;
@@ -15,11 +16,11 @@ export interface Dishe {
 		quantity: number
 		measurementUnitId: number;
 	}>;
-	imgFile: FileList | null
+	imgFile?: FileList | null
 }
   
 
-export interface CartItem extends Dishe {
+export interface CartItem extends Dish {
 	quantidade: number;
 	valorTotal: number;
 }

@@ -9,15 +9,16 @@ import { useCart } from '../../hooks/cart/use-cart'
 import { Modal, useModal } from '../../components/modal'
 import { ModalContainer, ModalTitle } from '../../components/modal/styles'
 import MenuFilter from '../menu-filter'
+import Loading from '../loading'
 
 const DishesMenu: FC = () => {
-    const { searchTerm, sort, selectedCategory, setSearchTerm, setSort, setSelectedCategory, filteredDishes } = useFilteredDishes()
+    const { searchTerm, sort, selectedCategory, setSearchTerm, setSort, setSelectedCategory, filteredDishes, isLoading } = useFilteredDishes()
     const { isAdminOrAttendant } = useAuth()
     const { addToCart } = useCart()
     const modal = useModal()
-
     const handleOpenModal = () => modal.current?.openModal()
     const handleCloseModal = () => modal.current?.closeModal()
+    if(isLoading) return <Loading/>
 
     return (
         <Box>

@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { Button, Grid, Typography } from '@mui/material'
-import { Dishe } from '../../../types/dishes'
 import DisheCard from './card'
 import { Modal, useModal } from '../../modal'
 import { ConfirmBox, EditBox } from './styles'
@@ -8,29 +7,32 @@ import DishForm from '../../forms/dishe'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
 import { ModalContainer, ModalTitle } from '../../modal/styles'
 import { closeModal, openModal } from '../../../utils/modal'
+import { Dish } from '../../../types/dish'
+import { transformDishToDishe } from '../../../utils/dishe'
 
 interface DisheGridProps {
-    dishes: Dishe[]
+    dishes: Dish[]
 }
 
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     const editModalRef = useModal()
     const deleteModalRef = useModal()
     const { deleteDish } = useDishes()
-    const [selectedDish, setSelectedDish] = useState<Dishe | null>(null)
+    const [selectedDish, setSelectedDish] = useState<Dish | undefined>(undefined)
+    const dish = transformDishToDishe(selectedDish)
 
-    const handleEditClick = (dish: Dishe) => {
+    const handleEditClick = (dish: Dish) => {
         setSelectedDish(dish)
         openModal(editModalRef)()
     }
 
-    const handleDeleteClick = (dish: Dishe) => {
+    const handleDeleteClick = (dish: Dish) => {
         setSelectedDish(dish)
         openModal(deleteModalRef)()
     }
 
     const handleDeleteConfirm = () => {
-        if (selectedDish) deleteDish(selectedDish.id)
+        if (selectedDish) deleteDish(String(selectedDish.id))
         closeModal(deleteModalRef)()
     }
 
@@ -39,7 +41,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
             <Grid container spacing={2}>
                 {dishes.map((dish) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={dish.id}>
-                        <DisheCard dishe={dish} onEdit={() => handleEditClick(dish)} onDelete={() => handleDeleteClick(dish)} />
+                        <DisheCard dish={dish} onEdit={() => handleEditClick(dish)} onDelete={() => handleDeleteClick(dish)} />
                     </Grid>
                 ))}
             </Grid>
@@ -47,7 +49,7 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
             <Modal ref={editModalRef}>
                 <ModalContainer>
                     <ModalTitle>Editar Prato</ModalTitle>
-                    <DishForm dish={selectedDish || undefined} onClose={closeModal(editModalRef)} />
+                    <DishForm dish={dish} onClose={closeModal(editModalRef)} />
                 </ModalContainer>
             </Modal>
 
