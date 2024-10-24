@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import DishService from '../../services/dishes';
 import { DishValueForm } from '../../types/dishes';
 import { Dish } from '../../types/dish';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '../../types/resposse-api';
 
 const dishService = new DishService();
 
@@ -22,8 +24,9 @@ export const useDishes = () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
       toast.success('Prato adicionado com sucesso!');
     },
-    onError: (error) => {
-      toast.error(`Erro ao adicionar prato : ${error}`);
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message = error.response?.data?.message;
+      toast.error(`Erro ao adicionar prato : ${message}`);
       throw error;
     }
   });
@@ -36,10 +39,11 @@ export const useDishes = () => {
       queryClient.invalidateQueries({ queryKey: ['dishes'] });
       toast.success('Prato atualizado com sucesso!');
     },
-    onError: (error) => {
-      toast.error(`Erro ao atualizar prato : ${error}`);
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message = error.response?.data?.message;
+      toast.error(`Erro ao atualizar prato: ${message}`);
       throw error;
-    }
+    },
   });
 
   const deleteDishMutation = useMutation({

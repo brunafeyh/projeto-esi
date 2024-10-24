@@ -11,72 +11,75 @@ import { useCategories } from '../../../hooks/category/use-categorys';
 import useIngredients from '../../../hooks/ingredients/use-ingredients';
 import Loading from '../../loading';
 import DeleteIcon from '@mui/icons-material/Delete';
- 
+
 interface DishFormProps {
-    dish?: DishValueForm;
-    onClose: () => void;
+    dish?: DishValueForm
+    onClose: () => void
 }
- 
+
 const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
     const { register, handleSubmit, reset, setValue, control } = useForm<DishValueForm>({
         defaultValues: dish ? dish : DEFAULT_DISHE,
     });
- 
+
     const { addDish, updateDish } = useDishes();
     const { categories, isLoading: isLoadingCategories } = useCategories();
     const { ingredients, isLoading: isLoadingIngredients } = useIngredients();
- 
-    const { fields, append, remove, update } = useFieldArray({
+
+    const { fields, append, remove, update, replace } = useFieldArray({
         control,
         name: "dishIngredientFormDTOList"
     });
- 
+
     useEffect(() => {
         if (dish) {
             setValue('categoryId', dish.categoryId);
-            dish.dishIngredientFormDTOList.forEach((ingredient) => append(ingredient));
+            
+            if (dish.dishIngredientFormDTOList && dish.dishIngredientFormDTOList.length > 0) {
+                replace(dish.dishIngredientFormDTOList);
+            }
         }
-    }, [dish, setValue, append]);
- 
+    }, [dish, setValue, replace]);
+
     const handleFormSubmit = async (data: DishValueForm) => {
-        let imageBase64 = data.image || ''
- 
+        let imageBase64 = data.image || '';
+
         if (data.imgFile instanceof FileList && data.imgFile.length > 0) {
-            const file = data.imgFile[0]
-            imageBase64 = await convertToBase64(file)
+            const file = data.imgFile[0];
+            imageBase64 = await convertToBase64(file);
         }
- 
+
         const dishData = {
             ...data,
             image: imageBase64,
             id: dish?.id || uuidv4(),
-        }
- 
-        if (dish?.id) updateDish(dishData)
-        else addDish(dishData)
- 
-        reset(DEFAULT_DISHE)
-        onClose()
-    }
- 
+        };
+
+        if (dish?.id) updateDish(dishData);
+        else addDish(dishData);
+
+        reset(DEFAULT_DISHE);
+        onClose();
+    };
+
     const handleAddIngredient = () => {
-        append({ ingredientId: 0, quantity: 1, measurementUnitId: 0 })
-    }
- 
+        append({ ingredientId: 0, quantity: 1, measurementUnitId: 0 });
+    };
+
     const handleIngredientChange = (index: number, ingredientId: number) => {
-        const selectedIngredient = ingredients.find(i => i.id === ingredientId)
- 
+        const selectedIngredient = ingredients.find(i => i.id === ingredientId);
+
         if (selectedIngredient) {
             update(index, {
                 ingredientId: selectedIngredient.id,
                 quantity: fields[index].quantity || 1,
                 measurementUnitId: selectedIngredient.measurementUnit.id,
-            })
+            });
         }
-    }
- 
+    };
+
     if (isLoadingCategories || isLoadingIngredients) return <Loading />;
- 
+
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
             <DialogContent>
@@ -112,6 +115,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     variant="filled"
                     {...register('pointsPrice', { required: true, valueAsNumber: true })}
                 />
+                
                 <FormControl variant="filled" fullWidth margin="dense">
                     <InputLabel id="category-label">Categoria</InputLabel>
                     <Select
@@ -126,12 +130,13 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                         ))}
                     </Select>
                 </FormControl>
+
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
                     <Button variant="outlined" onClick={handleAddIngredient}>
                         Adicionar Ingrediente
                     </Button>
                 </Box>
- 
+
                 {fields.map((field, index) => (
                     <Box key={field.id} sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                         <FormControl variant="filled" sx={{ flex: 1, mr: 2 }}>
@@ -155,7 +160,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                                 )}
                             />
                         </FormControl>
- 
+
                         <TextField
                             margin="dense"
                             label="Quantidade"
@@ -165,13 +170,13 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                             defaultValue={field.quantity}
                             sx={{ width: '120px' }}
                         />
- 
+
                         <IconButton onClick={() => remove(index)} sx={{ ml: 1 }}>
                             <DeleteIcon />
                         </IconButton>
                     </Box>
                 ))}
- 
+
                 <TextField
                     margin="dense"
                     label="Imagem"
@@ -194,5 +199,5 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         </form>
     );
 };
- 
-export default DishForm;
+
+export default DishForm
