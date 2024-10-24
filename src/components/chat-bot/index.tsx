@@ -1,34 +1,81 @@
-import { FC, useState } from 'react'
-import { Box, Typography, IconButton, Stack } from '@mui/material'
-import MicIcon from '@mui/icons-material/Mic'
-import CloseIcon from '@mui/icons-material/Close'
-import { Button, ChatContainer, ControlsContainer, Icon, MessageBox, MessagesContainer, TextField } from './styles'
-import { useChatBot } from '../../hooks/use-chat-bot'
-import { useVoiceRecognition } from '../../hooks/use-voice-recognition'
-import ChatIcon from '@mui/icons-material/Chat'
-import { Modal, useModal } from '../modal'
-import { ModalTitle } from '../modal/styles'
-import { closeModal, openModal } from '../../utils/modal'
+import { FC, useState } from 'react';
+import { Box, Typography, IconButton, Stack, CircularProgress } from '@mui/material';
+import MicIcon from '@mui/icons-material/Mic';
+import CloseIcon from '@mui/icons-material/Close';
+import ChatIcon from '@mui/icons-material/Chat';
+import { Button, ChatContainer, ControlsContainer, MessageBox, MessagesContainer, TextField } from './styles';
+import { useChatBot } from '../../hooks/use-chat-bot';
+import { useVoiceRecognition } from '../../hooks/use-voice-recognition'; 
+import { Modal, useModal } from '../modal';
+import { ModalTitle } from '../modal/styles';
+import { useAuth } from '../../hooks/use-auth';
+import { closeModal, openModal } from '../../utils/modal';
 
 const ChatBot: FC = () => {
-    const [inputText, setInputText] = useState<string>('')
-    const modalRef = useModal()
-    const { messages, sendMessage, addMessage } = useChatBot()
-    const { isRecording, audioURL, startRecording, stopRecording, cancelRecording } = useVoiceRecognition(
-        (transcript) => sendMessage(transcript),
-        (error) => addMessage(error, 'bot')
-    )
+    const [inputText, setInputText] = useState<string>('');
+    const [isProcessing, setIsProcessing] = useState<boolean>(false)
+    const modalRef = useModal();
+    const { messages, sendMessage, addMessage } = useChatBot();
+    const { user } = useAuth();
 
-    const handleSendClick = () => {
+    const handleTranscription = (transcript: string) => {
+        sendMessage(transcript, getName(), getRole());
+    };
+
+    const handleError = (error: string) => {
+        addMessage(error, 'bot');
+    };
+
+    const { isRecording, audioURL, startRecording, stopRecording, cancelRecording } = useVoiceRecognition(
+        handleTranscription,
+        handleError
+    );
+
+    const getName = () => {
+        return user ? user.name : 'colega';
+    };
+
+    const getRole = () => {
+        return user ? user.role : 'ROLE_CUSTOMER';
+    };
+
+    const handleSendClick = async () => {
         if (inputText.trim()) {
-            sendMessage(inputText)
-            setInputText('')
+            setIsProcessing(true)
+            try {
+                await sendMessage(inputText, getName(), getRole());
+                setInputText('');  
+            } catch (error) {
+                console.error('Erro ao enviar mensagem para o bot:', error);
+                addMessage('Erro ao enviar a mensagem.', 'bot');
+            } finally {
+                setIsProcessing(false);
+            }
         }
-    }
+    };
+
+    const handleAudioMessage = async () => {
+        if (audioURL) {
+            setIsProcessing(true);
+            try {
+                await sendMessage(audioURL, getName(), getRole());
+            } catch (error) {
+                console.error('Erro ao transcrever ou enviar mensagem:', error);
+                addMessage('Erro ao transcrever ou enviar áudio.', 'bot');
+            } finally {
+                setIsProcessing(false); 
+            }
+        }
+    };
+
+    const handleStopRecording = () => {
+        stopRecording();
+        handleAudioMessage(); 
+    };
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === 'Enter') handleSendClick()
-    }
+        if (event.key === 'Enter') handleSendClick();
+    };
 
     return (
         <Stack>
@@ -79,16 +126,23 @@ const ChatBot: FC = () => {
                                 endAdornment: (
                                     <IconButton
                                         color={isRecording ? 'secondary' : 'primary'}
-                                        onClick={isRecording ? stopRecording : startRecording}
+                                        onClick={isRecording ? handleStopRecording : startRecording}
                                         edge="end"
+                                        disabled={isProcessing}
                                     >
-                                        <MicIcon />
+                                        {isProcessing ? <CircularProgress size={24} /> : <MicIcon />}
                                     </IconButton>
                                 ),
                             }}
                         />
-                        <Button variant="contained" color="primary" onClick={handleSendClick} sx={{ height: 40 }}>
-                            <Icon />
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            onClick={handleSendClick} 
+                            sx={{ height: 40 }} 
+                            disabled={isProcessing} 
+                        >
+                            {isProcessing ? <CircularProgress size={24} /> : 'Enviar'}
                         </Button>
                     </ControlsContainer>
                 </ChatContainer>
@@ -97,4 +151,4 @@ const ChatBot: FC = () => {
     );
 };
 
-export default ChatBot
+export default ChatBot;

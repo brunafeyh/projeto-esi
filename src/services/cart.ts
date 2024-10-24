@@ -63,13 +63,13 @@ class CartService {
     const existingCart = await this.fetchCartByCpf(cpf);
 
     if (existingCart && existingCart.id) {
-      const itemIndex = existingCart.items.findIndex(item => item.id === itemId);
+      const itemIndex = existingCart.items.findIndex(item => String(item.id) === itemId);
 
       if (itemIndex >= 0) {
         existingCart.items[itemIndex] = {
           ...existingCart.items[itemIndex],
           quantidade: quantity,
-          valorTotal: existingCart.items[itemIndex].valorReais * quantity,
+          valorTotal: existingCart.items[itemIndex].reaisPrice * quantity,
         };
 
         const response = await axios.put(`${this.apiUrl}/${existingCart.id}`, existingCart);
@@ -84,7 +84,7 @@ class CartService {
     const existingCart = await this.fetchCartByCpf(cpf);
 
     if (existingCart && existingCart.id) {
-      existingCart.items = existingCart.items.filter(item => item.id !== itemId);
+      existingCart.items = existingCart.items.filter(item => String(item.id) !== itemId);
       await axios.put(`${this.apiUrl}/${existingCart.id}`, existingCart);
     } else {
       throw new Error('Carrinho não encontrado.');
