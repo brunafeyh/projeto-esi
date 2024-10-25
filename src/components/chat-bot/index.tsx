@@ -3,7 +3,7 @@ import { Box, Typography, IconButton, Stack, CircularProgress } from '@mui/mater
 import MicIcon from '@mui/icons-material/Mic';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from '@mui/icons-material/Chat';
-import SendIcon from '@mui/icons-material/Send';  // Import SendIcon
+import SendIcon from '@mui/icons-material/Send';
 import { ChatContainer, ControlsContainer, MessageBox, MessagesContainer, TextField } from './styles';
 import { useChatBot } from '../../hooks/use-chat-bot';
 import { useVoiceRecognition } from '../../hooks/use-voice-recognition'; 
@@ -16,7 +16,7 @@ const ChatBot: FC = () => {
     const [inputText, setInputText] = useState<string>('');
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const modalRef = useModal();
-    const { messages, sendMessage, addMessage } = useChatBot();
+    const { messages, sendMessage, addMessage, response } = useChatBot();
     const { user } = useAuth();
 
     const handleTranscription = (transcript: string) => {
@@ -78,6 +78,17 @@ const ChatBot: FC = () => {
         if (event.key === 'Enter') handleSendClick();
     };
 
+    const isValid = () => {
+        if(response) return response.isValidResponse
+        return false
+    }
+
+    const getColor = (user : "user" | "bot") =>{
+        if(user === "user" ) return '#d4edda'
+        if(user === "bot" && isValid()) return '#e2e3e5'
+        return "#ff0000 "
+    }
+
     return (
         <Stack>
             <IconButton onClick={openModal(modalRef)} style={{ color: '#FFF' }}>
@@ -97,7 +108,7 @@ const ChatBot: FC = () => {
                             <MessageBox
                                 key={index}
                                 align={message.sender === 'user' ? 'right' : 'left'}
-                                bgcolor={message.sender === 'user' ? '#d4edda' : '#e2e3e5'}
+                                bgcolor={getColor(message.sender)}
                             >
                                 <Typography variant="body1">
                                     <strong>{message.sender === 'user' ? 'Você' : 'Bot'}:</strong> {message.text}

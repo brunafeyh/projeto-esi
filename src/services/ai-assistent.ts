@@ -9,9 +9,12 @@ class AiAssistantService {
   }
 
   async transcribeAudio(transcribeData: TranscribeAudioRequest): Promise<TranscribeAudioResponse> {
-    const response = await apiInstance.post(`${this.apiUrl}/transcribe-audio`, transcribeData);
+    const response = await apiInstance.get<TranscribeAudioResponse>(`${this.apiUrl}/transcribe-audio`, {
+      params: transcribeData,
+    });
     return response.data;
   }
+
 
   async handleChatMessage(chatData: ChatRequest): Promise<ChatResponse> {
     const response = await apiInstance.post(`${this.apiUrl}/chat`, chatData);

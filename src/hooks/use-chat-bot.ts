@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Message } from '../types/chat';
 import AiAssistantService from '../services/ai-assistent';
+import { ChatResponse } from '../types/ai-assistent';
 
 export const useChatBot = () => {
     const [messages, setMessages] = useState<Message[]>([]);
+    const [response, setResponse] = useState<ChatResponse>();
     const aiAssistantService = new AiAssistantService();
 
     const addMessage = (text: string, sender: 'user' | 'bot') => {
@@ -19,6 +21,7 @@ export const useChatBot = () => {
                     userRole,
                     userMessage: messageText,
                 });
+                setResponse(response)
                 addMessage(response.response, 'bot');
             } catch (error) {
                 console.error('Erro ao enviar mensagem para o bot:', error);
@@ -31,5 +34,6 @@ export const useChatBot = () => {
         messages,
         sendMessage,
         addMessage,
+        response
     };
 };
