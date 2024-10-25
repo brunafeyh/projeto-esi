@@ -1,6 +1,6 @@
 import { useDishes } from "../hooks/dishes/use-dishes";
 import { useOrders } from "../hooks/order/use-orders";
-import { Prato } from "../types/dishes";
+import { DishValueForm } from "../types/dishes";
 import { DishSale, SalesPerDish } from "../types/graphs";
 import { Pedido } from "../types/order";
 
@@ -33,9 +33,9 @@ export const calculateTotalProfit = (orders: Pedido[]): number => {
 }
 
 
-export const mapDishesToCategories = (dishes: Prato[]): { [key: string]: string } => {
-  return dishes.reduce((map: { [key: string]: string }, dish: Prato) => {
-    map[dish.id] = dish.categoria;
+export const mapDishesToCategories = (dishes: DishValueForm[]): { [key: string]: string } => {
+  return dishes.reduce((map: { [key: string]: string }, dish: DishValueForm) => {
+    map[dish.id] = String(dish.categoryId);
     return map;
   }, {});
 };
@@ -45,7 +45,7 @@ export const countCategories = (orders: Pedido[], dishesMap: { [key: string]: st
 
   orders.forEach((order: Pedido) => {
     order.pratos.forEach((prato) => {
-      const category = dishesMap[prato.id];
+      const category = dishesMap[prato.prato.id];
       if (category) {
         categoryCount[category] = (categoryCount[category] || 0) + prato.quantidade;
       }
@@ -102,14 +102,14 @@ export const getMoreSelled = () => {
 
   orders.forEach(order => {
     order.pratos.forEach(prato => {
-      if (dishCountMap.has(prato.id)) {
-        const existingDish = dishCountMap.get(prato.id);
-        dishCountMap.set(prato.id, {
+      if (dishCountMap.has(prato.prato.id)) {
+        const existingDish = dishCountMap.get(prato.prato.id);
+        dishCountMap.set(prato.prato.id, {
           ...existingDish,
           quantidade: existingDish.quantidade + prato.quantidade,
         });
       } else {
-        dishCountMap.set(prato.id, {
+        dishCountMap.set(prato.prato.id, {
           ...prato,
         });
       }

@@ -38,3 +38,23 @@ export function transformDishToDishe(dish?: Dish): DishValueForm | undefined {
     imgFile: null 
   };
 }
+
+export function transformDishesToDishForms(dishes: Dish[]): DishValueForm[] {
+  return dishes.map(dish => ({
+    id: dish.id.toString(),
+    name: dish.name,
+    description: dish.description,
+    reaisPrice: dish.reaisPrice,
+    pointsPrice: dish.pointsPrice,
+    reaisCostValue: dish.reaisCostValue,
+    image: dish.image,
+    isAvailable: dish.isAvailable,
+    categoryId: dish.category.id,
+    dishIngredientFormDTOList: dish.dishIngredientDTOList.map(ingredientDTO => ({
+      ingredientId: ingredientDTO.ingredient.id,
+      quantity: ingredientDTO.quantity,
+      measurementUnitId: ingredientDTO.ingredient.measurementUnit.id,
+    })),
+    imgFile: null,
+  }));
+}

@@ -1,14 +1,13 @@
 import { CartItem } from "../types/dishes";
 import { Pedido } from "../types/order";
 
-export function calcularValorTotal(cartItems: CartItem[]): number {
+export function calculateTotalAmount(cartItems: CartItem[]): number {
   let valorTotal = 0;
   cartItems.forEach(item => {
     valorTotal += item.quantidade * item.reaisPrice;
   });
   return valorTotal;
 }
-
 
 export const calculateDiscountValue = (pointsToUse: number): number => pointsToUse * 0.01
 
@@ -36,7 +35,7 @@ export const createOrder = (
     status: 'Em Confirmação',
     pratos: cartItems.map(item => ({
       prato: {
-        id: item.id,
+        id: item.id.toString(),
         name: item.name,
         description: item.description,
         reaisPrice: item.reaisPrice,
@@ -44,11 +43,15 @@ export const createOrder = (
         reaisCostValue: item.reaisCostValue,
         image: item.image,
         isAvailable: item.isAvailable,
-        categoryId: item.categoryId,
-        dishIngredientFormDTOList: item.dishIngredientFormDTOList,
-        imgFile: item.imgFile,
+        categoryId: item.category.id, 
+        dishIngredientFormDTOList: item.dishIngredientDTOList.map(ingredient => ({
+          ingredientId: ingredient.ingredient.id,
+          quantity: ingredient.quantity,
+          measurementUnitId: ingredient.ingredient.measurementUnit.id,
+        })),
+        imgFile: null,
       },
-      quantidade: item.quantidade,  // Adicionando a quantidade para cada prato
+      quantidade: item.quantidade,
     })),
-  }
-}
+  };
+};

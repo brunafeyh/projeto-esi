@@ -5,7 +5,9 @@ import { Pedido } from '../../../types/order';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
 import { TextField } from '../login/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Dishe } from '../../../types/dishes';
+import { DishValueForm } from '../../../types/dishes';
+import { transformDishToDishe } from '../../../utils/dishe';
+import { DEFAULT_DISHE } from '../../../utils/constants/values';
 
 interface OrderFormProps {
     onSubmit: (data: Partial<Pedido>) => void;
@@ -24,11 +26,16 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
     });
     const { dishes } = useDishes();
 
+    const getDishe = (dish ?: DishValueForm) =>{
+        if(dish) return dish
+        return DEFAULT_DISHE
+    }
     const handleDishChange = (index: number, event: SelectChangeEvent<unknown>) => {
         const dishId = event.target.value as string;
-        const selectedDish = dishes.find(dish => dish.id === dishId);
+        const selectedDish = dishes.find(dish => String(dish.id) === dishId);
+        const dish = transformDishToDishe(selectedDish)
         if (selectedDish) {
-            setValue(`pratos.${index}.prato`, selectedDish);
+            setValue(`pratos.${index}.prato`, getDishe(dish));
             setValue(`pratos.${index}.quantidade`, 1);
         }
     };
@@ -139,7 +146,7 @@ const OrderForm: FC<OrderFormProps> = ({ onSubmit, defaultValues, isEditMode, on
                 variant="contained"
                 sx={{ width: '100%', marginBottom: 2 }}
                 onClick={() => append({
-                    prato: {} as Dishe,
+                    prato: {} as DishValueForm,
                     quantidade: 1,
                 })}
             >

@@ -3,6 +3,7 @@ import { useOrders } from '../order/use-orders';
 import { useDishes } from '../dishes/use-dishes';
 import { BACKGROUND_COLOR_GRAPHS } from '../../utils/constants/values';
 import { countCategories, mapDishesToCategories } from '../../utils/graph';
+import { transformDishesToDishForms } from '../../utils/dishe';
 
 export const usePopularCategoriesData = () => {
   const [data, setData] = useState({
@@ -22,8 +23,9 @@ export const usePopularCategoriesData = () => {
 
   useEffect(() => {
     if (orders && dishes) {
-      const dishesMap = mapDishesToCategories(dishes);
-      const categoryCount = countCategories(orders, dishesMap);
+      const dishesMap = transformDishesToDishForms(dishes)
+      const dishesList = mapDishesToCategories(dishesMap);
+      const categoryCount = countCategories(orders, dishesList);
 
       setData({
         labels: Object.keys(categoryCount),

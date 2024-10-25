@@ -5,7 +5,7 @@ import Cart from '..';
 import { useAuth } from '../../../hooks/use-auth';
 import { useOrderMutations } from '../../../hooks/order/use-order-mutations';
 import { useCart } from '../../../hooks/cart/use-cart';
-import { calcularValorTotal, calculateDiscountValue, calculateFinalValue, calculatePointsEarned, createOrder } from '../../../utils/cart';
+import { calculateTotalAmount, calculateDiscountValue, calculateFinalValue, calculatePointsEarned, createOrder } from '../../../utils/cart';
 import CheckoutForm from '../../forms/checkout';
 import { Popover, usePopover } from '../../popover';
 import { Modal, useModal } from '../../modal';
@@ -38,7 +38,7 @@ const CartButton: FC<{ onUpdateQuantity: (id: string, quantidade: number) => voi
   };
 
   const totalAmount = useMemo(() => {
-    const amount = calcularValorTotal(cartItems)
+    const amount = calculateTotalAmount(cartItems)
     return Number(amount).toFixed(2)
   }, [cartItems])
 

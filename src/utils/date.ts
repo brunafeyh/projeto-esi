@@ -1,4 +1,4 @@
-import { Dishe } from "../types/dishes"
+import { DishValueForm } from "../types/dishes"
 import { DEFAULT_DISHE } from "./constants/values"
 
 export const formatDateToDDMMYYYY = (dateString?: string): string => {
@@ -12,7 +12,7 @@ export const getString = (value?: string) => {
     return ''
 }
 
-export const getDishe = (value?: Dishe) => {
+export const getDishe = (value?: DishValueForm) => {
     if (value) return value
     return DEFAULT_DISHE
 }

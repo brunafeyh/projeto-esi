@@ -1,4 +1,4 @@
-import { Dishe } from "./dishes"
+import { DishValueForm } from "./dishes"
 
 export type Pedido = {
   id?: string;
@@ -11,7 +11,7 @@ export type Pedido = {
   metodoPagamento: string;
   status: string;
   pratos: Array<{
-    prato: Dishe;
+    prato: DishValueForm;
     quantidade: number;
   }>;
 };
