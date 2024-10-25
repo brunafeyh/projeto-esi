@@ -9,6 +9,7 @@ import { ModalContainer, ModalTitle } from '../../modal/styles'
 import { closeModal, openModal } from '../../../utils/modal'
 import { Dish } from '../../../types/dish'
 import { transformDishToDishe } from '../../../utils/dishe'
+import Loading from '../../loading'
 
 interface DisheGridProps {
     dishes: Dish[]
@@ -17,7 +18,7 @@ interface DisheGridProps {
 const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
     const editModalRef = useModal()
     const deleteModalRef = useModal()
-    const { deleteDish } = useDishes()
+    const { deleteDish, deleteIsLoading } = useDishes()
     const [selectedDish, setSelectedDish] = useState<Dish | undefined>(undefined)
     const dish = transformDishToDishe(selectedDish)
 
@@ -35,6 +36,8 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
         if (selectedDish) deleteDish(String(selectedDish.id))
         closeModal(deleteModalRef)()
     }
+
+    if(deleteIsLoading) return <Loading/>
 
     return (
         <>

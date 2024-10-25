@@ -13,8 +13,8 @@ import Loading from '../../loading';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface DishFormProps {
-    dish?: DishValueForm
-    onClose: () => void
+    dish?: DishValueForm;
+    onClose: () => void;
 }
 
 const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
@@ -22,19 +22,19 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         defaultValues: dish ? dish : DEFAULT_DISHE,
     });
 
-    const { addDish, updateDish } = useDishes();
+    const { addDish, updateDish, addIsLoading, updateIsLoading } = useDishes();
     const { categories, isLoading: isLoadingCategories } = useCategories();
     const { ingredients, isLoading: isLoadingIngredients } = useIngredients();
 
     const { fields, append, remove, update, replace } = useFieldArray({
         control,
-        name: "dishIngredientFormDTOList"
+        name: 'dishIngredientFormDTOList',
     });
 
     useEffect(() => {
         if (dish) {
             setValue('categoryId', dish.categoryId);
-            
+
             if (dish.dishIngredientFormDTOList && dish.dishIngredientFormDTOList.length > 0) {
                 replace(dish.dishIngredientFormDTOList);
             }
@@ -55,19 +55,34 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
             id: dish?.id || uuidv4(),
         };
 
-        if (dish?.id) updateDish(dishData);
-        else addDish(dishData);
-
-        reset(DEFAULT_DISHE);
-        onClose();
+        try {
+            if (dish?.id) {
+                updateDish(dishData, {
+                    onSuccess: () => {
+                        reset(DEFAULT_DISHE);
+                        onClose();
+                    },
+                });
+            } else {
+                addDish(dishData, {
+                    onSuccess: () => {
+                        reset(DEFAULT_DISHE);
+                        onClose();
+                    },
+                });
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
+
 
     const handleAddIngredient = () => {
         append({ ingredientId: 0, quantity: 1, measurementUnitId: 0 });
     };
 
     const handleIngredientChange = (index: number, ingredientId: number) => {
-        const selectedIngredient = ingredients.find(i => i.id === ingredientId);
+        const selectedIngredient = ingredients.find((i) => i.id === ingredientId);
 
         if (selectedIngredient) {
             update(index, {
@@ -78,7 +93,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         }
     };
 
-    if (isLoadingCategories || isLoadingIngredients) return <Loading />;
+    if (isLoadingCategories || isLoadingIngredients || addIsLoading || updateIsLoading) return <Loading />;
 
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -115,7 +130,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                     variant="filled"
                     {...register('pointsPrice', { required: true, valueAsNumber: true })}
                 />
-                
+
                 <FormControl variant="filled" fullWidth margin="dense">
                     <InputLabel id="category-label">Categoria</InputLabel>
                     <Select
@@ -192,12 +207,12 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                 <Button onClick={onClose} variant="outlined">
                     Cancelar
                 </Button>
-                <Button type="submit" variant="contained" sx={{ ml: 1 }}>
-                    {dish ? 'Salvar' : 'Adicionar'}
+                <Button type="submit" variant="contained" sx={{ ml: 1 }} disabled={addIsLoading}>
+                    {addIsLoading ? 'Salvando...' : dish ? 'Salvar' : 'Adicionar'}
                 </Button>
             </DialogActions>
         </form>
     );
 };
 
-export default DishForm
+export default DishForm;

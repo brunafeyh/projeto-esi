@@ -1,9 +1,10 @@
-
-export type TranscribeAudioRequest = {
-    file: string
+export interface TranscribeAudioRequest {
+    file: Blob;
 }
 
+
 export type TranscribeAudioResponse = string
+
 
 export type ChatRequest = {
     username: string;

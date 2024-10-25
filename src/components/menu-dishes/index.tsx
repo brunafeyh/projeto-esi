@@ -18,7 +18,7 @@ const DishesMenu: FC = () => {
     const modal = useModal()
     const handleOpenModal = () => modal.current?.openModal()
     const handleCloseModal = () => modal.current?.closeModal()
-    if(isLoading) return <Loading/>
+    if(isLoading ) return <Loading/>
 
     return (
         <Box>

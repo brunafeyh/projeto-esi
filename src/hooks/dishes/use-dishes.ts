@@ -31,6 +31,8 @@ export const useDishes = () => {
     }
   });
 
+  const addIsLoading = addDishMutation.isPending
+
   const updateDishMutation = useMutation({
     mutationFn: async (updatedDish: DishValueForm) => {
        await dishService.updateDish(updatedDish.id, updatedDish)
@@ -46,6 +48,8 @@ export const useDishes = () => {
     },
   });
 
+  const updateIsLoading = updateDishMutation.isPending
+
   const deleteDishMutation = useMutation({
     mutationFn: async (id: string) => {
         await dishService.deleteDish(id);
@@ -60,6 +64,8 @@ export const useDishes = () => {
     }
   });
 
+  const deleteIsLoading = deleteDishMutation.isPending
+
   const totalDishes = dishes.length;
 
   return {
@@ -70,5 +76,8 @@ export const useDishes = () => {
     addDish: addDishMutation.mutate,
     updateDish: updateDishMutation.mutate,
     deleteDish: deleteDishMutation.mutate,
+    addIsLoading,
+    updateIsLoading,
+    deleteIsLoading
   };
 };
