@@ -2,13 +2,14 @@ import { createBrowserRouter } from 'react-router-dom'
 import ErrorPage from './pages/error'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
-import Settings from './pages/settings'
-import PedidosCliente from './pages/pedidos/cliente'
-import PedidosAdmin from './pages/pedidos/admin'
-import Cardapio from './pages/cardapio'
-import Estatisticas from './pages/estatisticas'
-import Estoque from './pages/estoque'
 import RegisterPage from './pages/register'
+import RestaurantMenu from './pages/restaurant-menu'
+import Statistics from './pages/statistics'
+import Stock from './pages/stock'
+import AdminOrders from './pages/orders/admin'
+import ClientOrders from './pages/orders/client'
+import CategoriesPage from './components/settings/categorys'
+import Settings from './pages/settings'
 
 export const router = createBrowserRouter([
 	{
@@ -23,32 +24,36 @@ export const router = createBrowserRouter([
 				element: <LoginPage />,
 			},
 			{
-				path: 'cardapio',
-				element: <Cardapio />,
+				path: 'menu',
+				element: <RestaurantMenu />,
 			},
 			{
-				path: 'settings',
-				element: <Settings />,
-			},
-			{
-				path: 'meus-pedidos',
-				element: <PedidosCliente />,
+				path: 'my-orders',
+				element: <ClientOrders />,
 			},
 			{
 				path: 'register',
 				element: <RegisterPage />,
 			},			
 			{
-				path: 'estatisticas',
-				element: <Estatisticas />,
+				path: 'statistics',
+				element: <Statistics />,
 			},
 			{
-				path: 'estoque',
-				element: <Estoque />,
+				path: 'settings',
+				element: <Settings />,
 			},
 			{
-				path: 'pedidos',
-				element: <PedidosAdmin />,
+				path: 'categorys',
+				element: <CategoriesPage />,
+			},
+			{
+				path: 'stock',
+				element: <Stock />,
+			},
+			{
+				path: 'orders',
+				element: <AdminOrders />,
 			},
 			{
 				path: '*',

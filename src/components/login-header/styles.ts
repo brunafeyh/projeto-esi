@@ -1,4 +1,4 @@
-import { Stack, StackProps, Typography, TypographyProps, styled } from '@mui/material'
+import { Stack, StackProps, Typography as TypographyMui, TypographyProps, styled } from '@mui/material'
 import { FONT_WEIGHTS } from '../../themes/fonts'
 
 export const ContainerApresentation = styled(Stack)<StackProps>(({ theme }) => ({
@@ -34,7 +34,7 @@ export const PresentationContainer = styled(Stack)<StackProps>(({ theme }) => ({
 	background: theme.palette.unioeste.neutral.p100,
 }))
 
-export const TitleBP = styled(Typography)<TypographyProps>(({ theme }) => ({
+export const TitleBP = styled(TypographyMui)<TypographyProps>(({ theme }) => ({
 	width: theme.spacing(51),
 	height: theme.spacing(5.25),
 	textAlign: 'center',
@@ -50,3 +50,22 @@ export const ContainerLogoImages = styled(Stack)<StackProps>(({ theme }) => ({
 	justifyContent: 'flex-end',
 	alignItems: 'center',
 }))
+
+export const Title = styled(TypographyMui)<TypographyProps>(({ theme }) => ({
+	fontWeight: FONT_WEIGHTS.extralight,
+	fontSize: theme.spacing(3),
+	position: 'absolute',
+	top: '45%',
+	left: '25%',
+	color: theme.palette.unioeste.neutral.p10,
+}))
+
+export const Typography = styled(TypographyMui)<TypographyProps>(({ theme }) => ({
+	fontWeight: FONT_WEIGHTS.regular,
+	fontSize: theme.spacing(2),
+	position: 'absolute',
+	top: '52%',
+	left: '25%',
+	color: 'white',
+}))
+

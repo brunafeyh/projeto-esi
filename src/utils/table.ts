@@ -1,45 +1,58 @@
-import { Theme } from '@mui/material/styles'
 import { isValid, parseISO } from 'date-fns'
 import { ReactNode } from 'react'
+import { ChipProps, Theme } from '@mui/material'
 
-interface StyleAttributes {
-	backgroundColor: string
-	color: string
-	width: string
-}
-
-const getStatusStyles = (theme: Theme, status: ReactNode): StyleAttributes => {
-	let styles: StyleAttributes = {
-		backgroundColor: 'transparent',
-		color: 'inherit',
-		width: 'inherit',
-	}
-
+const getStatusStyles = (theme: Theme, status: ReactNode) => {
 	switch (status) {
 		case 'Concluída':
+			return {
+				backgroundColor: theme.palette.success.light,
+				color: theme.palette.success.contrastText,
+				width: '100px',
+			};
 		case 'Em andamento':
-			styles.backgroundColor = theme.palette.unioeste.success.p10 || 'transparent'
-			styles.color = theme.palette.unioeste.success.p100 || 'inherit'
-			styles.width = status === 'Concluída' ? theme.spacing(11) : theme.spacing(16)
-			break
-		case 'Cancelada':
-			styles.backgroundColor = theme.palette.unioeste.error.p10 || 'transparent'
-			styles.color = theme.palette.unioeste.error.p100 || 'inherit'
-			styles.width = theme.spacing(11)
-			break
+			return {
+				backgroundColor: theme.palette.warning.light,
+				color: theme.palette.warning.contrastText,
+				width: '120px',
+			};
 		case 'Negada':
-			styles.backgroundColor = theme.palette.unioeste.warning.p10 || 'transparent'
-			styles.color = theme.palette.unioeste.warning.p100 || 'inherit'
-			styles.width = theme.spacing(9)
-			break
+			return {
+				backgroundColor: theme.palette.error.light,
+				color: theme.palette.error.contrastText,
+				width: '80px',
+			};
+		case 'Cancelada':
+			return {
+				backgroundColor: theme.palette.grey[500],
+				color: theme.palette.common.white,
+				width: '90px',
+			};
 		default:
-			break
+			return {
+				backgroundColor: theme.palette.text.disabled,
+				color: theme.palette.common.white,
+				width: '80px',
+			};
 	}
+};
 
-	return styles
-}
+export default getStatusStyles;
 
-export default getStatusStyles
+export const getStatusColor = (status: string): ChipProps['color'] => {
+	switch (status) {
+		case 'Em Confirmação':
+			return 'warning';
+		case 'Em Preparação':
+			return 'info';
+		case 'Cancelado':
+			return 'error';
+		case 'Concluído':
+			return 'success';
+		default:
+			return 'default';
+	}
+};
 
 export type FormatValueTypes = 'string' | 'date' | 'number'
 

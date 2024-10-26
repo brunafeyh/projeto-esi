@@ -1,42 +1,21 @@
-import { useState, MouseEvent, FC } from 'react'
+import { FC } from 'react'
 import IconButton from '@mui/material/IconButton'
-import Popover from '@mui/material/Popover'
+import { Box, Tooltip } from '@mui/material'
 import Score from '../score'
 import { StarIconMui } from './styles'
-import { Box, Tooltip } from '@mui/material'
+import { Popover, usePopover } from '../popover'
+import { openPopover } from '../../utils/popover'
 
 const Pontuation: FC = () => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
+    const popoverRef = usePopover()
     return (
         <Box>
-            <Tooltip title='Pontuação'>
-                <IconButton onClick={handleClick}>
+            <Tooltip title="Pontuação">
+                <IconButton onClick={openPopover(popoverRef)}>
                     <StarIconMui />
                 </IconButton>
             </Tooltip>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-            >
+            <Popover ref={popoverRef}>
                 <Score />
             </Popover>
         </Box>

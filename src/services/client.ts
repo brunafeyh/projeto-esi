@@ -12,6 +12,10 @@ class ClientService {
     const response = await axios.get(this.apiUrl);
     return response.data.length;
   }
+
+  async createClient(clientData: Record<string, any>): Promise<void> {
+    await axios.post(this.apiUrl, clientData);
+  }
 }
 
 export default ClientService;

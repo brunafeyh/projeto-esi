@@ -7,6 +7,7 @@ import ErrorPage from '../../pages/error'
 import { theme } from '../../themes'
 import { useAuth } from '../../hooks/use-auth'
 import { AuthorizationRole } from '../../types/auth'
+import { closeModal, openModal } from '../../utils/modal'
 
 export const withAuthentication = <P extends object>(
 	Component: FunctionComponent<P>,
@@ -33,7 +34,7 @@ export const withAuthentication = <P extends object>(
 
 				if (isTokenAboutToExpire() && !showExpirationWarning) {
 					setShowExpirationWarning(true)
-					modalRef.current?.openModal()
+					openModal(modalRef)
 					autoLogoutTimeoutRef.current = setTimeout(async () => {
 						if (isRefreshTokenExpired()) {
 							clearTimeout(timeoutRef.current!)
@@ -59,11 +60,11 @@ export const withAuthentication = <P extends object>(
 			setShowExpirationWarning(false)
 			clearTimeout(timeoutRef.current!)
 			clearTimeout(autoLogoutTimeoutRef.current!)
-			modalRef.current?.closeModal()
+			closeModal(modalRef)
 		}
 
 		const handleLogout = async () => {
-			modalRef.current?.closeModal()
+			closeModal(modalRef)
 			clearTimeout(timeoutRef.current!)
 			clearTimeout(autoLogoutTimeoutRef.current!)
 			await logout()

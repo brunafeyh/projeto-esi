@@ -1,93 +1,79 @@
-import { FC, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import Table, { Column } from '../../table';
-import { TableRowBody } from '../../table/styles';
-import { TableCell } from '../../table-cell';
-import { Modal, useModal } from '../../modal';
-import { ContainedButton, ModalText, ModalTitle, Stack } from '../../../pages/pedidos/admin/styles';
-import { TextField } from '../../forms/login/styles';
-import { Pedido, useOrders } from '../../../hooks/use-orders';
-import { useOrderFilter } from '../../../hooks/use-order-filters';
+import { FC, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import { Box, Button, Chip, IconButton, Typography } from '@mui/material'
+import Table from '../../tables/table'
+import { TableRowBody } from '../../tables/table/styles'
+import { TableCell } from '../../tables/table-cell'
+import { Modal, useModal } from '../../modal'
+import { TextField } from '../../forms/login/styles'
+import { useOrders } from '../../../hooks/order/use-orders'
+import { useOrderFilter } from '../../../hooks/order/use-order-filters'
+import { ORDER_COLUMNS } from '../../../utils/constants/values'
+import { useOrderMutations } from '../../../hooks/order/use-order-mutations'
+import { Pedido } from '../../../types/order'
+import { formatDateToDDMMYYYY, getString } from '../../../utils/date'
+import { ModalContainer, ModalText, ModalTitle } from '../../modal/styles'
+import OrderForm from '../../forms/order'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { getStatusColor } from '../../../utils/table'
+import { closeModal, openModal } from '../../../utils/modal'
 
 const AdminOrder: FC = () => {
-    const { orders, addOrder } = useOrders();
-    const {
-        filteredPedidos,
-        filterStartDate,
-        filterEndDate,
-        setFilterStartDate,
-        setFilterEndDate,
-        handleSearch,
-        setFilteredPedidos
-    } = useOrderFilter(orders); 
-    const [newOrder, setNewOrder] = useState<Partial<Pedido>>({});
-    const [selectedOrder, setSelectedOrder] = useState<Pedido | null>(null);
-    const addOrderModalRef = useModal();
-    const detailsModalRef = useModal();
+    const { orders } = useOrders()
+    const { addOrder, updateOrder, removeOrder } = useOrderMutations()
+    const { filteredPedidos, filterStartDate, filterEndDate, setFilterStartDate, setFilterEndDate, setFilteredPedidos } = useOrderFilter(orders)
 
-    const handleRowClick = (id: string) => {
+    const [orderDetails, setOrderDetails] = useState<Partial<Pedido> | null>(null)
+    const [editOrderDetails, setEditOrderDetails] = useState<Partial<Pedido>>()
+    const [orderToDelete, setOrderToDelete] = useState<string | null>(null)
+
+    const addOrderModalRef = useModal()
+    const detailsModalRef = useModal()
+    const editOrderModalRef = useModal()
+    const deleteOrderModalRef = useModal()
+
+    const handleOpenEditModal = (id: string) => {
         const order = orders.find((pedido) => pedido.id === id);
-        return order || null;
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setNewOrder((prevOrder) => ({
-            ...prevOrder,
-            [name]: value,
-        }));
-    };
-
-    const handleAddOrder = async () => {
-        try {
-            await addOrder(newOrder as Pedido);
-            setFilteredPedidos([...orders, newOrder as Pedido]);
-            addOrderModalRef.current?.closeModal();
-        } catch (error) {
-            console.error('Erro ao adicionar pedido:', error);
-        }
-    };
-
-    const resetNewOrder = () => {
-        setNewOrder({
-            numeroPedido: '',
-            descricao: '',
-            valorTotal: 0,
-            metodoPagamento: '',
-            data: '',
-            pratos: [],
-        });
-    };
-
-    const handleOpenAddOrderModal = () => {
-        resetNewOrder();
-        addOrderModalRef.current?.openModal();
-    };
-
-    const handleCloseAddOrderModal = () => {
-        addOrderModalRef.current?.closeModal();
-    };
-
-    const handleOpenDetailsModal = async (id: string) => {
-        const order = handleRowClick(id);
         if (order) {
-            setSelectedOrder(order);
-            detailsModalRef.current?.openModal();
+            setEditOrderDetails(order);
+            openModal(editOrderModalRef)();
         }
     };
 
-    const handleCloseDetailsModal = () => {
-        setSelectedOrder(null);
-        detailsModalRef.current?.closeModal();
+    const handleAddOrder = (data: Partial<Pedido>) => {
+        data.status = "Em Confirmação";
+        addOrder(data as Pedido);
+        setFilteredPedidos([...orders, data as Pedido]);
+        closeModal(addOrderModalRef)();
     };
 
-    const columns: Column[] = [
-        { field: 'numeroPedido', headerName: 'Nº Pedido' },
-        { field: 'data', headerName: 'Data' },
-        { field: 'descricao', headerName: 'Descrição' },
-        { field: 'valorTotal', headerName: 'Valor (R$)' },
-        { field: 'metodoPagamento', headerName: 'Método de Pagamento' },
-    ];
+    const handleEditOrder = (data: Partial<Pedido>) => {
+        if (editOrderDetails?.id) updateOrder({ ...data, id: editOrderDetails.id } as Pedido)
+        closeModal(editOrderModalRef)()
+        setEditOrderDetails(undefined)
+    };
+
+    const handleOpenDetailsModal = (id: string) => {
+        const order = orders.find((pedido) => pedido.id === id)
+        if (order) {
+            setOrderDetails(order)
+            openModal(detailsModalRef)()
+        }
+    };
+
+    const handleOpenDeleteModal = (id: string) => {
+        setOrderToDelete(id)
+        openModal(deleteOrderModalRef)()
+    };
+
+    const handleDeleteOrder = () => {
+        if (orderToDelete) {
+            removeOrder(orderToDelete)
+            setOrderToDelete(null)
+            closeModal(deleteOrderModalRef)()
+        }
+    };
 
     return (
         <Box>
@@ -96,132 +82,109 @@ const AdminOrder: FC = () => {
                     <TextField
                         label="Data Inicial"
                         type="date"
-                        variant="outlined"
+                        variant="filled"
                         value={filterStartDate}
                         onChange={(e) => setFilterStartDate(e.target.value)}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
+                        InputLabelProps={{ shrink: true }}
                         sx={{ mr: 2, width: '200px' }}
                     />
                     <TextField
                         label="Data Final"
                         type="date"
-                        variant="outlined"
+                        variant="filled"
                         value={filterEndDate}
                         onChange={(e) => setFilterEndDate(e.target.value)}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
+                        InputLabelProps={{ shrink: true }}
                         sx={{ mr: 2, width: '200px' }}
                     />
-                    <ContainedButton variant="contained" onClick={handleSearch}>
-                        Buscar
-                    </ContainedButton>
                 </Box>
-                <ContainedButton variant="contained" onClick={handleOpenAddOrderModal}>
+                <Button variant="contained" onClick={openModal(addOrderModalRef)}>
                     Adicionar Pedido
-                </ContainedButton>
+                </Button>
             </Box>
 
             <Table
-                columns={columns}
+                columns={ORDER_COLUMNS}
                 data={filteredPedidos}
                 renderData={(row) => (
-                    <TableRowBody key={row.id} onClick={() => handleOpenDetailsModal(row.id)} style={{ cursor: 'pointer' }}>
+                    <TableRowBody key={uuidv4()} onClick={() => handleOpenDetailsModal(row.id)} style={{ cursor: 'pointer' }}>
                         <TableCell>{row.numeroPedido}</TableCell>
-                        <TableCell>{row.data}</TableCell>
+                        <TableCell>{formatDateToDDMMYYYY(row.data)}</TableCell>
                         <TableCell>{row.descricao}</TableCell>
                         <TableCell>{row.valorTotal}</TableCell>
                         <TableCell>{row.metodoPagamento}</TableCell>
+                        <TableCell>
+                            <Chip label={row.status} color={getStatusColor(row.status)} variant="outlined" size="small" />
+                        </TableCell>
+                        <TableCell>
+                            <IconButton
+                                size="small"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenEditModal(row.id);
+                                }}
+                                sx={{ width: 20, height: 20, mr: 1 }}
+                            >
+                                <EditIcon sx={{ width: 20, height: 20 }} />
+                            </IconButton>
+                            <IconButton
+                                size="small"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenDeleteModal(row.id);
+                                }}
+                                sx={{ width: 20, height: 20 }}
+                            >
+                                <DeleteIcon sx={{ width: 20, height: 20 }} />
+                            </IconButton>
+                        </TableCell>
                     </TableRowBody>
                 )}
             />
 
-            <Modal ref={addOrderModalRef} title="Adicionar Novo Pedido">
-                <Stack>
+            <Modal ref={addOrderModalRef} title="Adicionar Pedido">
+                <ModalContainer>
                     <ModalTitle>Adicionar Pedido</ModalTitle>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Nº Pedido"
-                        type="text"
-                        fullWidth
-                        variant="filled"
-                        name="numeroPedido"
-                        value={newOrder.numeroPedido || ''}
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        margin="dense"
-                        label="Descrição"
-                        type="text"
-                        fullWidth
-                        variant="filled"
-                        name="descricao"
-                        value={newOrder.descricao || ''}
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        margin="dense"
-                        label="Valor (R$)"
-                        type="number"
-                        fullWidth
-                        variant="filled"
-                        name="valorTotal"
-                        value={newOrder.valorTotal || 0}
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        margin="dense"
-                        label="Método de Pagamento"
-                        type="text"
-                        fullWidth
-                        variant="filled"
-                        name="metodoPagamento"
-                        value={newOrder.metodoPagamento || ''}
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        margin="dense"
-                        label="Data"
-                        type="date"
-                        fullWidth
-                        variant="filled"
-                        name="data"
-                        value={newOrder.data || ''}
-                        onChange={handleInputChange}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
+                    <OrderForm onSubmit={handleAddOrder} isEditMode={false} onClose={closeModal(addOrderModalRef)} />
+                </ModalContainer>
+            </Modal>
 
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                        <Button onClick={handleCloseAddOrderModal} variant="outlined">
+            <Modal ref={editOrderModalRef} title="Editar Pedido">
+                <ModalContainer>
+                    <ModalTitle>Editar Pedido</ModalTitle>
+                    <OrderForm onSubmit={handleEditOrder} defaultValues={editOrderDetails} isEditMode={true} onClose={closeModal(editOrderModalRef)} />
+                </ModalContainer>
+            </Modal>
+
+            <Modal ref={deleteOrderModalRef} title="Confirmar Exclusão">
+                <ModalContainer>
+                    <Typography>Tem certeza que deseja excluir este pedido?</Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                        <Button onClick={closeModal(deleteOrderModalRef)} variant="outlined">
                             Cancelar
                         </Button>
-                        <ContainedButton onClick={handleAddOrder} variant="contained" sx={{ ml: 2 }}>
-                            Adicionar
-                        </ContainedButton>
+                        <Button onClick={handleDeleteOrder} variant="contained" color="error" sx={{ ml: 2 }}>
+                            Excluir
+                        </Button>
                     </Box>
-                </Stack>
+                </ModalContainer>
             </Modal>
 
             <Modal ref={detailsModalRef} title="Detalhes do Pedido">
-                <Stack spacing={2}>
-                    {selectedOrder ? (
+                <ModalContainer>
+                    {orderDetails ? (
                         <>
-                            <ModalTitle>Pedido: {selectedOrder.numeroPedido}</ModalTitle>
-                            <ModalText>Data: {selectedOrder.data}</ModalText>
-                            <ModalText>Descrição: {selectedOrder.descricao}</ModalText>
-                            <ModalText>Valor (R$): {selectedOrder.valorTotal}</ModalText>
-                            <ModalText>Método de Pagamento: {selectedOrder.metodoPagamento}</ModalText>
-                            <ModalText>Pratos: </ModalText>
+                            <ModalTitle mb={2}>{orderDetails.numeroPedido}</ModalTitle>
+                            <ModalText>Data: {formatDateToDDMMYYYY(getString(orderDetails.data))}</ModalText>
+                            <ModalText>Descrição: {orderDetails.descricao}</ModalText>
+                            <ModalText>Valor (R$): {(orderDetails.valorTotal ?? 0).toFixed(2)}</ModalText>
+                            <ModalText>Método de Pagamento: {orderDetails.metodoPagamento}</ModalText>
+                            <ModalText>Pratos:</ModalText>
                             <Box>
-                                {selectedOrder.pratos && selectedOrder.pratos.length > 0 ? (
-                                    selectedOrder.pratos.map((prato, index) => (
-                                        <Typography key={index} variant="body2">
-                                            {prato.quantidade}x {prato.nome} - R$ {prato.valor.toFixed(2)}
+                                {orderDetails.pratos && orderDetails.pratos.length > 0 ? (
+                                    orderDetails.pratos.map((prato) => (
+                                        <Typography key={uuidv4()} variant="body2">
+                                            {prato.quantidade} x {prato.prato.name} - R$ {(parseFloat(prato.prato.reaisPrice?.toString() || '0') || 0).toFixed(2)}
                                         </Typography>
                                     ))
                                 ) : (
@@ -232,15 +195,15 @@ const AdminOrder: FC = () => {
                     ) : (
                         <Typography variant="body1">Carregando detalhes do pedido...</Typography>
                     )}
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                        <Button onClick={handleCloseDetailsModal} variant="outlined">
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                        <Button onClick={closeModal(detailsModalRef)} variant="contained">
                             Fechar
                         </Button>
                     </Box>
-                </Stack>
+                </ModalContainer>
             </Modal>
         </Box>
-    );
-};
+    )
+}
 
-export default AdminOrder;
+export default AdminOrder

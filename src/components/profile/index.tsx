@@ -1,22 +1,22 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LogoutButton, LogoutIconProfile, Stack, UserEmailTitle, UserNameTitle, UserRoleTitle } from './styles';
-import { useAuth } from '../../hooks/use-auth';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { LogoutButton, LogoutIconProfile, Stack, UserEmailTitle, UserNameTitle, UserRoleTitle } from './styles'
+import { useAuth } from '../../hooks/use-auth'
 
 const Profile: React.FC = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
+    const { user, logout } = useAuth()
+    const navigate = useNavigate()
 
     const handleLogout = async () => {
         try {
-            await logout();
-            navigate('/login');
+            await logout()
+            navigate('/login')
         } catch (error) {
             console.error('Logout error:', error);
         }
-    };
+    }
 
-    if (!user) return null;
+    if (!user) return null
 
     return (
         <Stack>
@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
                 Sair
             </LogoutButton>
         </Stack>
-    );
-};
+    )
+}
 
-export default Profile;
+export default Profile

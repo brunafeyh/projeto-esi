@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
-const API_URL = 'http://menu-master-production.up.railway.app';
+import { API_BASE_URL } from '../shared/api';
 
 export interface LoginResponse {
   token: string;
@@ -17,7 +16,7 @@ export interface ValidateTokenResponse {
 
 export const login = async (email: string, password: string) => {
   try {
-    const response = await axios.post<LoginResponse>(`${API_URL}/authentication/login`, {
+    const response = await axios.post<LoginResponse>(`${API_BASE_URL}/authentication/login`, {
       email,
       password,
     });
@@ -38,7 +37,7 @@ export const createUser = async (user: {
   role: string;
 }) => {
   try {
-    const response = await axios.post<CreateUserResponse>(`${API_URL}/authentication/create-user`, user);
+    const response = await axios.post<CreateUserResponse>(`${API_BASE_URL}/authentication/create-user`, user);
     toast.success('User created successfully!');
     return response.data;
   } catch (error) {
@@ -50,7 +49,7 @@ export const createUser = async (user: {
 
 export const validateToken = async (token: string) => {
   try {
-    const response = await axios.get<ValidateTokenResponse>(`${API_URL}/authentication/validate-token`, {
+    const response = await axios.get<ValidateTokenResponse>(`${API_BASE_URL}/authentication/validate-token`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
