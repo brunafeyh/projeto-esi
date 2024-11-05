@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
-import { DialogContent, DialogActions, Button, MenuItem, Select, FormControl, InputLabel, Box, IconButton } from '@mui/material';
+import { Button, MenuItem, Select, FormControl, InputLabel, Box, IconButton } from '@mui/material';
 import { DishValueForm } from '../../../types/dishes';
 import { DEFAULT_DISHE } from '../../../utils/constants/values';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
@@ -11,6 +11,9 @@ import { useCategories } from '../../../hooks/category/use-categorys';
 import useIngredients from '../../../hooks/ingredients/use-ingredients';
 import Loading from '../../loading';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useUnits } from '../../../hooks/unit/use-units';
+import { ActionBox } from '../../../pages/stock/styles';
+import ImageUpload from '../../image-upload';
 
 interface DishFormProps {
     dish?: DishValueForm;
@@ -25,6 +28,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
     const { addDish, updateDish, addIsLoading, updateIsLoading } = useDishes();
     const { categories, isLoading: isLoadingCategories } = useCategories();
     const { ingredients, isLoading: isLoadingIngredients } = useIngredients();
+    const { units, isLoading: isLoadingUnits } = useUnits();
 
     const { fields, append, remove, update, replace } = useFieldArray({
         control,
@@ -76,7 +80,6 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         }
     };
 
-
     const handleAddIngredient = () => {
         append({ ingredientId: 0, quantity: 1, measurementUnitId: 0 });
     };
@@ -93,11 +96,18 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
         }
     };
 
-    if (isLoadingCategories || isLoadingIngredients || addIsLoading || updateIsLoading) return <Loading />;
+    const handleFileSelect = async (file: File | null) => {
+        if (file) {
+            const base64Image = await convertToBase64(file)
+            setValue('image', base64Image)
+        } else setValue('image', '');
+    }
+
+    if (isLoadingCategories || isLoadingIngredients || isLoadingUnits || addIsLoading || updateIsLoading) return <Loading />
 
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <DialogContent>
+            <Box sx={{ maxHeight: '70vh', overflow: 'auto', width: '100%', paddingBottom: 3 }}>
                 <TextField
                     margin="dense"
                     label="Nome"
@@ -168,7 +178,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                                     >
                                         {ingredients.map((ingredient) => (
                                             <MenuItem key={ingredient.id} value={ingredient.id}>
-                                                {ingredient.name} ({ingredient.measurementUnit.acronym})
+                                                {ingredient.name}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -186,33 +196,48 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                             sx={{ width: '120px' }}
                         />
 
+                        <FormControl variant="filled" sx={{ flex: 1, ml: 2 }}>
+                            <InputLabel id={`unit-label-${index}`}>Unidade</InputLabel>
+                            <Controller
+                                name={`dishIngredientFormDTOList.${index}.measurementUnitId`}
+                                control={control}
+                                defaultValue={field.measurementUnitId}
+                                render={({ field: unitField }) => (
+                                    <Select labelId={`unit-label-${index}`} {...unitField}>
+                                        {units.map((unit) => (
+                                            <MenuItem key={unit.id} value={unit.id}>
+                                                {unit.acronym}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                )}
+                            />
+                        </FormControl>
+
                         <IconButton onClick={() => remove(index)} sx={{ ml: 1 }}>
                             <DeleteIcon />
                         </IconButton>
                     </Box>
                 ))}
 
-                <TextField
-                    margin="dense"
-                    label="Imagem"
-                    type="file"
-                    fullWidth
-                    variant="filled"
-                    inputProps={{ accept: 'image/*' }}
-                    {...register('imgFile')}
-                    InputLabelProps={{ shrink: true }}
+                <Controller
+                    name="image"
+                    control={control}
+                    render={() => (
+                        <ImageUpload onFileSelect={(file) => handleFileSelect(file)} />
+                    )}
                 />
-            </DialogContent>
-            <DialogActions>
+            </Box>
+            <ActionBox mt={2}>
                 <Button onClick={onClose} variant="outlined">
                     Cancelar
                 </Button>
                 <Button type="submit" variant="contained" sx={{ ml: 1 }} disabled={addIsLoading}>
                     {addIsLoading ? 'Salvando...' : dish ? 'Salvar' : 'Adicionar'}
                 </Button>
-            </DialogActions>
+            </ActionBox>
         </form>
-    );
-};
+    )
+}
 
-export default DishForm;
+export default DishForm

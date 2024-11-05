@@ -5,7 +5,7 @@ import { Modal, useModal } from '../../modal'
 import { ConfirmBox, EditBox } from './styles'
 import DishForm from '../../forms/dishe'
 import { useDishes } from '../../../hooks/dishes/use-dishes'
-import { ModalContainer, ModalTitle } from '../../modal/styles'
+import { EditModalContainer, ModalTitle } from '../../modal/styles'
 import { closeModal, openModal } from '../../../utils/modal'
 import { Dish } from '../../../types/dish'
 import { transformDishToDishe } from '../../../utils/dishe'
@@ -50,10 +50,10 @@ const EditDisheGrid: FC<DisheGridProps> = ({ dishes }) => {
             </Grid>
             
             <Modal ref={editModalRef}>
-                <ModalContainer>
+                <EditModalContainer>
                     <ModalTitle>Editar Prato</ModalTitle>
                     <DishForm dish={dish} onClose={closeModal(editModalRef)} />
-                </ModalContainer>
+                </EditModalContainer>
             </Modal>
 
             <Modal ref={deleteModalRef}>

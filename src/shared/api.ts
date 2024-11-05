@@ -1,5 +1,5 @@
 export const apiBaseUrl = 'http://localhost:3000'
-export const API_BASE_URL = 'https://projeto-esi.rj.r.appspot.com';
+export const API_BASE_URL = 'https://projeto-esi-440701.rj.r.appspot.com/';
 
 import axios from 'axios';
 import { ACCESS_TOKEN_KEY } from '../utils/constants/values';

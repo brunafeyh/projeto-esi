@@ -22,6 +22,15 @@ export const ModalContainer = styled(BoxMui)(({ theme }) => ({
 	margin: 'auto',
 }));
 
+export const EditModalContainer = styled(BoxMui)(({ theme }) => ({
+	padding: theme.spacing(4),
+	backgroundColor: theme.palette.unioeste.neutral.p10,
+	borderRadius: theme.spacing(2),
+	boxShadow: theme.shadows[5],
+	maxWidth: theme.spacing(80),
+	margin: 'auto',
+}));
+
 export const ModalTitle = styled(Typography)(({ theme }) => ({
 	marginBottom: theme.spacing(2),
 	fontWeight: FONT_WEIGHTS.bold,
