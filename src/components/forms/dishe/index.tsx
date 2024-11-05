@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
-import { Button, MenuItem, Select, FormControl, InputLabel, Box, IconButton } from '@mui/material';
+import { Button, MenuItem, Select, FormControl, InputLabel, Box, IconButton, Typography } from '@mui/material';
 import { DishValueForm } from '../../../types/dishes';
 import { DEFAULT_DISHE } from '../../../utils/constants/values';
 import { useDishes } from '../../../hooks/dishes/use-dishes';
@@ -107,7 +107,7 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
 
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <Box sx={{ maxHeight: '70vh', overflow: 'auto', width: '100%', paddingBottom: 3 }}>
+            <Box sx={{ maxHeight: '70vh', overflow: 'auto', width: '100%', paddingRight: 2 }}>
                 <TextField
                     margin="dense"
                     label="Nome"
@@ -219,6 +219,8 @@ const DishForm: FC<DishFormProps> = ({ dish, onClose }) => {
                         </IconButton>
                     </Box>
                 ))}
+
+                <Typography sx={{fontSize: 14, mt: 2, mb: 2}}>Adicionar Imagem</Typography>
 
                 <Controller
                     name="image"
