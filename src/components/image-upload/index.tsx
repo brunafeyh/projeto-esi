@@ -104,7 +104,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect }) => {
                         color="primary"
                         sx={{ display: 'flex', alignItems: 'center', mr: 1 }}
                     >
-                        <VisibilityIcon sx={{ fontSize: 20, mr: 0.5 }} /> Visualizar
+                        <VisibilityIcon sx={{ fontSize: 20, mr: 0.5 }} />
                     </Link>
                     <Link
                         href={preview || '#'}
@@ -113,7 +113,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect }) => {
                         color="primary"
                         sx={{ display: 'flex', alignItems: 'center', mr: 1 }}
                     >
-                        <DownloadIcon sx={{ fontSize: 20, mr: 0.5 }} /> Download
+                        <DownloadIcon sx={{ fontSize: 20, mr: 0.5 }} />
                     </Link>
                     <IconButton onClick={handleRemoveFile} sx={{ width: 20, height: 20 }}>
                         <DeleteIcon color="primary" sx={{ width: 20, height: 20 }} />
